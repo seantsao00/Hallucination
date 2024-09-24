@@ -1,4 +1,6 @@
 {
+    "dotnet.defaultSolution": "NTU-GP-2024-Fall.sln",
+    "files.autoSave": "off",
     "files.exclude": {
         "**/.DS_Store": true,
         "**/.git": true,
@@ -56,5 +58,4 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "NTU-GP-2024-Fall.sln"
 }

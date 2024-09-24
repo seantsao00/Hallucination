@@ -1,26 +1,36 @@
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-    public float moveSpeed = 5f;   // Speed of the character
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.2f;
+    public LayerMask groundLayer;
 
-    private Rigidbody2D rb;        // Reference to the Rigidbody2D component
-    private Vector2 movement;      // Stores the movement input
+    private Rigidbody2D rb;
+    private bool isGrounded;
+    private Vector2 movement;
 
-    // Start is called before the first frame update
     void Start() {
-        rb = GetComponent<Rigidbody2D>();  // Get the Rigidbody2D component attached to the player
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update() {
-        // Get input from W, A, S, D keys (Vertical = W/S, Horizontal = A/D)
         movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        if (Input.GetButtonDown("Jump") && isGrounded) {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
     }
 
-    // FixedUpdate is called at a fixed time interval (used for physics-related updates)
     void FixedUpdate() {
-        // Move the character by adjusting its velocity
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
+    }
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 }

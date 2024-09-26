@@ -1,0 +1,38 @@
+{
+    "dialogues": [
+        {
+            "name": "introduction",
+            "lines": [
+                {
+                    "speaker": "Villager",
+                    "sentence": "Hello there, traveler!"
+                },
+                {
+                    "speaker": "Player",
+                    "sentence": "Hi! What's going on here?"
+                },
+                {
+                    "speaker": "Villager",
+                    "sentence": "This is our peaceful village."
+                }
+            ]
+        },
+        {
+            "name": "quest_start",
+            "lines": [
+                {
+                    "speaker": "Quest Giver",
+                    "sentence": "I have a task for you."
+                },
+                {
+                    "speaker": "Player",
+                    "sentence": "What do you need?"
+                },
+                {
+                    "speaker": "Quest Giver",
+                    "sentence": "Retrieve the sacred stone from the cave."
+                }
+            ]
+        }
+    ]
+}

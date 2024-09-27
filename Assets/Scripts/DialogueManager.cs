@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject leftImage;  // Reference to the left image GameObject (player's image)
     public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
-    
+
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class DialogueManager : MonoBehaviour
         leftImage.SetActive(false);  // Hide both images at the start
         rightImage.SetActive(false);
         StartDialogue("quest_start");
-        
+
     }
 
     void Update()

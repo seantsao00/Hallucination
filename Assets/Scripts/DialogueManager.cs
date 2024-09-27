@@ -6,15 +6,18 @@ using System.IO;
 
 public class DialogueManager : MonoBehaviour
 {
+    public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;  // Reference to the TextMeshPro component
 
     private Queue<DialogueLine> dialogueLines;  // Queue to hold the dialogue lines
     private DialogueData dialogueData;  // Store all the dialogues from JSON
+    
 
     void Start()
     {
         dialogueLines = new Queue<DialogueLine>();
         LoadDialoguesFromFile();  // Load all dialogues from the JSON file
+        dialogueBox.SetActive(false);  // Initially hide the dialogue box at the start
         StartDialogue("quest_start");
     }
 
@@ -53,6 +56,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueData != null)
         {
+            dialogueBox.SetActive(true);  // Show the dialogue box when dialogue starts
             // Find the correct dialogue by name
             DialogueCollection dialogueCollection = FindDialogueByName(dialogueName);
 
@@ -114,6 +118,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         Debug.Log("End of dialogue");
+        dialogueBox.SetActive(false);
         // Implement any additional behavior when dialogue ends
     }
 }

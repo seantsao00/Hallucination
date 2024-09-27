@@ -11,6 +11,9 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<DialogueLine> dialogueLines;  // Queue to hold the dialogue lines
     private DialogueData dialogueData;  // Store all the dialogues from JSON
+
+    public GameObject leftImage;  // Reference to the left image GameObject (player's image)
+    public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
     
 
     void Start()
@@ -18,7 +21,10 @@ public class DialogueManager : MonoBehaviour
         dialogueLines = new Queue<DialogueLine>();
         LoadDialoguesFromFile();  // Load all dialogues from the JSON file
         dialogueBox.SetActive(false);  // Initially hide the dialogue box at the start
+        leftImage.SetActive(false);  // Hide both images at the start
+        rightImage.SetActive(false);
         StartDialogue("quest_start");
+        
     }
 
     void Update()
@@ -102,12 +108,26 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine dialogueLine = dialogueLines.Dequeue();
         StopAllCoroutines();  // Stop any previous typing coroutine
+        UpdateSpeakerImage(dialogueLine.speaker); // Update image visibility based on speaker
         StartCoroutine(TypeSentence(dialogueLine));  // Display the dialogue line with a typing effect
     }
-
+    void UpdateSpeakerImage(string speaker)
+    {
+        if (speaker == "Player")
+        {
+            leftImage.SetActive(true);  // Show player's image on the left
+            rightImage.SetActive(false);  // Hide the other character's image
+        }
+        else
+        {
+            leftImage.SetActive(false);  // Hide player's image
+            rightImage.SetActive(true);  // Show the other character's image on the right
+        }
+    }
     IEnumerator TypeSentence(DialogueLine dialogueLine)
     {
-        dialogueText.text = dialogueLine.speaker + ": ";  // Show speaker's name
+        // dialogueText.text = dialogueLine.speaker + ": ";  // Show speaker's name
+        dialogueText.text = "";
         foreach (char letter in dialogueLine.sentence.ToCharArray())
         {
             dialogueText.text += letter;  // Type each letter one by one
@@ -118,7 +138,8 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         Debug.Log("End of dialogue");
-        dialogueBox.SetActive(false);
-        // Implement any additional behavior when dialogue ends
+        dialogueBox.SetActive(false);   // Hide the dialogue box when dialogue ends
+        leftImage.SetActive(false);  // Hide both images when dialogue ends
+        rightImage.SetActive(false);
     }
 }

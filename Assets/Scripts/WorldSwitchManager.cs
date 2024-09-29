@@ -11,6 +11,10 @@ public class WorldSwitchManager : MonoBehaviour {
 
     private bool isInWorldFairy = true;
 
+    void Start() {
+        ActivateWorldFairy();
+    }
+
     void Update() {
         if (Input.GetKeyDown(KeyCode.X)) {
             StartCoroutine(SwitchWorldsWithFade());

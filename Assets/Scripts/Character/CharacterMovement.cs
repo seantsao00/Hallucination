@@ -22,15 +22,29 @@ public class CharacterMovement : MonoBehaviour {
 
     void Update() {
         movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetButtonDown("Jump") && character.IsGrounded) {
-            character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
+        // Debug.Log($"Layer Index: {gameObject.layer}, Layer Name: {LayerMask.LayerToName(gameObject.layer)}");
+        if (!character.IsClimbing && character.OverlappedClimbalbe != null && movement.y != 0) {
+            character.IsClimbing = true;
+        }
+        if (character.IsClimbing && character.IsGrounded && movement.y == 0) character.IsClimbing = false;
+        if (character.IsClimbing && character.OverlappedClimbalbe == null) character.IsClimbing = false;
+
+        if (!character.IsClimbing) {
+            if (Input.GetButtonDown("Jump") && character.IsGrounded) {
+                character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
+            }
         }
     }
 
     void FixedUpdate() {
-        if (!character.IsDashing) {
+        if (!character.IsDashing && !character.IsClimbing) {
             character.Rb.velocity = new Vector2(movement.x * moveSpeed, character.Rb.velocity.y);
         }
+        if (character.IsClimbing) {
+            character.Rb.velocity = new Vector2(0, movement.y * moveSpeed);
+        }
     }
+
 }

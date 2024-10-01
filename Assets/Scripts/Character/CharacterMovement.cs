@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
 
-public class PlayerMovement : MonoBehaviour {
+public class CharacterMovement : MonoBehaviour {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public Transform groundCheck;
@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour {
     public bool IsGrounded {
         get { return isGrounded; }
     }
-    /// <summary> The moving direction of the player. </summary>
-    /// <remarks> Note that this is not the current speed of the player. </remarks>
+    /// <summary> The moving direction of the character. </summary>
+    /// <remarks> Note that this is not the current speed of the character. </remarks>
     private Vector2 movement;
 
     [HideInInspector] public bool isDashing = false;

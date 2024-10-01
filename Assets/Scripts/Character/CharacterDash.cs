@@ -17,13 +17,15 @@ public class CharacterDash : MonoBehaviour {
     [SerializeField] float dashGravityScale = 0.2f;
 
     Character character;
-
+    public AudioClip dashSound;  // Drag and drop your dash sound effect here in the Inspector
+    private AudioSource audioSource;  // Reference to AudioSource component
     bool isDashCooling = false;
     bool isDashReset = true;
     TrailRenderer dashTrailRenderer;
     Vector2 facingDirection = new Vector2(1, 0);
 
     void Start() {
+        audioSource = GetComponent<AudioSource>();  // Get the AudioSource component
         character = GetComponent<Character>();
         Assert.IsTrue(dashDurationSeconds <= dashCooldownSeconds);
         dashTrailRenderer = GetComponent<TrailRenderer>();
@@ -34,7 +36,13 @@ public class CharacterDash : MonoBehaviour {
         if (horizontal != 0)
             facingDirection.x = horizontal;
         if (character.IsGrounded) isDashReset = true;
-        if (!isDashCooling && Input.GetButtonDown("Dash") && isDashReset) {
+        
+        if (!isDashCooling && Input.GetButtonDown("Dash") && isDashReset && !character.IsClimbing) {
+            // Play dash sound effect
+            if (dashSound != null)
+            {
+                audioSource.PlayOneShot(dashSound);  // Play the dash sound effect
+            }
             StartCoroutine(Dash());
         }
     }

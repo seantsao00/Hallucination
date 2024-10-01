@@ -16,7 +16,11 @@ public class CharacterMovement : MonoBehaviour {
     /// <remarks> Note that this is not the current speed of the character. </remarks>
     private Vector2 movement;
 
+    public AudioClip jumpSound;  // Drag and drop your jump sound effect here in the Inspector
+    private AudioSource audioSource;  // Reference to AudioSource component
+
     void Start() {
+        audioSource = GetComponent<AudioSource>();  // Get the AudioSource component
         character = GetComponent<Character>();
     }
 
@@ -34,6 +38,10 @@ public class CharacterMovement : MonoBehaviour {
         if (!character.IsClimbing) {
             if (Input.GetButtonDown("Jump") && character.IsGrounded) {
                 character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
+                if (jumpSound != null)
+                {
+                    audioSource.PlayOneShot(jumpSound);  // Play the jump sound effect
+                }
             }
         }
     }

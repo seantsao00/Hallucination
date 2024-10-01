@@ -161,10 +161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 0}
   groundCheckRadius: 0.2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
   IsGrounded: 1
+  OverlappedClimbalbe: {fileID: 0}
   IsDashing: 0
 --- !u!114 &6627739361679771361
 MonoBehaviour:
@@ -180,7 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpPower: 10
-  isDashing: 0
+  jumpSound: {fileID: 8300000, guid: cc72fe4bc1c488143b0fc26ab2273401, type: 3}
 --- !u!61 &7706779010662043586
 BoxCollider2D:
   m_ObjectHideFlags: 0

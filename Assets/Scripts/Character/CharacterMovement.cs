@@ -7,44 +7,30 @@ using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
 
 public class CharacterMovement : MonoBehaviour {
-    public float moveSpeed = 5f;
-    public float jumpPower = 10f;
-    public Transform groundCheck;
-    public float groundCheckRadius = 0.2f;
-    public LayerMask groundLayer;
 
-    private Rigidbody2D rb;
-    private bool isGrounded;
-    public bool IsGrounded {
-        get { return isGrounded; }
-    }
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float jumpPower = 10f;
+
+    private Character character;
     /// <summary> The moving direction of the character. </summary>
     /// <remarks> Note that this is not the current speed of the character. </remarks>
     private Vector2 movement;
 
-    [HideInInspector] public bool isDashing = false;
-
     void Start() {
-        rb = GetComponent<Rigidbody2D>();
+        character = GetComponent<Character>();
     }
 
     void Update() {
         movement.x = Input.GetAxisRaw("Horizontal");
 
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        if (Input.GetButtonDown("Jump") && isGrounded) {
-            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+        if (Input.GetButtonDown("Jump") && character.IsGrounded) {
+            character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
         }
     }
 
     void FixedUpdate() {
-        if (!isDashing) {
-            rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
+        if (!character.IsDashing) {
+            character.Rb.velocity = new Vector2(movement.x * moveSpeed, character.Rb.velocity.y);
         }
-    }
-
-    void OnDrawGizmos() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 }

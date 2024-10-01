@@ -32,7 +32,9 @@ public class PlayerDash : MonoBehaviour {
     }
 
     void Update() {
-        facingDirection.x = Input.GetAxisRaw("Horizontal");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        if (horizontal != 0)
+            facingDirection.x = horizontal;
         bool isGrounded = playerMovement.IsGrounded;
         if (isGrounded) isDashReset = true;
         if (!isDashCooling && Input.GetButtonDown("Dash") && isDashReset) {

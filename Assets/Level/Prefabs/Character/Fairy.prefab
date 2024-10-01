@@ -57,6 +57,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 8602150884692660129}
+    - targetCorrespondingSourceObject: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1860308792635032451}
   m_SourcePrefab: {fileID: 100100000, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
@@ -65,6 +68,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
   m_PrefabInstance: {fileID: 4132095499825998733}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8602150884692660129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119055625902650740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5a7da609eb14240bdaa44bf94acc32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 20
+  dashDurationSeconds: 0.2
+  dashCooldownSeconds: 1
+  dashGravityScale: 0.2
 --- !u!96 &-1860308792635032451
 TrailRenderer:
   serializedVersion: 3

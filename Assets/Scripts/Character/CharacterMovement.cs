@@ -8,7 +8,7 @@ using UnityEngine.Timeline;
 
 public class CharacterMovement : MonoBehaviour {
     public float moveSpeed = 5f;
-    public float jumpForce = 10f;
+    public float jumpPower = 10f;
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
@@ -33,7 +33,7 @@ public class CharacterMovement : MonoBehaviour {
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         if (Input.GetButtonDown("Jump") && isGrounded) {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
         }
     }
 

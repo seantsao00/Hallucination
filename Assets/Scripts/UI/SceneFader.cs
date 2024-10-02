@@ -15,12 +15,12 @@ public class SceneFader : MonoBehaviour
         fadeCanvasGroup.blocksRaycasts = false;
     }
 
-    public void FadeAndSwitchScene(string sceneName)
+    public void FadeOutAndSwitchScene(string sceneName)
     {
-        StartCoroutine(FadeOutAndLoadScene(sceneName));
+        StartCoroutine(FadeOutAnimation(sceneName));
     }
 
-    private IEnumerator FadeOutAndLoadScene(string sceneName)
+    private IEnumerator FadeOutAnimation(string sceneName)
     {
         // Enable blocking of raycasts during the fade
         fadeCanvasGroup.blocksRaycasts = true;
@@ -36,8 +36,6 @@ public class SceneFader : MonoBehaviour
 
         // Ensure the alpha is fully set to 1
         fadeCanvasGroup.alpha = 1f;
-
-        // Load the new scene
         SceneManager.LoadScene(sceneName);
     }
 }

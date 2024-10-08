@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bear
       objectReference: {fileID: 0}
+    - target: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6627739361679771361, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       propertyPath: canDash
       value: 0

@@ -7,17 +7,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
 
 public class CharacterMovement : MonoBehaviour {
+    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float jumpPower = 10f;
 
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpPower = 10f;
+    Character character;
+    Vector2 movement;
 
-    private Character character;
-    /// <summary> The moving direction of the character. </summary>
-    /// <remarks> Note that this is not the current speed of the character. </remarks>
-    private Vector2 movement;
-
-    public AudioClip jumpSound;  // Drag and drop your jump sound effect here in the Inspector
-    private AudioSource audioSource;  // Reference to AudioSource component
+    [SerializeField] AudioClip jumpSound;  // Drag and drop your jump sound effect here in the Inspector
+    AudioSource audioSource;  // Reference to AudioSource component
 
     void Start() {
         audioSource = GetComponent<AudioSource>();  // Get the AudioSource component
@@ -28,7 +25,6 @@ public class CharacterMovement : MonoBehaviour {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        // Debug.Log($"Layer Index: {gameObject.layer}, Layer Name: {LayerMask.LayerToName(gameObject.layer)}");
         if (!character.IsClimbing && character.OverlappedClimbalbe != null && movement.y != 0) {
             character.IsClimbing = true;
         }
@@ -38,8 +34,7 @@ public class CharacterMovement : MonoBehaviour {
         if (!character.IsClimbing) {
             if (Input.GetButtonDown("Jump") && character.IsGrounded) {
                 character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
-                if (jumpSound != null)
-                {
+                if (jumpSound != null) {
                     audioSource.PlayOneShot(jumpSound);  // Play the jump sound effect
                 }
             }

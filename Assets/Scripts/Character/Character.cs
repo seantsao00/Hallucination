@@ -34,8 +34,6 @@ public class Character : MonoBehaviour {
         isClimbing = climbing;
         if (isClimbing) {
             gameObject.layer = aheadGroundLayer;
-            // Debug.Log(gameObject.name);
-            // Debug.Log($"Layer Index: {gameObject.layer}, Layer Name: {LayerMask.LayerToName(gameObject.layer)}");
             Rb.gravityScale = 0;
             Rb.velocity = new Vector2(0, Rb.velocity.y);
         } else {
@@ -58,7 +56,6 @@ public class Character : MonoBehaviour {
     void Update() {
         IsGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayerMask);
         OverlappedClimbalbe = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, climbableLayerMask);
-        // if (OverlappedClimbalbe != null) Debug.Log("On a climbable object.");
     }
 
     void OnDrawGizmos() {

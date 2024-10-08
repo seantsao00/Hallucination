@@ -1,8 +1,8 @@
 using UnityEngine;
 
 public class DisappearingPlatformManager : MonoBehaviour {
-    public float timeToDisappear = 1f; // Time the player has to stay for the platform to disappear
-    public float timeToReappear = 1.5f;  // Time after the player leaves for the platform to reappear.
+    public float timeToDisappear = 3f; // Time the player has to stay for the platform to disappear
+    public float timeToReappear = 2f;  // Time after the player leaves for the platform to reappear.
 
     bool playerOnPlatform = false;
     bool playerOverlappingPlatform = false; // New variable

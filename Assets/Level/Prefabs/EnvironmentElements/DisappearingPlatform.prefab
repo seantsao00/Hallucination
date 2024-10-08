@@ -12,6 +12,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DisappearingPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 5307044586434194678, guid: a92bef0427b48b241a41b6e49c39c668, type: 3}
+      propertyPath: m_Color.b
+      value: 0.32941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5307044586434194678, guid: a92bef0427b48b241a41b6e49c39c668, type: 3}
+      propertyPath: m_Color.g
+      value: 0.32941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5307044586434194678, guid: a92bef0427b48b241a41b6e49c39c668, type: 3}
+      propertyPath: m_Color.r
+      value: 0.32941177
+      objectReference: {fileID: 0}
     - target: {fileID: 7846300171314603298, guid: a92bef0427b48b241a41b6e49c39c668, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -55,5 +67,27 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1867884551644796458, guid: a92bef0427b48b241a41b6e49c39c668, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2940992020779632672}
   m_SourcePrefab: {fileID: 100100000, guid: a92bef0427b48b241a41b6e49c39c668, type: 3}
+--- !u!1 &3127131312340787224 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1867884551644796458, guid: a92bef0427b48b241a41b6e49c39c668, type: 3}
+  m_PrefabInstance: {fileID: 3641655380954101298}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2940992020779632672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3127131312340787224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca5a5a9ad9fbbe42892c6ae280cb005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDisappear: 1
+  timeToReappear: 1.5

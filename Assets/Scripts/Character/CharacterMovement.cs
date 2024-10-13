@@ -25,12 +25,14 @@ public class CharacterMovement : MonoBehaviour {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
+        // climb
         if (!character.IsClimbing && character.OverlappedClimbalbe != null && movement.y != 0) {
             character.IsClimbing = true;
         }
         if (character.IsClimbing && character.IsGrounded && movement.y == 0) character.IsClimbing = false;
         if (character.IsClimbing && character.OverlappedClimbalbe == null) character.IsClimbing = false;
 
+        // normal move
         if (!character.IsClimbing) {
             if (Input.GetButtonDown("Jump") && character.IsGrounded) {
                 character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);

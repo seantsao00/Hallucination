@@ -17,6 +17,12 @@ public class Character : MonoBehaviour {
     private Rigidbody2D rb;
     public Rigidbody2D Rb { get { return rb; } }
     [HideInInspector] public bool IsGrounded = true;
+    bool isSittingOnBench = false;
+    public bool IsSittingOnBench {
+        get { return isSittingOnBench; }
+        set { SetSittingState(value); }
+    }
+
     [HideInInspector] public Collider2D OverlappedClimbalbe;
 
     [HideInInspector] public bool IsDashing = false;
@@ -26,10 +32,13 @@ public class Character : MonoBehaviour {
     bool isClimbing;
     public bool IsClimbing {
         get { return isClimbing; }
-        set {
-            SetClimbingState(value);
-        }
+        set { SetClimbingState(value); }
     }
+
+    private void SetSittingState(bool sitting) {
+        isSittingOnBench = sitting;
+    }
+
     private void SetClimbingState(bool climbing) {
         isClimbing = climbing;
         if (isClimbing) {

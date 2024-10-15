@@ -6,11 +6,14 @@ public class ElevatorSwitchController : SwitchController
     public Transform targetPosition; // The position to move the player to
     public float moveSpeed = 2f; // Speed at which the player moves to the target
 
-    bool isMovingPlayer = false; // To prevent multiple coroutines from starting
-    Transform playerTransform; // Reference to the player's transform
+    private bool isMovingPlayer = false; // To prevent multiple coroutines from starting
+    private Transform playerTransform; // Reference to the player's transform
 
-    Rigidbody2D playerRigidbody; // Reference to the player's Rigidbody2D
-    bool originalIsKinematic; // To store the player's original isKinematic state
+    private Rigidbody2D playerRigidbody; // Reference to the player's Rigidbody2D
+    private bool originalIsKinematic; // To store the player's original isKinematic state
+
+    // Reference to the player's controller script
+    private Character player;
 
     protected override void Update()
     {
@@ -34,6 +37,7 @@ public class ElevatorSwitchController : SwitchController
         // Get the player's Rigidbody2D component
         if (playerTransform != null)
         {
+            
             playerRigidbody = playerTransform.GetComponent<Rigidbody2D>();
             if (playerRigidbody != null)
             {
@@ -43,8 +47,18 @@ public class ElevatorSwitchController : SwitchController
                 // Set isKinematic to true to disable physics interaction
                 playerRigidbody.isKinematic = true;
             }
-        }
+            
 
+            // Get the PlayerController component
+            player = playerTransform.GetComponent<Character>();
+            if (player != null)
+            {
+                player.IsControllable = false;
+            } else {
+                print("Not found");
+            }
+        }
+        print(player.IsControllable);
         // While the player hasn't reached the target position
         while (Vector3.Distance(playerTransform.position, targetPosition.position) > 0.1f)
         {
@@ -61,16 +75,25 @@ public class ElevatorSwitchController : SwitchController
         playerTransform.position = targetPosition.position;
 
         // Restore the player's original isKinematic state
+        
         if (playerRigidbody != null)
         {
             playerRigidbody.isKinematic = originalIsKinematic;
         }
+        
+
+        
+        if (player != null)
+        {
+            // Set the player's climbing state back to false
+            player.IsControllable = true;
+        }
+        print(player.IsControllable);
 
         // Change the switch color back to the original color
         spriteRenderer.color = originalColor;
 
         isMovingPlayer = false;
-        playerTransform = null; // Clear the cached transform
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)

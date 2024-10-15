@@ -30,13 +30,21 @@ public class Character : MonoBehaviour {
     private float normalGravityScale;
 
     bool isClimbing;
+    bool isControllable;
     public bool IsClimbing {
         get { return isClimbing; }
         set { SetClimbingState(value); }
     }
+    public bool IsControllable {
+        get { return isControllable; }
+        set { SetControllableState(value); }
+    }
 
     private void SetSittingState(bool sitting) {
         isSittingOnBench = sitting;
+    }
+    private void SetControllableState(bool controllable) {
+        isControllable = controllable;
     }
 
     private void SetClimbingState(bool climbing) {
@@ -61,6 +69,7 @@ public class Character : MonoBehaviour {
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        isControllable = true;
         normalGravityScale = Rb.gravityScale;
     }
 

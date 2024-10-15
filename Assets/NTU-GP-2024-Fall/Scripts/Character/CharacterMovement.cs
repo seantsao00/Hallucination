@@ -22,8 +22,13 @@ public class CharacterMovement : MonoBehaviour {
     }
 
     void Update() {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        if (character.IsControllable) {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+        } else {
+            movement.x = movement.y = 0;
+        }
+        
 
         // climb
         if (!character.IsClimbing && character.OverlappedClimbalbe != null && movement.y != 0) {
@@ -34,7 +39,7 @@ public class CharacterMovement : MonoBehaviour {
 
         // normal move
         if (!character.IsClimbing) {
-            if (Input.GetButtonDown("Jump") && character.IsGrounded) {
+            if (Input.GetButtonDown("Jump") && character.IsGrounded && character.IsControllable) {
                 character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
                 if (jumpSound != null) {
                     audioSource.PlayOneShot(jumpSound);  // Play the jump sound effect

@@ -4643,7 +4643,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.995893, y: 11.250001, z: -10}
+  m_LocalPosition: {x: -19.999987, y: 11.25, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -6710,7 +6710,6 @@ GameObject:
   - component: {fileID: 808138753}
   - component: {fileID: 808138752}
   - component: {fileID: 808138754}
-  - component: {fileID: 808138755}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -6787,19 +6786,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &808138755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 808138750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d96261be12a6f55438a59d17450f55f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tipText: {fileID: 0}
 --- !u!1001 &810021754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9961,6 +9947,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1757817320}
     m_Modifications:
+    - target: {fileID: 162886864788211761, guid: 5b07c0b65e11c5a4c804dc80dae62692, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 40.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 162886864788211761, guid: 5b07c0b65e11c5a4c804dc80dae62692, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 22.5001
+      objectReference: {fileID: 0}
     - target: {fileID: 162886864788211761, guid: 5b07c0b65e11c5a4c804dc80dae62692, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -16168,6 +16162,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647589227}
     m_Modifications:
+    - target: {fileID: 162886864788211761, guid: 5b07c0b65e11c5a4c804dc80dae62692, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 40.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 162886864788211761, guid: 5b07c0b65e11c5a4c804dc80dae62692, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 22.5001
+      objectReference: {fileID: 0}
     - target: {fileID: 162886864788211761, guid: 5b07c0b65e11c5a4c804dc80dae62692, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

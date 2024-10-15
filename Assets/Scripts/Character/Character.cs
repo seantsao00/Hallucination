@@ -51,6 +51,8 @@ public class Character : MonoBehaviour {
         }
     }
 
+    public bool isDead = false;
+
     void Awake() {
         groundLayerMask = LayerMask.GetMask("Ground");
         climbableLayerMask = LayerMask.GetMask("Climbable");

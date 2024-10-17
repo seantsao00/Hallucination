@@ -3,8 +3,6 @@ using Cinemachine;
 using System.Collections;
 
 public class WorldSwitchManager : MonoBehaviour {
-    public CinemachineVirtualCamera VirtualCameraFairy;
-    public CinemachineVirtualCamera VirtualCameraBear;
     public GameObject WorldFairyEnvironment;
     public GameObject WorldBearEnvironment;
     public CanvasGroup FadeCanvasGroup;
@@ -38,17 +36,11 @@ public class WorldSwitchManager : MonoBehaviour {
     void ActivateWorldFairy() {
         WorldFairyEnvironment.SetActive(true);
         WorldBearEnvironment.SetActive(false);
-
-        VirtualCameraFairy.Priority = 10;
-        VirtualCameraBear.Priority = 0;
     }
 
     void ActivateWorldBear() {
         WorldFairyEnvironment.SetActive(false);
         WorldBearEnvironment.SetActive(true);
-
-        VirtualCameraFairy.Priority = 0;
-        VirtualCameraBear.Priority = 10;
     }
 
     public void Enable() {

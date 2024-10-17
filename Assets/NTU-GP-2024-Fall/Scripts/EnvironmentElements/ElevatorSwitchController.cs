@@ -6,7 +6,7 @@ public class ElevatorSwitchController : SwitchController
     public Transform targetPosition; // The position to move the player to
     public float moveSpeed = 2f; // Speed at which the player moves to the target
     public WorldSwitchManager worldSwitchManager;
-
+    public TipManager tipManager;
     bool isMovingCharacter = false; // To prevent multiple coroutines from starting
     Transform characterTransform; // Reference to the player's transform
 
@@ -25,6 +25,7 @@ public class ElevatorSwitchController : SwitchController
     {
         if (!isMovingCharacter)
         {
+            tipManager.ShowTip(false, "");
             // Start moving the player to the target position
             StartCoroutine(MoveCharacterToTarget());
         }
@@ -78,6 +79,7 @@ public class ElevatorSwitchController : SwitchController
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other); // Call the base class method
+        tipManager.ShowTip(true, "Press E to use the elevator");
 
         if (other.CompareTag("Player"))
         {
@@ -88,6 +90,7 @@ public class ElevatorSwitchController : SwitchController
 
     protected override void OnTriggerExit2D(Collider2D other)
     {
+        tipManager.ShowTip(false, "");
         base.OnTriggerExit2D(other); // Call the base class method
 
         if (other.CompareTag("Player"))

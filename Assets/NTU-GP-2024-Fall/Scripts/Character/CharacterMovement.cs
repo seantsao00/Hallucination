@@ -22,7 +22,7 @@ public class CharacterMovement : MonoBehaviour {
     }
 
     void Update() {
-        if (character.IsControllable) {
+        if (!character.IsTransporting) {
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
         } else {
@@ -39,7 +39,7 @@ public class CharacterMovement : MonoBehaviour {
 
         // normal move
         if (!character.IsClimbing) {
-            if (Input.GetButtonDown("Jump") && character.IsGrounded && character.IsControllable) {
+            if (Input.GetButtonDown("Jump") && character.IsGrounded && !character.IsTransporting) {
                 character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
                 if (jumpSound != null) {
                     audioSource.PlayOneShot(jumpSound);  // Play the jump sound effect

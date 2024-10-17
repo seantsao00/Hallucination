@@ -30,21 +30,28 @@ public class Character : MonoBehaviour {
     private float normalGravityScale;
 
     bool isClimbing;
-    bool isControllable;
+    bool isTransporting;
     public bool IsClimbing {
         get { return isClimbing; }
         set { SetClimbingState(value); }
     }
-    public bool IsControllable {
-        get { return isControllable; }
-        set { SetControllableState(value); }
+    public bool IsTransporting {
+        get { return isTransporting; }
+        set { SetTransportingState(value); }
     }
 
     private void SetSittingState(bool sitting) {
         isSittingOnBench = sitting;
     }
-    private void SetControllableState(bool controllable) {
-        isControllable = controllable;
+    private void SetTransportingState(bool transporting) {
+        isTransporting = transporting;
+        if (isTransporting) {
+            gameObject.layer = aheadGroundLayer;
+            Rb.gravityScale = 0;
+        } else {
+            gameObject.layer = LayerMask.NameToLayer("Default");
+            Rb.gravityScale = normalGravityScale;
+        }
     }
 
     private void SetClimbingState(bool climbing) {
@@ -69,7 +76,7 @@ public class Character : MonoBehaviour {
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-        isControllable = true;
+        isTransporting = false;
         normalGravityScale = Rb.gravityScale;
     }
 

@@ -35,7 +35,7 @@ public class CharacterDash : MonoBehaviour {
         if (horizontal != 0) facingDirection.x = horizontal;
         if (character.IsGrounded) isDashReset = true;
 
-        if (!isDashCooling && Input.GetButtonDown("Dash") && isDashReset && !character.IsClimbing && character.IsControllable) {
+        if (!isDashCooling && Input.GetButtonDown("Dash") && isDashReset && !character.IsClimbing && !character.IsTransporting) {
             // Play dash sound effect
             if (dashSound != null) {
                 audioSource.PlayOneShot(dashSound);  // Play the dash sound effect

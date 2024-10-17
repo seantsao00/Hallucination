@@ -5,15 +5,16 @@ public class ElevatorSwitchController : SwitchController
 {
     public Transform targetPosition; // The position to move the player to
     public float moveSpeed = 2f; // Speed at which the player moves to the target
+    public WorldSwitchManager worldSwitchManager;
 
-    private bool isMovingPlayer = false; // To prevent multiple coroutines from starting
-    private Transform playerTransform; // Reference to the player's transform
+    bool isMovingCharacter = false; // To prevent multiple coroutines from starting
+    Transform characterTransform; // Reference to the player's transform
 
-    private Rigidbody2D playerRigidbody; // Reference to the player's Rigidbody2D
-    private bool originalIsKinematic; // To store the player's original isKinematic state
+    Rigidbody2D characterRigidbody; // Reference to the player's Rigidbody2D
+    bool originalIsKinematic; // To store the player's original isKinematic state
 
     // Reference to the player's controller script
-    private Character player;
+    Character character;
 
     protected override void Update()
     {
@@ -22,49 +23,36 @@ public class ElevatorSwitchController : SwitchController
 
     protected override void OnSwitchActivated()
     {
-        if (!isMovingPlayer)
+        if (!isMovingCharacter)
         {
             // Start moving the player to the target position
-            StartCoroutine(MovePlayerToTarget());
+            StartCoroutine(MoveCharacterToTarget());
         }
     }
 
     // Coroutine to move the player to the target position
-    private IEnumerator MovePlayerToTarget()
+    private IEnumerator MoveCharacterToTarget()
     {
-        isMovingPlayer = true;
-
+        isMovingCharacter = true;
+        worldSwitchManager.Disable();
         // Get the player's Rigidbody2D component
-        if (playerTransform != null)
+        if (characterTransform != null)
         {
-            
-            playerRigidbody = playerTransform.GetComponent<Rigidbody2D>();
-            if (playerRigidbody != null)
+            if (character != null)
             {
-                // Store the original isKinematic state
-                originalIsKinematic = playerRigidbody.isKinematic;
-
-                // Set isKinematic to true to disable physics interaction
-                playerRigidbody.isKinematic = true;
+                character.IsTransporting = true;
             }
-            
-
-            // Get the PlayerController component
-            player = playerTransform.GetComponent<Character>();
-            if (player != null)
+            else
             {
-                player.IsControllable = false;
-            } else {
                 print("Not found");
             }
         }
-        print(player.IsControllable);
         // While the player hasn't reached the target position
-        while (Vector3.Distance(playerTransform.position, targetPosition.position) > 0.1f)
+        while (Vector3.Distance(characterTransform.position, targetPosition.position) > 0.1f)
         {
             // Move the player towards the target position
-            playerTransform.position = Vector3.MoveTowards(
-                playerTransform.position,
+            characterTransform.position = Vector3.MoveTowards(
+                characterTransform.position,
                 targetPosition.position,
                 moveSpeed * Time.deltaTime
             );
@@ -72,28 +60,19 @@ public class ElevatorSwitchController : SwitchController
         }
 
         // Ensure the player is exactly at the target position
-        playerTransform.position = targetPosition.position;
-
-        // Restore the player's original isKinematic state
-        
-        if (playerRigidbody != null)
-        {
-            playerRigidbody.isKinematic = originalIsKinematic;
-        }
-        
-
-        
-        if (player != null)
+        characterTransform.position = targetPosition.position;
+        if (character != null)
         {
             // Set the player's climbing state back to false
-            player.IsControllable = true;
+            character.IsTransporting = false;
         }
-        print(player.IsControllable);
+
 
         // Change the switch color back to the original color
         spriteRenderer.color = originalColor;
 
-        isMovingPlayer = false;
+        isMovingCharacter = false;
+        worldSwitchManager.Enable();
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
@@ -102,7 +81,8 @@ public class ElevatorSwitchController : SwitchController
 
         if (other.CompareTag("Player"))
         {
-            playerTransform = other.transform; // Cache the player's transform
+            character = other.GetComponent<Character>();
+            characterTransform = other.transform; // Cache the player's transform
         }
     }
 

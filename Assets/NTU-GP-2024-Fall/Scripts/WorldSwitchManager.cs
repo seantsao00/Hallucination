@@ -10,13 +10,14 @@ public class WorldSwitchManager : MonoBehaviour {
     public CanvasGroup FadeCanvasGroup;
 
     private bool isInWorldFairy = true;
+    private bool disabled = false;
 
     void Start() {
         ActivateWorldFairy();
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.X)) {
+        if (Input.GetKeyDown(KeyCode.X) && !disabled) {
             StartCoroutine(SwitchWorldsWithFade());
         }
     }
@@ -50,6 +51,14 @@ public class WorldSwitchManager : MonoBehaviour {
         VirtualCameraBear.Priority = 10;
     }
 
+    public void Enable() {
+        disabled = false;
+    }
+
+    public void Disable() {
+        disabled = true;
+    }
+
     IEnumerator FadeOut() {
         float fadeDuration = 0.4f;
         float fadeSpeed = 1f / fadeDuration;
@@ -71,4 +80,6 @@ public class WorldSwitchManager : MonoBehaviour {
         }
         FadeCanvasGroup.alpha = 0;
     }
+
+    
 }

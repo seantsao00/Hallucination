@@ -34,7 +34,7 @@ public class ElevatorSwitchController : SwitchController {
         // Get the player's Rigidbody2D component
         if (characterTransform != null) {
             if (character != null) {
-                character.CurrentState = new CharacterState.Transporting(character);
+                character.CurrentState = new CharacterState.Transporting();
             } else {
                 print("Not found");
             }
@@ -54,7 +54,7 @@ public class ElevatorSwitchController : SwitchController {
         characterTransform.position = targetPosition.position;
         if (character != null) {
             // Set the player's climbing state back to false
-            character.CurrentState = new CharacterState.Free(character);
+            character.CurrentState = new CharacterState.Free();
         }
 
 

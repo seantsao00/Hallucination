@@ -11,23 +11,17 @@ using UnityEngine.Timeline;
 
 public class CharacterState {
     public interface ICharacterState {
-        void HandleStateChange(bool isActive);
+        void HandleStateChange(Character character, bool isActive);
     }
 
     public abstract class CharacterStateBase : ICharacterState {
-        protected Character character;
-        protected CharacterStateBase(Character character) { this.character = character; }
-        public virtual void HandleStateChange(bool isActive) {}
+        public virtual void HandleStateChange(Character character, bool isActive) {}
     }
 
-    public class Free : CharacterStateBase {
-        public Free(Character character) : base(character) {}
-    }
+    public class Free : CharacterStateBase {}
 
     public class Climbing : CharacterStateBase {
-        public Climbing(Character character) : base(character) {}
-
-        public override void HandleStateChange(bool isActive) {
+        public override void HandleStateChange(Character character, bool isActive) {
             if (isActive) {
                 character.gameObject.layer = LayerMask.NameToLayer("AheadGround");
                 character.Rb.gravityScale = 0;
@@ -39,22 +33,14 @@ public class CharacterState {
         }
     }
 
-    public class GrabbingMovable : CharacterStateBase {
-        public GrabbingMovable(Character character) : base(character) {}
-    }
+    public class GrabbingMovable : CharacterStateBase {}
 
-    public class Dashing : CharacterStateBase {
-        public Dashing(Character character) : base(character) {}
-    }
+    public class Dashing : CharacterStateBase {}
 
-    public class SittingOnBench : CharacterStateBase {
-        public SittingOnBench(Character character) : base(character) {}
-    }
+    public class SittingOnBench : CharacterStateBase {}
 
     public class Transporting : CharacterStateBase {
-        public Transporting(Character character) : base(character) {}
-
-        public override void HandleStateChange(bool isActive) {
+        public override void HandleStateChange(Character character, bool isActive) {
             if (isActive) {
                 character.gameObject.layer = LayerMask.NameToLayer("AheadGround");
                 character.Rb.gravityScale = 0;

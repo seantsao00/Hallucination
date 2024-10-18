@@ -46,13 +46,13 @@ public class Bench : MonoBehaviour {
 
     private void SitOnBench() {
         IsBeingSat = true;
-        character.CurrentState = new CharacterState.SittingOnBench(character);
+        character.CurrentState = new CharacterState.SittingOnBench();
         tipText.enabled = false;
     }
 
     private void LeaveBench() {
         IsBeingSat = false;
-        character.CurrentState = new CharacterState.Free(character);
+        character.CurrentState = new CharacterState.Free();
         tipText.enabled = true;
     }
 }

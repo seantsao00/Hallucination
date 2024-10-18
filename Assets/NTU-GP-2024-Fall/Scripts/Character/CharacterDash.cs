@@ -45,7 +45,7 @@ public class CharacterDash : MonoBehaviour {
 
     IEnumerator Dash() {
         isDashCooling = true;
-        character.CurrentState = new CharacterState.Dashing(character);
+        character.CurrentState = new CharacterState.Dashing();
         isDashReset = false;
 
         float originalGravity = character.Rb.gravityScale;
@@ -56,7 +56,7 @@ public class CharacterDash : MonoBehaviour {
 
         yield return new WaitForSeconds(dashDuration);
 
-        character.CurrentState = new CharacterState.Free(character);
+        character.CurrentState = new CharacterState.Free();
 
         character.Rb.gravityScale = originalGravity;
 

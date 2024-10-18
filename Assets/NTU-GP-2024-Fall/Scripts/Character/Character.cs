@@ -52,8 +52,8 @@ public class Character : MonoBehaviour {
 
     void SetCurrentState(CharacterState.ICharacterState newState) {
         if (newState == currentState) return;
-        currentState?.HandleStateChange(false);
-        newState?.HandleStateChange(true);
+        currentState?.HandleStateChange(this, false);
+        newState?.HandleStateChange(this, true);
         currentState = newState;
     }
 
@@ -89,7 +89,7 @@ public class Character : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         NormalGravityScale = Rb.gravityScale;
-        CurrentState = new CharacterState.Free(this);
+        CurrentState = new CharacterState.Free();
     }
 
     void Update() {

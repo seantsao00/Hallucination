@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CharacterInteract : MonoBehaviour {
     Character character;
-    [SerializeField] float grabbingStoneSpeed = 2f;
 
     void Awake() {}
     void Start() {
@@ -16,9 +15,11 @@ public class CharacterInteract : MonoBehaviour {
         Stone stone = movableGameObject.GetComponent<Stone>();
         if (stone != null) {
             if (Input.GetButton("Interact")) {
-                float horizontalGrabDirection = 2*Input.GetAxisRaw("Horizontal");
+                character.CurrentState = new CharacterState.GrabbingMovable();
+                float horizontalGrabDirection = character.GrabbingStoneSpeed * Input.GetAxisRaw("Horizontal");
                 stone.HorizontalMove(horizontalGrabDirection);
             } else {
+                character.CurrentState = new CharacterState.Free();
                 stone.HorizontalMove(0);
             }
             return;

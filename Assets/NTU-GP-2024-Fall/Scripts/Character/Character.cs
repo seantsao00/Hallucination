@@ -37,7 +37,6 @@ public class Character : MonoBehaviour {
     }
 
     LayerMask groundLayerMask, climbableLayerMask, movableMask;
-    int aheadGroundLayer;
 
     private Rigidbody2D rb;
     public Rigidbody2D Rb { get { return rb; } }
@@ -45,9 +44,12 @@ public class Character : MonoBehaviour {
 
     [HideInInspector] public Collider2D OverlappedClimbalbe;
 
-    public float NormalGravityScale;
-
-    public bool isDead = false;
+    [HideInInspector] public bool IsDead = false;
+    [HideInInspector] public float NormalGravityScale;
+    public float NormalMoveSpeed = 5f;
+    public float GrabbingStoneSpeed = 2f;
+    public float JumpPower = 10f;
+    [HideInInspector] public float CurrentSpeed;
 
 
     void SetCurrentState(CharacterState.ICharacterState newState) {
@@ -74,6 +76,7 @@ public class Character : MonoBehaviour {
             Stone stone = facedMovableGameObject?.GetComponent<Stone>();
             if (stone != null) {
                 stone.HorizontalMove(0);
+                CurrentState = new CharacterState.Free();
             }
         }
         facedMovableGameObject = gameObject;
@@ -83,13 +86,13 @@ public class Character : MonoBehaviour {
         groundLayerMask = LayerMask.GetMask("Ground");
         climbableLayerMask = LayerMask.GetMask("Climbable");
         movableMask = LayerMask.GetMask("Movable");
-        aheadGroundLayer = LayerMask.NameToLayer("AheadGround");
     }
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         NormalGravityScale = Rb.gravityScale;
         CurrentState = new CharacterState.Free();
+        CurrentSpeed = NormalMoveSpeed;
     }
 
     void Update() {

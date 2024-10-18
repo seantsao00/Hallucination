@@ -8,11 +8,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
 
 public class CharacterMovement : MonoBehaviour {
-    [SerializeField] float normalMoveSpeed = 5f;
-    [SerializeField] float jumpPower = 10f;
-
-    public float CurrentSpeed = 5f;
-
     Character character;
     Vector2 movement;
 
@@ -22,7 +17,6 @@ public class CharacterMovement : MonoBehaviour {
     void Start() {
         audioSource = GetComponent<AudioSource>();  // Get the AudioSource component
         character = GetComponent<Character>();
-        CurrentSpeed = normalMoveSpeed;
     }
 
     void Update() {
@@ -48,7 +42,7 @@ public class CharacterMovement : MonoBehaviour {
         // normal move
         if (character.CurrentState is CharacterState.Free || character.CurrentState is CharacterState.Dashing) {
             if (Input.GetButtonDown("Jump") && character.IsGrounded) {
-                character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
+                character.Rb.velocity = new Vector2(character.Rb.velocity.x, character.JumpPower);
                 if (jumpSound != null) {
                     audioSource.PlayOneShot(jumpSound);  // Play the jump sound effect
                 }
@@ -60,10 +54,10 @@ public class CharacterMovement : MonoBehaviour {
         if (character.CurrentState is not CharacterState.Dashing
             && character.CurrentState is not CharacterState.Climbing
         ) {
-            character.Rb.velocity = new Vector2(movement.x * CurrentSpeed, character.Rb.velocity.y);
+            character.Rb.velocity = new Vector2(movement.x * character.CurrentSpeed, character.Rb.velocity.y);
         }
         if (character.CurrentState is CharacterState.Climbing) {
-            character.Rb.velocity = new Vector2(0, movement.y * CurrentSpeed);
+            character.Rb.velocity = new Vector2(0, movement.y * character.CurrentSpeed);
         }
     }
 

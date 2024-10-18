@@ -30,7 +30,7 @@ public class CharacterDeath : MonoBehaviour {
         // }
 
         // Optional: Disable character movement or other components
-        GetComponent<Character>().isDead = true;
+        GetComponent<Character>().IsDead = true;
 
         // Reset the scene after a short delay
         Invoke(nameof(ResetScene), deathDelay);

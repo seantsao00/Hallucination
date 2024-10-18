@@ -33,7 +33,15 @@ public class CharacterState {
         }
     }
 
-    public class GrabbingMovable : CharacterStateBase {}
+    public class GrabbingMovable : CharacterStateBase {
+        public override void HandleStateChange(Character character, bool isActive) {
+            if (isActive) {
+                character.CurrentSpeed = character.GrabbingStoneSpeed;
+            } else {
+                character.CurrentSpeed = character.NormalMoveSpeed;
+            }
+        }
+    }
 
     public class Dashing : CharacterStateBase {}
 

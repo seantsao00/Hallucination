@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class CharacterDeath : MonoBehaviour {
     // public AudioClip deathSound;
-    // public ParticleSystem deathParticles;
+    public ParticleSystem deathParticles;
     public float deathDelay = 2.0f;
     bool isDead = false;
     AudioSource audioSource;
@@ -26,9 +26,9 @@ public class CharacterDeath : MonoBehaviour {
         // }
 
         // Optional: Play death particle effects
-        // if (deathParticles != null) {
-        //     Instantiate(deathParticles, transform.position, Quaternion.identity);
-        // }
+        if (deathParticles != null) {
+            Instantiate(deathParticles, transform.position, Quaternion.identity).Play();
+        }
 
         // Disable character movement or other components
         GetComponent<Character>().IsDead = true;

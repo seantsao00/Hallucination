@@ -20,6 +20,7 @@ public class CharacterDeath : MonoBehaviour {
     void Die() {
         isDead = true;
 
+        // Optional: Play death sound
         // if (deathSound != null) {
         //     audioSource.PlayOneShot(deathSound);
         // }
@@ -29,7 +30,7 @@ public class CharacterDeath : MonoBehaviour {
         //     Instantiate(deathParticles, transform.position, Quaternion.identity);
         // }
 
-        // Optional: Disable character movement or other components
+        // Disable character movement or other components
         GetComponent<Character>().IsDead = true;
 
         // Reset the scene after a short delay
@@ -39,5 +40,12 @@ public class CharacterDeath : MonoBehaviour {
     void ResetScene() {
         // Reload the current scene to reset everything
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Detect when the character falls into the DeathZone
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.CompareTag("DeathZone")) {
+            TakeDamage();
+        }
     }
 }

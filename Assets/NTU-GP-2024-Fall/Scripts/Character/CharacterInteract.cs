@@ -4,7 +4,7 @@ using UnityEngine;
 public class CharacterInteract : MonoBehaviour {
     Character character;
 
-    void Awake() {}
+    void Awake() { }
     void Start() {
         character = GetComponent<Character>();
     }

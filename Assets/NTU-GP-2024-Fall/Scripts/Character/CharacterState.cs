@@ -15,10 +15,10 @@ public class CharacterState {
     }
 
     public abstract class CharacterStateBase : ICharacterState {
-        public virtual void HandleStateChange(Character character, bool isActive) {}
+        public virtual void HandleStateChange(Character character, bool isActive) { }
     }
 
-    public class Free : CharacterStateBase {}
+    public class Free : CharacterStateBase { }
 
     public class Climbing : CharacterStateBase {
         public override void HandleStateChange(Character character, bool isActive) {
@@ -43,9 +43,9 @@ public class CharacterState {
         }
     }
 
-    public class Dashing : CharacterStateBase {}
+    public class Dashing : CharacterStateBase { }
 
-    public class SittingOnBench : CharacterStateBase {}
+    public class SittingOnBench : CharacterStateBase { }
 
     public class Transporting : CharacterStateBase {
         public override void HandleStateChange(Character character, bool isActive) {

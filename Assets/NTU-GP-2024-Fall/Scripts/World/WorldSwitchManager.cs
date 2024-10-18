@@ -1,14 +1,16 @@
 using UnityEngine;
-using Cinemachine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class WorldSwitchManager : MonoBehaviour {
     public GameObject WorldFairyEnvironment;
     public GameObject WorldBearEnvironment;
     public CanvasGroup FadeCanvasGroup;
+    public UnityEvent OnWorldSwitch;
 
     private bool isInWorldFairy = true;
     private bool disabled = false;
+
 
     void Start() {
         ActivateWorldFairy();
@@ -23,6 +25,7 @@ public class WorldSwitchManager : MonoBehaviour {
     IEnumerator SwitchWorldsWithFade() {
         yield return StartCoroutine(FadeOut());
 
+        OnWorldSwitch?.Invoke();
         isInWorldFairy = !isInWorldFairy;
         if (isInWorldFairy) {
             ActivateWorldFairy();
@@ -73,5 +76,5 @@ public class WorldSwitchManager : MonoBehaviour {
         FadeCanvasGroup.alpha = 0;
     }
 
-    
+
 }

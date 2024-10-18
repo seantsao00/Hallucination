@@ -82,6 +82,37 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &7149490774171609328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1731885650370004280}
+  m_Layer: 0
+  m_Name: FrontCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1731885650370004280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149490774171609328}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1431853418619855094}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4132095499825998733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90,6 +121,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3669802901798649802, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
+      propertyPath: faceCheck
+      value: 
+      objectReference: {fileID: 1731885650370004280}
     - target: {fileID: -3669802901798649802, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       propertyPath: groundCheck
       value: 
@@ -145,6 +180,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3064367424361827195, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1731885650370004280}
     - targetCorrespondingSourceObject: {fileID: 3064367424361827195, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       insertIndex: -1
       addedObject: {fileID: 789414997237792789}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Diagnostics.Tracing;
 using Unity.VisualScripting.Dependencies.NCalc;
@@ -7,8 +8,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
 
 public class CharacterMovement : MonoBehaviour {
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float normalMoveSpeed = 5f;
     [SerializeField] float jumpPower = 10f;
+
+    public float CurrentSpeed = 5f;
 
     Character character;
     Vector2 movement;
@@ -19,27 +22,32 @@ public class CharacterMovement : MonoBehaviour {
     void Start() {
         audioSource = GetComponent<AudioSource>();  // Get the AudioSource component
         character = GetComponent<Character>();
+        CurrentSpeed = normalMoveSpeed;
     }
 
     void Update() {
-        if (!character.IsTransporting) {
+        if (character.CurrentState is not CharacterState.Transporting) {
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
         } else {
             movement.x = movement.y = 0;
         }
-        
+
 
         // climb
-        if (!character.IsClimbing && character.OverlappedClimbalbe != null && movement.y != 0) {
-            character.IsClimbing = true;
+        if (character.CurrentState is CharacterState.Free && character.OverlappedClimbalbe != null && movement.y != 0) {
+            character.CurrentState = new CharacterState.Climbing(character);
         }
-        if (character.IsClimbing && character.IsGrounded && movement.y == 0) character.IsClimbing = false;
-        if (character.IsClimbing && character.OverlappedClimbalbe == null) character.IsClimbing = false;
+        if (character.CurrentState is CharacterState.Climbing) {
+            if (character.IsGrounded && movement.y == 0)
+                character.CurrentState = new CharacterState.Free(character);
+            if (character.OverlappedClimbalbe == null)
+                character.CurrentState = new CharacterState.Free(character);
+        }
 
         // normal move
-        if (!character.IsClimbing) {
-            if (Input.GetButtonDown("Jump") && character.IsGrounded && !character.IsTransporting) {
+        if (character.CurrentState is CharacterState.Free || character.CurrentState is CharacterState.Dashing) {
+            if (Input.GetButtonDown("Jump") && character.IsGrounded) {
                 character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
                 if (jumpSound != null) {
                     audioSource.PlayOneShot(jumpSound);  // Play the jump sound effect
@@ -49,11 +57,13 @@ public class CharacterMovement : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (!character.IsDashing && !character.IsClimbing) {
-            character.Rb.velocity = new Vector2(movement.x * moveSpeed, character.Rb.velocity.y);
+        if (character.CurrentState is not CharacterState.Dashing
+            && character.CurrentState is not CharacterState.Climbing
+        ) {
+            character.Rb.velocity = new Vector2(movement.x * CurrentSpeed, character.Rb.velocity.y);
         }
-        if (character.IsClimbing) {
-            character.Rb.velocity = new Vector2(0, movement.y * moveSpeed);
+        if (character.CurrentState is CharacterState.Climbing) {
+            character.Rb.velocity = new Vector2(0, movement.y * CurrentSpeed);
         }
     }
 

@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Threading;
 using Unity.VisualScripting.Dependencies.NCalc;
@@ -7,86 +9,102 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
 
+
 public class Character : MonoBehaviour {
-    [Header("GroundCheck")]
+    CharacterState.ICharacterState currentState;
+    public CharacterState.ICharacterState CurrentState {
+        get { return currentState; }
+        set { SetCurrentState(value); }
+    }
+
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundCheckRadius = 0.2f;
-    LayerMask groundLayerMask, climbableLayerMask;
+
+    Vector2 facingDirection = new Vector2(1, 0);
+    public Vector2 FacingDirection {
+        get { return facingDirection; }
+        set { SetFacingDirection(value); }
+    }
+    [SerializeField] Transform faceCheck;
+    [SerializeField] float faceCheckRadius = 0.2f;
+    GameObject facedMovableGameObject;
+    /// <summary>
+    /// Faced movable object within character's interacting range
+    /// </summary>
+    public GameObject FacedMovableGameObject {
+        get { return facedMovableGameObject; }
+        set { SetFacedMovableObject(value); }
+    }
+
+    LayerMask groundLayerMask, climbableLayerMask, movableMask;
     int aheadGroundLayer;
 
     private Rigidbody2D rb;
     public Rigidbody2D Rb { get { return rb; } }
     [HideInInspector] public bool IsGrounded = true;
-    bool isSittingOnBench = false;
-    public bool IsSittingOnBench {
-        get { return isSittingOnBench; }
-        set { SetSittingState(value); }
-    }
 
     [HideInInspector] public Collider2D OverlappedClimbalbe;
 
-    [HideInInspector] public bool IsDashing = false;
-
-    private float normalGravityScale;
-
-    bool isClimbing;
-    bool isTransporting;
-    public bool IsClimbing {
-        get { return isClimbing; }
-        set { SetClimbingState(value); }
-    }
-    public bool IsTransporting {
-        get { return isTransporting; }
-        set { SetTransportingState(value); }
-    }
-
-    private void SetSittingState(bool sitting) {
-        isSittingOnBench = sitting;
-    }
-    private void SetTransportingState(bool transporting) {
-        isTransporting = transporting;
-        if (isTransporting) {
-            gameObject.layer = aheadGroundLayer;
-            Rb.gravityScale = 0;
-        } else {
-            gameObject.layer = LayerMask.NameToLayer("Default");
-            Rb.gravityScale = normalGravityScale;
-        }
-    }
-
-    private void SetClimbingState(bool climbing) {
-        isClimbing = climbing;
-        if (isClimbing) {
-            gameObject.layer = aheadGroundLayer;
-            Rb.gravityScale = 0;
-            Rb.velocity = new Vector2(0, Rb.velocity.y);
-        } else {
-            gameObject.layer = LayerMask.NameToLayer("Default");
-            Rb.gravityScale = normalGravityScale;
-        }
-    }
+    public float NormalGravityScale;
 
     public bool isDead = false;
+
+
+    void SetCurrentState(CharacterState.ICharacterState newState) {
+        if (newState == currentState) return;
+        currentState?.HandleStateChange(false);
+        newState?.HandleStateChange(true);
+        currentState = newState;
+    }
+
+    private void SetFacingDirection(Vector2 direction) {
+        if (direction.x * facingDirection.x < 0) {
+            if (direction.x * facingDirection.x < 0) {
+                // Flip the faceCheck position along the X-axis relative to the character
+                Vector3 currentLocalPosition = faceCheck.localPosition;
+                currentLocalPosition.x = -currentLocalPosition.x;
+                faceCheck.localPosition = currentLocalPosition;
+            }
+        }
+        facingDirection = direction;
+    }
+
+    private void SetFacedMovableObject(GameObject gameObject) {
+        if (gameObject != facedMovableGameObject) {
+            Stone stone = facedMovableGameObject?.GetComponent<Stone>();
+            if (stone != null) {
+                stone.HorizontalMove(0);
+            }
+        }
+        facedMovableGameObject = gameObject;
+    }
 
     void Awake() {
         groundLayerMask = LayerMask.GetMask("Ground");
         climbableLayerMask = LayerMask.GetMask("Climbable");
+        movableMask = LayerMask.GetMask("Movable");
         aheadGroundLayer = LayerMask.NameToLayer("AheadGround");
     }
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-        isTransporting = false;
-        normalGravityScale = Rb.gravityScale;
+        NormalGravityScale = Rb.gravityScale;
+        CurrentState = new CharacterState.Free(this);
     }
 
     void Update() {
-        IsGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayerMask);
+        IsGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayerMask | movableMask);
+        FacedMovableGameObject = Physics2D.OverlapCircle(faceCheck.position, faceCheckRadius, movableMask)?.gameObject;
         OverlappedClimbalbe = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, climbableLayerMask);
+        if (CurrentState is not CharacterState.GrabbingMovable) {
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            if (horizontal != 0) FacingDirection = new(horizontal, 0);
+        }
     }
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        Gizmos.DrawWireSphere(faceCheck.position, faceCheckRadius);
     }
 }

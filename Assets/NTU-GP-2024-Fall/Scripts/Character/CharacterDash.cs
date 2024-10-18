@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,7 +19,6 @@ public class CharacterDash : MonoBehaviour {
 
     bool isDashCooling = false;
     bool isDashReset = true;
-    Vector2 facingDirection = new Vector2(1, 0);
     TrailRenderer dashTrailRenderer;
 
     AudioSource audioSource;  // Reference to AudioSource component
@@ -31,11 +31,10 @@ public class CharacterDash : MonoBehaviour {
     }
 
     void Update() {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        if (horizontal != 0) facingDirection.x = horizontal;
         if (character.IsGrounded) isDashReset = true;
+        if (character.CurrentState is not CharacterState.Free) return;
 
-        if (!isDashCooling && Input.GetButtonDown("Dash") && isDashReset && !character.IsClimbing && !character.IsTransporting) {
+        if (!isDashCooling && Input.GetButtonDown("Dash")) {
             // Play dash sound effect
             if (dashSound != null) {
                 audioSource.PlayOneShot(dashSound);  // Play the dash sound effect
@@ -46,18 +45,18 @@ public class CharacterDash : MonoBehaviour {
 
     IEnumerator Dash() {
         isDashCooling = true;
-        character.IsDashing = true;
+        character.CurrentState = new CharacterState.Dashing(character);
         isDashReset = false;
 
         float originalGravity = character.Rb.gravityScale;
         character.Rb.gravityScale = dashGravityScale * originalGravity;
-        character.Rb.velocity = new Vector2(facingDirection.x * dashSpeed, 0);
+        character.Rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
 
         dashTrailRenderer.emitting = true;
 
         yield return new WaitForSeconds(dashDuration);
 
-        character.IsDashing = false;
+        character.CurrentState = new CharacterState.Free(character);
 
         character.Rb.gravityScale = originalGravity;
 

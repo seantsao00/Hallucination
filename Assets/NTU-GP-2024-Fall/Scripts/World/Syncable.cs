@@ -4,19 +4,19 @@ public class Syncable : MonoBehaviour {
     private WorldSwitchManager worldSwitchManager;
     public GameObject SyncedObject;
 
-    void Awake() {
+    protected virtual void Awake() {
         worldSwitchManager = FindAnyObjectByType<WorldSwitchManager>();
     }
 
-    private void OnEnable() {
+    protected void OnEnable() {
         worldSwitchManager.OnWorldSwitch.AddListener(SyncState);
     }
 
-    private void OnDisable() {
+    protected void OnDisable() {
         worldSwitchManager.OnWorldSwitch.RemoveListener(SyncState);
     }
 
-    public void SyncState() {
+    public virtual void SyncState() {
         SyncedObject.transform.localPosition = transform.localPosition;
     }
 }

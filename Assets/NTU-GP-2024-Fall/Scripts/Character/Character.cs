@@ -50,6 +50,8 @@ public class Character : MonoBehaviour {
     public float JumpPower = 10f;
     [HideInInspector] public float CurrentSpeed;
 
+    SpriteRenderer spriteRenderer;
+
 
     void SetCurrentState(CharacterState.ICharacterState newState) {
         if (newState == currentState) return;
@@ -67,6 +69,7 @@ public class Character : MonoBehaviour {
                 faceCheck.localPosition = currentLocalPosition;
             }
         }
+        spriteRenderer.flipX = direction.x > 0;
         facingDirection = direction;
     }
 
@@ -89,6 +92,7 @@ public class Character : MonoBehaviour {
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         NormalGravityScale = Rb.gravityScale;
         CurrentState = new CharacterState.Free();
         CurrentSpeed = NormalMoveSpeed;

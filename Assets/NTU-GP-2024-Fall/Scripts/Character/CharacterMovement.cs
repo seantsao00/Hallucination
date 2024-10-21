@@ -25,7 +25,11 @@ public class CharacterMovement : MonoBehaviour {
         } else {
             movement.x = movement.y = 0;
         }
-
+        if(movement.x != 0) {
+            GetComponent<Animator>().SetBool("Movement", true);
+        } else {
+            GetComponent<Animator>().SetBool("Movement", false);
+        }
 
         // climb
         if (character.CurrentState is CharacterState.Free && character.OverlappedClimbalbe != null && movement.y != 0) {

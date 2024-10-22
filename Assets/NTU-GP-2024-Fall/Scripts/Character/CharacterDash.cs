@@ -18,7 +18,6 @@ public class CharacterDash : MonoBehaviour {
     Character character;
 
     bool isDashCooling = false;
-    bool isDashReset = true;
     TrailRenderer dashTrailRenderer;
 
     AudioSource audioSource;  // Reference to AudioSource component
@@ -31,7 +30,6 @@ public class CharacterDash : MonoBehaviour {
     }
 
     void Update() {
-        if (character.IsGrounded) isDashReset = true;
         if (character.CurrentState is not CharacterState.Free) return;
 
         if (!isDashCooling && Input.GetButtonDown("Dash")) {
@@ -46,7 +44,6 @@ public class CharacterDash : MonoBehaviour {
     IEnumerator Dash() {
         isDashCooling = true;
         character.CurrentState = new CharacterState.Dashing();
-        isDashReset = false;
 
         float originalGravity = character.Rb.gravityScale;
         character.Rb.gravityScale = dashGravityScale * originalGravity;

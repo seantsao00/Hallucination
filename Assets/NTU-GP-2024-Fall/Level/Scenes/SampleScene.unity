@@ -16281,7 +16281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 708032280094739539, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
       propertyPath: JumpPower
-      value: 20
+      value: 16.5
       objectReference: {fileID: 0}
     - target: {fileID: 708032280094739539, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
       propertyPath: tipManager

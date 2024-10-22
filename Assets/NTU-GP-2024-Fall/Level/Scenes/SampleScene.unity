@@ -15015,7 +15015,7 @@ GameObject:
   - component: {fileID: 808138752}
   - component: {fileID: 808138754}
   m_Layer: 5
-  m_Name: Image
+  m_Name: FadingMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16139,6 +16139,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: tipManager
+      value: 
+      objectReference: {fileID: 1143437145}
+    - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -16299,8 +16303,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 708032280094739539, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
       propertyPath: JumpPower
-      value: 20
+      value: 16.5
       objectReference: {fileID: 0}
+    - target: {fileID: 708032280094739539, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
+      propertyPath: tipManager
+      value: 
+      objectReference: {fileID: 1143437145}
     - target: {fileID: 708032280094739539, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
@@ -23454,7 +23462,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0032001361, y: 0.0028242469}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -23465,7 +23473,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.41948986, y: 0.7201177}
+  m_Size: {x: 0.38, y: 0.71}
   m_EdgeRadius: 0
 --- !u!1 &1844029965 stripped
 GameObject:

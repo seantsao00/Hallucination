@@ -3,7 +3,7 @@ using UnityEngine.UI;  // For handling UI elements
 using TMPro;
 
 public class Bench : MonoBehaviour {
-    public TipManager tipManager;
+    [SerializeField] TipManager tipManager;
     [SerializeField] string tip = "Press Up or W to sit";
     Character character;
     /// <summary>
@@ -51,6 +51,6 @@ public class Bench : MonoBehaviour {
     private void LeaveBench() {
         IsBeingSat = false;
         character.CurrentState = new CharacterState.Free();
-        tipManager.ShowTip(true);
+        tipManager.ShowTip(true, tip);
     }
 }

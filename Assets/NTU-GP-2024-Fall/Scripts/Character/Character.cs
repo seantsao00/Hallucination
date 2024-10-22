@@ -52,6 +52,9 @@ public class Character : MonoBehaviour {
 
     SpriteRenderer spriteRenderer;
 
+    [SerializeField] TipManager tipManager;
+    [SerializeField] string grabTip = "Hold E or left shift to move the stone";
+
 
     void SetCurrentState(CharacterState.ICharacterState newState) {
         if (newState == currentState) return;
@@ -74,14 +77,21 @@ public class Character : MonoBehaviour {
     }
 
     private void SetFacedMovableObject(GameObject gameObject) {
-        if (gameObject != facedMovableGameObject) {
-            Stone stone = facedMovableGameObject?.GetComponent<Stone>();
+        GameObject oldObject = facedMovableGameObject;
+        facedMovableGameObject = gameObject;
+        Stone stone;
+        if (gameObject != oldObject) {
+            stone = oldObject?.GetComponent<Stone>();
             if (stone != null) {
+                tipManager.ShowTip(false);
                 stone.HorizontalMove(0);
                 CurrentState = new CharacterState.Free();
             }
+            stone = gameObject?.GetComponent<Stone>();
+            if (stone != null) {
+                tipManager.ShowTip(true, grabTip);
+            }
         }
-        facedMovableGameObject = gameObject;
     }
 
     void Awake() {

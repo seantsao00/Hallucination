@@ -16117,6 +16117,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: tipManager
+      value: 
+      objectReference: {fileID: 1143437145}
+    - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -16279,6 +16283,10 @@ PrefabInstance:
       propertyPath: JumpPower
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 708032280094739539, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
+      propertyPath: tipManager
+      value: 
+      objectReference: {fileID: 1143437145}
     - target: {fileID: 708032280094739539, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64

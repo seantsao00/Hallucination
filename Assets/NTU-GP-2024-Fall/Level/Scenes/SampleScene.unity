@@ -15008,6 +15008,14 @@ PrefabInstance:
       value: ElevatorSwitch
       objectReference: {fileID: 0}
     - target: {fileID: 5299278618855393004, guid: 25d7ac5174242ad41b959632118f57b5, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299278618855393004, guid: 25d7ac5174242ad41b959632118f57b5, type: 3}
+      propertyPath: m_Color.r
+      value: 0.017319918
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299278618855393004, guid: 25d7ac5174242ad41b959632118f57b5, type: 3}
       propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
@@ -25074,7 +25082,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 681448193580602380, guid: bd244f97e00ef064086aea364d0f6e14, type: 3}
       propertyPath: m_LocalScale.x
-      value: 14
+      value: 19.1996
       objectReference: {fileID: 0}
     - target: {fileID: 681448193580602380, guid: bd244f97e00ef064086aea364d0f6e14, type: 3}
       propertyPath: m_LocalScale.y
@@ -25082,7 +25090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 681448193580602380, guid: bd244f97e00ef064086aea364d0f6e14, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 37.25
+      value: 36.3
       objectReference: {fileID: 0}
     - target: {fileID: 681448193580602380, guid: bd244f97e00ef064086aea364d0f6e14, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25143,6 +25151,10 @@ PrefabInstance:
     - target: {fileID: 8321889483917363096, guid: bd244f97e00ef064086aea364d0f6e14, type: 3}
       propertyPath: m_Name
       value: LethalObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321889483917363096, guid: bd244f97e00ef064086aea364d0f6e14, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -9,7 +9,7 @@ public class TipManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
+        bottomTip.SetActive(false);
     }
 
     // Update is called once per frame

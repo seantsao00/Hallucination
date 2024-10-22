@@ -7989,7 +7989,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d96261be12a6f55438a59d17450f55f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipText: {fileID: 290398292}
+  tipManager: {fileID: 1143437145}
+  tip: Press Up or W to sit
 --- !u!61 &90088664
 BoxCollider2D:
   m_ObjectHideFlags: 0

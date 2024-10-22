@@ -3,7 +3,8 @@ using UnityEngine.UI;  // For handling UI elements
 using TMPro;
 
 public class Bench : MonoBehaviour {
-    public TextMeshProUGUI tipText;
+    public TipManager tipManager;
+    [SerializeField] string tip = "Press Up or W to sit";
     Character character;
     /// <summary>
     /// If a character is sitting on the bench.
@@ -11,23 +12,20 @@ public class Bench : MonoBehaviour {
     bool IsBeingSat = false;
 
     private void Start() {
-        // Hide the tip text at the start
-        tipText.enabled = false;
     }
 
     // Detect when the player enters the checkpoint area
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            tipText.text = "Press Up or W to sit";
             character = other.gameObject.GetComponent<Character>();
-            tipText.enabled = true;
+            tipManager.ShowTip(true, tip);
         }
     }
 
     // Detect when the player exits the checkpoint area
     private void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            tipText.enabled = false;
+            tipManager.ShowTip(false);
             character = null;
         }
     }
@@ -47,12 +45,12 @@ public class Bench : MonoBehaviour {
     private void SitOnBench() {
         IsBeingSat = true;
         character.CurrentState = new CharacterState.SittingOnBench();
-        tipText.enabled = false;
+        tipManager.ShowTip(false);
     }
 
     private void LeaveBench() {
         IsBeingSat = false;
         character.CurrentState = new CharacterState.Free();
-        tipText.enabled = true;
+        tipManager.ShowTip(true);
     }
 }

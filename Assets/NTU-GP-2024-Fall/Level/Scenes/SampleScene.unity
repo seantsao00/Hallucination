@@ -192,8 +192,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1146502153
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8125,8 +8125,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1334939969
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9025ebe8431344818ac7b5d6ff45b968, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -13356,7 +13356,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000093c56441f2fcd5ec97c4b1d4191914f
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -13468,6 +13468,14 @@ PrefabInstance:
     - target: {fileID: 3958596323119533666, guid: 25d7ac5174242ad41b959632118f57b5, type: 3}
       propertyPath: m_Name
       value: ElevatorSwitch
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299278618855393004, guid: 25d7ac5174242ad41b959632118f57b5, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299278618855393004, guid: 25d7ac5174242ad41b959632118f57b5, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1334939969
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14245,9 +14253,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1334939969
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7a24cb0b917b14c759f5ca7a51c1da70, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -14540,6 +14548,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.46226406
       objectReference: {fileID: 0}
+    - target: {fileID: 4161713188786758239, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161713188786758239, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1146502153
+      objectReference: {fileID: 0}
     - target: {fileID: 6029154810940154959, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: m_Size.x
       value: 1.4
@@ -14715,6 +14731,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 1bbb5d64804f94842af424103347803b, type: 3}
+    - target: {fileID: 4924709013397538231, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4924709013397538231, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1146502153
+      objectReference: {fileID: 0}
     - target: {fileID: 6461285755618117523, guid: d60ba54ccb56fcd48be6facbace1f3f9, type: 3}
       propertyPath: m_LocalPosition.y
       value: -1.5
@@ -20066,9 +20090,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1334939969
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.74663067, g: 0.74663067, b: 0.74663067, a: 1}
   m_FlipX: 0
@@ -33573,7 +33597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 681448193580602380, guid: bd244f97e00ef064086aea364d0f6e14, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 681448193580602380, guid: bd244f97e00ef064086aea364d0f6e14, type: 3}
       propertyPath: m_LocalRotation.w

@@ -14,7 +14,7 @@ public class SwitchController : MonoBehaviour {
 
     protected virtual void Update() {
         // Check if the player is in range and presses the E key
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E)) {
+        if (isPlayerInRange && Input.GetButtonDown("Interact")) {
             // Change the color of the object when E is pressed
             print("Switch activated");
             spriteRenderer.color = interactionColor;

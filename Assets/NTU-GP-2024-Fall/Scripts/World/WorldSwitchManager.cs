@@ -17,7 +17,7 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.X) && !disabled) {
+        if (Input.GetButtonDown("Switch World") && !disabled) {
             StartCoroutine(SwitchWorldsWithFade());
         }
     }

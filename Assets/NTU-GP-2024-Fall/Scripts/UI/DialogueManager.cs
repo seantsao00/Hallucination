@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour {
 
     void Update() {
         // Check if the player presses Enter and a sentence is not typing
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetButtonDown("Interact")) {
             DisplayNextSentence();
         }
     }

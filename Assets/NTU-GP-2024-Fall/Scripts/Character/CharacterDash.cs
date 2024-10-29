@@ -49,7 +49,6 @@ public class CharacterDash : MonoBehaviour {
 
         float originalGravity = character.Rb.gravityScale;
         character.Rb.gravityScale = dashGravityMultiplier * originalGravity;
-        Debug.Log(character.Rb.gravityScale);
         character.Rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
 
         dashTrailRenderer.emitting = true;
@@ -58,9 +57,7 @@ public class CharacterDash : MonoBehaviour {
 
         character.CurrentState = new CharacterState.Free();
 
-        Debug.Log(character.Rb.gravityScale);
         character.Rb.gravityScale = originalGravity;
-        Debug.Log(character.Rb.gravityScale);
 
         dashTrailRenderer.emitting = false;
 

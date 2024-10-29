@@ -32,13 +32,13 @@ public class CharacterMovement : MonoBehaviour {
         }
 
         // climb
-        if (character.CurrentState is CharacterState.Free && character.OverlappedClimbalbe != null && movement.y != 0) {
+        if (character.CurrentState is CharacterState.Free && character.OverlappedClimbable != null && movement.y != 0) {
             character.CurrentState = new CharacterState.Climbing();
         }
         if (character.CurrentState is CharacterState.Climbing) {
             if (character.IsGrounded && movement.y == 0)
                 character.CurrentState = new CharacterState.Free();
-            if (character.OverlappedClimbalbe == null)
+            if (character.OverlappedClimbable == null)
                 character.CurrentState = new CharacterState.Free();
         }
 

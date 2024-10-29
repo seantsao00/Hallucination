@@ -41,7 +41,7 @@ public class Character : MonoBehaviour {
     public Rigidbody2D Rb { get { return rb; } }
     [HideInInspector] public bool IsGrounded = true;
 
-    [HideInInspector] public Collider2D OverlappedClimbalbe;
+    [HideInInspector] public Collider2D OverlappedClimbable;
 
     [HideInInspector] public bool IsDead = false;
     [HideInInspector] public float NormalGravityScale;
@@ -111,7 +111,7 @@ public class Character : MonoBehaviour {
     void Update() {
         IsGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayerMask | movableMask);
         FacedMovableGameObject = Physics2D.OverlapCircle(faceCheck.position, faceCheckRadius, movableMask)?.gameObject;
-        OverlappedClimbalbe = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, climbableLayerMask);
+        OverlappedClimbable = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, climbableLayerMask);
         if (CurrentState is not CharacterState.GrabbingMovable) {
             float horizontal = Input.GetAxisRaw("Horizontal");
             if (horizontal != 0) FacingDirection = new(horizontal, 0);

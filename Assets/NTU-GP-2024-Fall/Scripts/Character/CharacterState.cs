@@ -1,12 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
-using UnityEngine.Timeline;
 
 public class CharacterState {
     public interface ICharacterState {
@@ -17,7 +9,14 @@ public class CharacterState {
         public virtual void HandleStateChange(Character character, bool isActive) { }
     }
 
-    public class Free : CharacterStateBase { }
+    public class Free : CharacterStateBase {
+        public override void HandleStateChange(Character character, bool isActive) {
+            if (isActive) {
+                character.CurrentMovement.SetNormal();
+            } else {
+            }
+        }
+    }
 
     public class Climbing : CharacterStateBase {
         public override void HandleStateChange(Character character, bool isActive) {
@@ -35,20 +34,25 @@ public class CharacterState {
     public class GrabbingMovable : CharacterStateBase {
         public override void HandleStateChange(Character character, bool isActive) {
             if (isActive) {
-                character.CurrentSpeed = character.GrabbingStoneSpeed;
-            } else {
-                character.CurrentSpeed = character.NormalMoveSpeed;
+                character.CurrentMovement.SetGrabbing();
             }
         }
     }
 
-    public class Dashing : CharacterStateBase { }
+    public class Dashing : CharacterStateBase {
+        public override void HandleStateChange(Character character, bool isActive) {
+            if (isActive) {
+                character.CurrentMovement.SetDashing();
+            }
+        }
+    }
 
     public class SittingOnBench : CharacterStateBase { }
 
     public class Transporting : CharacterStateBase {
         public override void HandleStateChange(Character character, bool isActive) {
             if (isActive) {
+                character.CurrentMovement.SetTransporting();
                 character.gameObject.layer = LayerMask.NameToLayer("AheadGround");
                 character.Rb.gravityScale = 0;
             } else {

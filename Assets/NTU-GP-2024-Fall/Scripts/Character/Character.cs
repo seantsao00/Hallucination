@@ -1,15 +1,82 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
-using UnityEngine.Timeline;
 
-
+/// <summary>
+/// The <c>Character</c> class maintains the character's current state, including movement states 
+/// (e.g., jumping, dashing) and speed control (e.g., maximum fall speed).
+/// This class provides methods and properties to change character states and movement, ensuring 
+/// that updates notify all necessary dependencies.
+/// </summary>
 public class Character : MonoBehaviour {
+    [System.Serializable]
+    public class CharacterMovementAttributes {
+        [Header("Movement")]
+        public float NormalHorizontalSpeed = 5f;
+        public float JumpPower = 12f;
+        public float ClimbingSpeed = 5f;
+        public float GrabbingHorizontalSpeed = 3f;
+
+        [Space(10)]
+        [Header("Limit")]
+        public float StickOnWallFallingSpeed = 3f;
+        public float MaxFallingSpeed = 30f;
+    }
+
+    public class CharacterCurrentMovement {
+        private CharacterMovementAttributes attributes;
+
+        /// <summary>
+        /// The current horizontal movement speed applied to the character.
+        /// Adjusts based on character state (e.g., reduced speed when pulling an object).
+        /// </summary>
+        public float HorizontalSpeed;
+
+        public float ClimbingSpeed;
+
+        /// <summary>
+        /// The current JumpPower applied to the character.
+        /// </summary>
+        public float JumpPower;
+
+        public bool IsHorizontalMoveEnabled;
+        public bool IsJumpEnabled;
+        public bool IsDashEnabled;
+
+        public CharacterCurrentMovement(CharacterMovementAttributes attributes) {
+            Init(attributes);
+        }
+        public void Init(CharacterMovementAttributes attributes) {
+            this.attributes = attributes;
+            SetNormal();
+        }
+        public void SetNormal() {
+            HorizontalSpeed = attributes.NormalHorizontalSpeed;
+            JumpPower = attributes.JumpPower;
+            ClimbingSpeed = attributes.ClimbingSpeed;
+            IsHorizontalMoveEnabled = true;
+            IsJumpEnabled = true;
+            IsDashEnabled = true;
+        }
+        public void SetDashing() {
+            SetNormal();
+            IsHorizontalMoveEnabled = false;
+        }
+        public void SetGrabbing() {
+            HorizontalSpeed = attributes.GrabbingHorizontalSpeed;
+            IsHorizontalMoveEnabled = true;
+            IsJumpEnabled = false;
+            IsDashEnabled = false;
+        }
+        public void SetTransporting() {
+            IsHorizontalMoveEnabled = false;
+            IsJumpEnabled = false;
+            IsDashEnabled = false;
+        }
+    }
+
+    [SerializeField] CharacterMovementAttributes movementAttributes;
+    public CharacterCurrentMovement CurrentMovement;
+
     CharacterState.ICharacterState currentState;
     public CharacterState.ICharacterState CurrentState {
         get { return currentState; }
@@ -45,11 +112,6 @@ public class Character : MonoBehaviour {
 
     [HideInInspector] public bool IsDead = false;
     [HideInInspector] public float NormalGravityScale;
-    public float NormalMoveSpeed = 5f;
-    public float GrabbingStoneSpeed = 2f;
-    public float JumpPower = 10f;
-    [HideInInspector] public float CurrentSpeed;
-
     SpriteRenderer spriteRenderer;
 
     [SerializeField] TipManager tipManager;
@@ -98,6 +160,7 @@ public class Character : MonoBehaviour {
         groundLayerMask = LayerMask.GetMask("Ground");
         climbableLayerMask = LayerMask.GetMask("Climbable");
         movableMask = LayerMask.GetMask("Movable");
+        CurrentMovement = new CharacterCurrentMovement(movementAttributes);
     }
 
     void Start() {
@@ -105,7 +168,6 @@ public class Character : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
         NormalGravityScale = Rb.gravityScale;
         CurrentState = new CharacterState.Free();
-        CurrentSpeed = NormalMoveSpeed;
     }
 
     void Update() {
@@ -115,6 +177,11 @@ public class Character : MonoBehaviour {
         if (CurrentState is not CharacterState.GrabbingMovable) {
             float horizontal = Input.GetAxisRaw("Horizontal");
             if (horizontal != 0) FacingDirection = new(horizontal, 0);
+        }
+        if (Rb.velocity.magnitude > 0) {
+            GetComponent<Animator>().SetBool("Movement", true);
+        } else {
+            GetComponent<Animator>().SetBool("Movement", false);
         }
     }
 

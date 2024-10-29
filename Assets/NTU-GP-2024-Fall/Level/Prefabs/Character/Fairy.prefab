@@ -82,37 +82,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!1 &7149490774171609328
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1731885650370004280}
-  m_Layer: 0
-  m_Name: FrontCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1731885650370004280
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7149490774171609328}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1431853418619855094}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4132095499825998733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -174,13 +143,13 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3064367424361827195, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1731885650370004280}
-    - targetCorrespondingSourceObject: {fileID: 3064367424361827195, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 789414997237792789}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
-      insertIndex: 4
+      insertIndex: 5
+      addedObject: {fileID: -5545773767642144904}
+    - targetCorrespondingSourceObject: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
+      insertIndex: 6
       addedObject: {fileID: 8602150884692660129}
     - targetCorrespondingSourceObject: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       insertIndex: -1
@@ -194,6 +163,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
   m_PrefabInstance: {fileID: 4132095499825998733}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &-5545773767642144904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119055625902650740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea84035c6b45b3d468432654f5359235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSound: {fileID: 8300000, guid: cc72fe4bc1c488143b0fc26ab2273401, type: 3}
 --- !u!114 &8602150884692660129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,10 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5a7da609eb14240bdaa44bf94acc32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 20
+  dashLength: 4
   dashDuration: 0.2
   dashCooldown: 1
-  dashGravityScale: 0.2
+  dashGravityScale: 0
   dashSound: {fileID: 8300000, guid: 5ea5d7bebfddcf24c87e972a80cb4427, type: 3}
 --- !u!96 &-1860308792635032451
 TrailRenderer:

@@ -16026,6 +16026,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647589227}
     m_Modifications:
+    - target: {fileID: -1860308792635032451, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1121673558486839445, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 119055625902650740, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: m_Name
       value: Fairy
@@ -16099,12 +16107,20 @@ PrefabInstance:
       value: 0.46226406
       objectReference: {fileID: 0}
     - target: {fileID: 4161713188786758239, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161713188786758239, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: m_SortingLayer
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4161713188786758239, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: m_SortingLayerID
       value: 1146502153
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454104689273384196, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6029154810940154959, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: m_Size.x
@@ -16115,6 +16131,10 @@ PrefabInstance:
       value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 6029154810940154959, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6029154810940154959, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.6666666
       objectReference: {fileID: 0}
@@ -16122,9 +16142,17 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.6666666
       objectReference: {fileID: 0}
+    - target: {fileID: 7107334573105769836, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: JumpPower
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: tipManager
@@ -16133,6 +16161,10 @@ PrefabInstance:
     - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602150884692660129, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23506,8 +23538,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxJumpHeight: 3.5
   slowerFallGravityMultiplier: 0.75
+  releaseJumpSpeedMultiplier: 0.5
   jumpHangTimeGravityMultiplier: 0.75
   jumpHangTimeThresholdSpeed: 0.5
+  coyoteTime: 0.2
   jumpSound: {fileID: 0}
 --- !u!4 &1900296765 stripped
 Transform:

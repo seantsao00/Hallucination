@@ -19,7 +19,7 @@ public class Character : MonoBehaviour {
         [Space(10)]
         [Header("Limit")]
         public float StickOnWallFallingSpeed = 3f;
-        public float MaxFallingSpeed = 30f;
+        public float MaxFallingSpeed = 16f;
     }
 
     public class CharacterCurrentMovement {
@@ -176,6 +176,9 @@ public class Character : MonoBehaviour {
             GetComponent<Animator>().SetBool("Movement", true);
         } else {
             GetComponent<Animator>().SetBool("Movement", false);
+        }
+        if (Rb.velocity.y <= -movementAttributes.MaxFallingSpeed) {
+            Rb.velocity = new Vector2(Rb.velocity.x, -movementAttributes.MaxFallingSpeed);
         }
     }
 

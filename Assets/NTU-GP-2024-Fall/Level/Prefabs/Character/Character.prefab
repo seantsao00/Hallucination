@@ -167,7 +167,7 @@ MonoBehaviour:
     ClimbingSpeed: 5
     GrabbingHorizontalSpeed: 3
     StickOnWallFallingSpeed: 3
-    MaxFallingSpeed: 30
+    MaxFallingSpeed: 16
   groundCheck: {fileID: 2119589066021161974}
   groundCheckRadius: 0.2
   faceCheck: {fileID: 4690221609876608825}

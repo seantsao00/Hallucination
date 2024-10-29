@@ -16122,22 +16122,6 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.6666666
       objectReference: {fileID: 0}
-    - target: {fileID: 7107334573105769836, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
-      propertyPath: dashSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7107334573105769836, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
-      propertyPath: jumpSound
-      value: 
-      objectReference: {fileID: 8300000, guid: cc72fe4bc1c488143b0fc26ab2273401, type: 3}
-    - target: {fileID: 7107334573105769836, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7107334573105769836, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
-      propertyPath: dashDurationSeconds
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: JumpPower
       value: 15
@@ -16149,22 +16133,6 @@ PrefabInstance:
     - target: {fileID: 8379540029500189627, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 8602150884692660129, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
-      propertyPath: dashSound
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8602150884692660129, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
-      propertyPath: dashLength
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8602150884692660129, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
-      propertyPath: dashDuration
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8602150884692660129, guid: ae0511e0725b4e0468548405cf49222c, type: 3}
-      propertyPath: dashGravityScale
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23536,6 +23504,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea84035c6b45b3d468432654f5359235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxJumpHeight: 3.5
+  slowerFallGravityMultiplier: 0.75
+  jumpHangTimeGravityMultiplier: 0.75
+  jumpHangTimeThresholdSpeed: 0.5
   jumpSound: {fileID: 0}
 --- !u!4 &1900296765 stripped
 Transform:

@@ -8,9 +8,6 @@ public class CharacterJump : MonoBehaviour {
     [Tooltip("Gravity multiplier applied when the player hold jump button and the character is jumping upward.")]
     [SerializeField] float slowerFallGravityMultiplier = 0.7f;
     [SerializeField] float releaseJumpSpeedMultiplier = 0.5f;
-    [Tooltip("Gravity multiplier applied when the character’s vertical falling speed falls below the threshold.")]
-    [SerializeField] float jumpHangTimeGravityMultiplier = 0.4f;
-    [SerializeField] float jumpHangTimeThresholdSpeed = 0.5f;
     [Tooltip("Duration the character can still jump after leaving the ground.")]
     [SerializeField] float coyoteTime = 0.1f;
     [Tooltip("Time buffer to allow jumps even if the jump button is pressed slightly early, "
@@ -60,14 +57,6 @@ public class CharacterJump : MonoBehaviour {
             character.Rb.gravityScale = character.NormalGravityScale;
             character.Rb.velocity = new Vector2(character.Rb.velocity.x,
                 releaseJumpSpeedMultiplier * character.Rb.velocity.y);
-        }
-
-        if (character.Rb.velocity.y <= 0) {
-            if (Mathf.Abs(character.Rb.velocity.y) < jumpHangTimeThresholdSpeed) {
-                character.Rb.gravityScale = character.NormalGravityScale * jumpHangTimeGravityMultiplier;
-            } else {
-                character.Rb.gravityScale = character.NormalGravityScale;
-            }
         }
     }
 }

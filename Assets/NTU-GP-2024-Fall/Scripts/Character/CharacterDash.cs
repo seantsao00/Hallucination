@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class CharacterDash : MonoBehaviour {
     [SerializeField] float dashLength = 4f;
     [SerializeField] float dashDuration = 0.2f;
     [SerializeField] float dashCooldown = 1f;
-    [SerializeField] float dashGravityScale = 0f;
+    [SerializeField] float dashGravityMultiplier = 0f;
     [SerializeField] AudioClip dashSound;  // Drag and drop your dash sound effect here in the Inspector
     float dashSpeed;
 
@@ -47,7 +48,8 @@ public class CharacterDash : MonoBehaviour {
         character.CurrentState = new CharacterState.Dashing();
 
         float originalGravity = character.Rb.gravityScale;
-        character.Rb.gravityScale = dashGravityScale * originalGravity;
+        character.Rb.gravityScale = dashGravityMultiplier * originalGravity;
+        Debug.Log(character.Rb.gravityScale);
         character.Rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
 
         dashTrailRenderer.emitting = true;
@@ -56,7 +58,9 @@ public class CharacterDash : MonoBehaviour {
 
         character.CurrentState = new CharacterState.Free();
 
+        Debug.Log(character.Rb.gravityScale);
         character.Rb.gravityScale = originalGravity;
+        Debug.Log(character.Rb.gravityScale);
 
         dashTrailRenderer.emitting = false;
 

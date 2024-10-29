@@ -16,8 +16,10 @@ public class Character : MonoBehaviour {
         public float ClimbingSpeed = 5f;
         public float GrabbingHorizontalSpeed = 3f;
 
-        [Space(10)]
-        [Header("Limit")]
+        [Header("Behavior")]
+        [Tooltip("Gravity multiplier applied when the character’s vertical falling speed falls below the threshold.")]
+        public float AirHangTimeGravityMultiplier = 0.4f;
+        public float AirHangTimeThresholdSpeed = 0.5f;
         public float StickOnWallFallingSpeed = 3f;
         public float MaxFallingSpeed = 16f;
     }
@@ -176,6 +178,13 @@ public class Character : MonoBehaviour {
             GetComponent<Animator>().SetBool("Movement", true);
         } else {
             GetComponent<Animator>().SetBool("Movement", false);
+        }
+        if (Rb.velocity.y < 0 && currentState is not CharacterState.Dashing) {
+            if (Mathf.Abs(Rb.velocity.y) < movementAttributes.AirHangTimeThresholdSpeed) {
+                Rb.gravityScale = NormalGravityScale * movementAttributes.AirHangTimeGravityMultiplier;
+            } else {
+                Rb.gravityScale = NormalGravityScale;
+            }
         }
         if (Rb.velocity.y <= -movementAttributes.MaxFallingSpeed) {
             Rb.velocity = new Vector2(Rb.velocity.x, -movementAttributes.MaxFallingSpeed);

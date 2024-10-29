@@ -161,18 +161,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3edae7746902f6a43a0efa6719618def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementAttributes:
+    NormalHorizontalSpeed: 5
+    JumpPower: 12
+    ClimbingSpeed: 5
+    GrabbingHorizontalSpeed: 3
+    StickOnWallFallingSpeed: 3
+    MaxFallingSpeed: 16
   groundCheck: {fileID: 2119589066021161974}
   groundCheckRadius: 0.2
   faceCheck: {fileID: 4690221609876608825}
   faceCheckRadius: 0.2
   IsGrounded: 1
-  OverlappedClimbalbe: {fileID: 0}
+  OverlappedClimbable: {fileID: 0}
   IsDead: 0
   NormalGravityScale: 0
-  NormalMoveSpeed: 5
-  GrabbingStoneSpeed: 2
-  JumpPower: 10
-  CurrentSpeed: 0
+  tipManager: {fileID: 0}
+  grabTip: Hold E or left shift to move the stone
 --- !u!114 &6627739361679771361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c548ecb7bdb10f4486c91f8f36a0c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSound: {fileID: 8300000, guid: cc72fe4bc1c488143b0fc26ab2273401, type: 3}
 --- !u!61 &7706779010662043586
 BoxCollider2D:
   m_ObjectHideFlags: 0

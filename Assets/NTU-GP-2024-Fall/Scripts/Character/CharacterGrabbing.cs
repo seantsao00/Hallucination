@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class CharacterInteract : MonoBehaviour {
+public class CharacterGrabbing : MonoBehaviour {
     Character character;
 
     void Awake() { }
@@ -16,8 +16,8 @@ public class CharacterInteract : MonoBehaviour {
         if (stone != null) {
             if (Input.GetButton("Interact")) {
                 character.CurrentState = new CharacterState.GrabbingMovable();
-                float horizontalGrabDirection = character.GrabbingStoneSpeed * Input.GetAxisRaw("Horizontal");
-                stone.HorizontalMove(horizontalGrabDirection);
+                float horizontalGrabSpeed = character.CurrentMovement.HorizontalSpeed * Input.GetAxisRaw("Horizontal");
+                stone.HorizontalMove(horizontalGrabSpeed);
             } else {
                 character.CurrentState = new CharacterState.Free();
                 stone.HorizontalMove(0);

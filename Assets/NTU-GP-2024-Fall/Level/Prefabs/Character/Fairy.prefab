@@ -130,6 +130,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3727498768843472702, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
+      propertyPath: m_GravityScale
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       propertyPath: m_Name
       value: Fairy
@@ -175,6 +179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea84035c6b45b3d468432654f5359235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxJumpHeight: 3.5
+  slowerFallGravityMultiplier: 0.4
+  jumpHangTimeGravityMultiplier: 0.3
+  jumpHangTimeThresholdSpeed: 0.5
   jumpSound: {fileID: 8300000, guid: cc72fe4bc1c488143b0fc26ab2273401, type: 3}
 --- !u!114 &8602150884692660129
 MonoBehaviour:

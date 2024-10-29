@@ -10,7 +10,7 @@ using UnityEngine;
 public class Character : MonoBehaviour {
     [System.Serializable]
     public class CharacterMovementAttributes {
-        [Header("Movement")]
+        [Header("HorizontalMovement")]
         public float NormalHorizontalSpeed = 5f;
         public float JumpPower = 12f;
         public float ClimbingSpeed = 5f;
@@ -33,11 +33,6 @@ public class Character : MonoBehaviour {
 
         public float ClimbingSpeed;
 
-        /// <summary>
-        /// The current JumpPower applied to the character.
-        /// </summary>
-        public float JumpPower;
-
         public bool IsHorizontalMoveEnabled;
         public bool IsJumpEnabled;
         public bool IsDashEnabled;
@@ -51,7 +46,6 @@ public class Character : MonoBehaviour {
         }
         public void SetNormal() {
             HorizontalSpeed = attributes.NormalHorizontalSpeed;
-            JumpPower = attributes.JumpPower;
             ClimbingSpeed = attributes.ClimbingSpeed;
             IsHorizontalMoveEnabled = true;
             IsJumpEnabled = true;
@@ -161,12 +155,12 @@ public class Character : MonoBehaviour {
         climbableLayerMask = LayerMask.GetMask("Climbable");
         movableMask = LayerMask.GetMask("Movable");
         CurrentMovement = new CharacterCurrentMovement(movementAttributes);
+        rb = GetComponent<Rigidbody2D>();
+        NormalGravityScale = Rb.gravityScale;
     }
 
     void Start() {
-        rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        NormalGravityScale = Rb.gravityScale;
         CurrentState = new CharacterState.Free();
     }
 

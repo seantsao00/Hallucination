@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour {
         dialogueBox.SetActive(false);  // Initially hide the dialogue box at the start
         leftImage.SetActive(false);  // Hide both images at the start
         rightImage.SetActive(false);
-        StartDialogue("quest_start");
+        // StartDialogue("quest_start");
 
     }
 

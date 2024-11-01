@@ -41,7 +41,6 @@ public class PlaytimeManager : MonoBehaviour
 
         // Find the Toggle Button and set up the OnClick event
         toggleButton = GameObject.Find("ToggleTimerButton")?.GetComponent<Button>();
-        print(toggleButton);
         if (toggleButton != null)
         {
             // Clear previous listeners and add ToggleTimerVisibility

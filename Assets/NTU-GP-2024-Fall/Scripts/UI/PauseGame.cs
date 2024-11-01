@@ -1,13 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseGame : MonoBehaviour {
     public GameObject pauseMenuUI; // Assign the Pause Menu UI in the Inspector
     private bool isPaused = false;
 
-    void Start() {
-
-    }
     void Update() {
         // Listen for the "Esc" key to toggle the pause state
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -31,5 +28,17 @@ public class PauseGame : MonoBehaviour {
         pauseMenuUI.SetActive(true);     // Show the pause menu
         Time.timeScale = 0f;             // Pause time
         isPaused = true;
+    }
+
+    // Function to go back to the main menu
+    public void GoToMainMenu() {
+        Time.timeScale = 1f;             // Ensure time is resumed
+        SceneManager.LoadScene("MainMenu"); // Replace "MainMenu" with the actual scene name
+    }
+
+    // Function to restart the current level
+    public void RestartGame() {
+        Time.timeScale = 1f;             // Ensure time is resumed
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
     }
 }

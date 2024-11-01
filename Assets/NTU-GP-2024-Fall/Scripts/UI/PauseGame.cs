@@ -3,10 +3,29 @@ using UnityEngine.SceneManagement;
 
 public class PauseGame : MonoBehaviour {
     public GameObject pauseMenuUI; // Assign the Pause Menu UI in the Inspector
-    private bool isPaused = false;
-
+    public GameObject fairy;      // Assign the Player GameObject in the Inspector
+    public GameObject bear;
+    public GameObject worldSwitchManager;
+    bool isPaused = false;
+    Character fairyCharacter, bearCharacter;
+    CharacterHorizontalMove fairyHorizontalMove, bearHorizontalMove;
+    CharacterDash fairyDash;
+    CharacterJump fairyJump;
+    CharacterClimb bearClimb;
+    WorldSwitchManager worldSwitch;
+    void Start() {
+        fairyCharacter = fairy.GetComponent<Character>();
+        bearCharacter = bear.GetComponent<Character>();
+        fairyHorizontalMove = fairy.GetComponent<CharacterHorizontalMove>();
+        bearHorizontalMove = bear.GetComponent<CharacterHorizontalMove>();
+        fairyDash = fairy.GetComponent<CharacterDash>();
+        fairyJump = fairy.GetComponent<CharacterJump>();
+        bearClimb = bear.GetComponent<CharacterClimb>();
+        worldSwitch = worldSwitchManager.GetComponent<WorldSwitchManager>();
+    }
     void Update() {
         // Listen for the "Esc" key to toggle the pause state
+        
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (isPaused) {
                 Resume();
@@ -21,6 +40,7 @@ public class PauseGame : MonoBehaviour {
         pauseMenuUI.SetActive(false);     // Hide the pause menu
         Time.timeScale = 1f;              // Resume time
         isPaused = false;
+        SetMovementActive(true);
     }
 
     // Function to pause the game
@@ -28,6 +48,7 @@ public class PauseGame : MonoBehaviour {
         pauseMenuUI.SetActive(true);     // Show the pause menu
         Time.timeScale = 0f;             // Pause time
         isPaused = true;
+        SetMovementActive(false);
     }
 
     // Function to go back to the main menu
@@ -40,5 +61,16 @@ public class PauseGame : MonoBehaviour {
     public void RestartGame() {
         Time.timeScale = 1f;             // Ensure time is resumed
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
+    }
+
+    void SetMovementActive(bool isEnabled) {
+        fairyCharacter.enabled = isEnabled;
+        bearCharacter.enabled = isEnabled;
+        fairyHorizontalMove.enabled = isEnabled;
+        bearHorizontalMove.enabled = isEnabled;
+        fairyDash.enabled = isEnabled;
+        fairyJump.enabled = isEnabled;
+        bearClimb.enabled = isEnabled;
+        worldSwitch.enabled = isEnabled;
     }
 }

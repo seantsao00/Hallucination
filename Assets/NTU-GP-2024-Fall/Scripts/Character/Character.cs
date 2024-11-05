@@ -174,7 +174,7 @@ public class Character : MonoBehaviour {
             float horizontal = Input.GetAxisRaw("Horizontal");
             if (horizontal != 0) FacingDirection = new(horizontal, 0);
         }
-        if (Rb.velocity.magnitude > 0) {
+        if (Rb.velocity.x != 0) {
             GetComponent<Animator>().SetBool("Movement", true);
         } else {
             GetComponent<Animator>().SetBool("Movement", false);

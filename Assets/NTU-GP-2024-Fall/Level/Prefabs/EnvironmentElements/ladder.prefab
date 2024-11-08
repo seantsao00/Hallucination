@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 512115006499365621, guid: 2faaf5b7af1dc884cbb521d587f2108d, type: 3}
       propertyPath: m_Name
-      value: Ladder Variant
+      value: Ladder
       objectReference: {fileID: 0}
     - target: {fileID: 512115006499365621, guid: 2faaf5b7af1dc884cbb521d587f2108d, type: 3}
       propertyPath: m_Layer

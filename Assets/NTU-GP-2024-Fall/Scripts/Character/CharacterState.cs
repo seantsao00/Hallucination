@@ -61,5 +61,15 @@ public class CharacterState {
             }
         }
     }
+
+    public class BeingBlown : CharacterStateBase {
+        public override void HandleStateChange(Character character, bool isActive) {
+            if (isActive) {
+                character.Rb.gravityScale = character.NormalGravityScale * character.MovementAttributes.AirHangTimeGravityMultiplier;
+            } else {
+                character.Rb.gravityScale = character.NormalGravityScale;
+            }
+        }
+    }
 }
 

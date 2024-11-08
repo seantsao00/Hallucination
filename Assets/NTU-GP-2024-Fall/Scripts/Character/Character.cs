@@ -22,6 +22,8 @@ public class Character : MonoBehaviour {
         public float AirHangTimeThresholdSpeed = 0.5f;
         public float StickOnWallFallingSpeed = 3f;
         public float MaxFallingSpeed = 16f;
+
+        [HideInInspector, NonSerialized] public float velocityEps = 1e-4f;
     }
 
     public class CharacterCurrentMovement {
@@ -70,7 +72,7 @@ public class Character : MonoBehaviour {
         }
     }
 
-    [SerializeField] CharacterMovementAttributes movementAttributes;
+    public CharacterMovementAttributes MovementAttributes;
     public CharacterCurrentMovement CurrentMovement;
 
     CharacterState.ICharacterState currentState;
@@ -156,7 +158,7 @@ public class Character : MonoBehaviour {
         groundLayerMask = LayerMask.GetMask("Ground");
         climbableLayerMask = LayerMask.GetMask("Climbable");
         movableMask = LayerMask.GetMask("Movable");
-        CurrentMovement = new CharacterCurrentMovement(movementAttributes);
+        CurrentMovement = new CharacterCurrentMovement(MovementAttributes);
         rb = GetComponent<Rigidbody2D>();
         NormalGravityScale = Rb.gravityScale;
     }
@@ -179,15 +181,15 @@ public class Character : MonoBehaviour {
         } else {
             GetComponent<Animator>().SetBool("Movement", false);
         }
-        if (Rb.velocity.y < 0 && currentState is not CharacterState.Dashing) {
-            if (Mathf.Abs(Rb.velocity.y) < movementAttributes.AirHangTimeThresholdSpeed) {
-                Rb.gravityScale = NormalGravityScale * movementAttributes.AirHangTimeGravityMultiplier;
+        if (Rb.velocity.y < -MovementAttributes.velocityEps && currentState is not CharacterState.Dashing) {
+            if (Mathf.Abs(Rb.velocity.y) < MovementAttributes.AirHangTimeThresholdSpeed) {
+                Rb.gravityScale = NormalGravityScale * MovementAttributes.AirHangTimeGravityMultiplier;
             } else {
                 Rb.gravityScale = NormalGravityScale;
             }
         }
-        if (Rb.velocity.y <= -movementAttributes.MaxFallingSpeed) {
-            Rb.velocity = new Vector2(Rb.velocity.x, -movementAttributes.MaxFallingSpeed);
+        if (Rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {
+            Rb.velocity = new Vector2(Rb.velocity.x, -MovementAttributes.MaxFallingSpeed);
         }
     }
 

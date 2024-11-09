@@ -5,8 +5,7 @@ using UnityEngine;
 class Checkpoint : Syncable {
     public bool isChecked;
 
-    protected override void Awake() {
-        base.Awake();
+    protected void Awake() {
         isChecked = false;
     }
     public override void SyncState() {

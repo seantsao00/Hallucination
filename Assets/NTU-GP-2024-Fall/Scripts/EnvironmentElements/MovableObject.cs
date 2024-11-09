@@ -1,4 +1,3 @@
-using Unity.Collections;
 using UnityEngine;
 
 public class MovableObject : MonoBehaviour, IButtonControlled {
@@ -47,6 +46,9 @@ public class MovableObject : MonoBehaviour, IButtonControlled {
             if (offset.magnitude < eps) {
                 int nextTarget = (currentMovementTarget + 1) % points.Length;
                 SetTargetIndex(nextTarget);
+            }
+        } else {
+            if (offset.magnitude < eps) {
             }
         }
     }

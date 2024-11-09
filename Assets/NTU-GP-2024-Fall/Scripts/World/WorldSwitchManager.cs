@@ -92,5 +92,7 @@ public class WorldSwitchManager : MonoBehaviour {
         FadeCanvasGroup.alpha = 0;
     }
 
-
+    void OnDrawGizmos() {
+        Awake();
+    }
 }

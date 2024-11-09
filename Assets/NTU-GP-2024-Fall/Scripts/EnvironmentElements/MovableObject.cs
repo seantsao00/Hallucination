@@ -1,7 +1,7 @@
 using Unity.Collections;
 using UnityEngine;
 
-public class MovableObject : MonoBehaviour {
+public class MovableObject : MonoBehaviour, IButtonControlled {
     [SerializeField] Transform movableObject;
     [SerializeField] bool autoMove;
     [SerializeField] Transform[] points;
@@ -15,6 +15,20 @@ public class MovableObject : MonoBehaviour {
 
     public void SetTargetIndex(int index) {
         currentMovementTarget = index;
+    }
+
+    public void Activate() {
+        if (initialPositionIndex != 0) {
+            Debug.LogWarning("Movable Object is controlled by a button but its initial position index is not 0.");
+        }
+        if (points.Length < 2) {
+            Debug.LogWarning("Movable Object is controlled by a button but its points length is less then 2.");
+        }
+        currentMovementTarget = 1;
+    }
+
+    public void Deactivate() {
+        currentMovementTarget = 0;
     }
 
     void Update() {
@@ -51,6 +65,19 @@ public class MovableObject : MonoBehaviour {
                 }
             }
         }
+    }
+
+    bool CanBeCarried(Collider2D collider) {
+        return collider.CompareTag("Player") || collider.CompareTag("Stone");
+    }
+
+    void OnTriggerEnter2D(Collider2D collider) {
+        if (CanBeCarried(collider)) 
+            collider.transform.SetParent(transform);
+    }
+    void OnTriggerExit2D(Collider2D collider) {
+        if (CanBeCarried(collider)) 
+            collider.transform.SetParent(null);
     }
 
     void OnDrawGizmos() {

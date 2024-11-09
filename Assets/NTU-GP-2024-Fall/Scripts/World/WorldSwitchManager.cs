@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using System.Collections;
 
 public class WorldSwitchManager : MonoBehaviour {
+    public static WorldSwitchManager Instance { get; private set; }
     public GameObject WorldFairyEnvironment;
     public GameObject WorldBearEnvironment;
     public CanvasGroup FadeCanvasGroup;
@@ -11,6 +12,21 @@ public class WorldSwitchManager : MonoBehaviour {
     private bool isInWorldFairy = true;
     private bool disabled = false;
 
+    void Awake() {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("WorldSwitchManager: " +
+            "Duplicate instance detected and removed. Only one instance of WorldSwitchManager is allowed.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    private void OnDestroy() {
+        if (Instance == this) {
+            Instance = null;
+        }
+    }
 
     void Start() {
         ActivateWorldFairy();

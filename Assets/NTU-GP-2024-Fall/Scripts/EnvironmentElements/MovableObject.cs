@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 public class MovableObject : MonoBehaviour, IButtonControlled {
     [SerializeField] Transform movableObject;
@@ -11,6 +13,7 @@ public class MovableObject : MonoBehaviour, IButtonControlled {
     float eps = 1e-4f;
     Vector3 currentPosition;
     int currentMovementTarget;
+    private Dictionary<Collider2D, Transform> originalParents = new Dictionary<Collider2D, Transform>();
 
     public void SetTargetIndex(int index) {
         currentMovementTarget = index;
@@ -58,8 +61,8 @@ public class MovableObject : MonoBehaviour, IButtonControlled {
         currentPosition = points[initialPositionIndex].position;
         if (movableObject != null && points.Length >= 2) {
             for (int i = 0; i < points.Length; i++) {
-                if (!Mathf.Approximately(points[i].position.z, 0f)) {
-                    Debug.LogWarning($"Z-coordinate of point {i} in the movable object path is non-zero"+
+                if (!Mathf.Approximately(points[i].localPosition.z, 0f)) {
+                    Debug.LogWarning($"Z-coordinate of point {i} in the movable object path is non-zero" +
                     $"({points[i].transform.position}). Automatically setting it to 0.");
                     Vector3 correctedPosition = points[i].position;
                     correctedPosition.z = 0f;
@@ -69,17 +72,28 @@ public class MovableObject : MonoBehaviour, IButtonControlled {
         }
     }
 
+    void RestoreColliderParent(Collider2D collider) {
+        if(!originalParents.ContainsKey(collider)) return;
+        collider.transform.SetParent(null);
+        collider.transform.SetParent(originalParents[collider]);
+    }
+
     bool CanBeCarried(Collider2D collider) {
         return collider.CompareTag("Player") || collider.CompareTag("Stone");
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if (CanBeCarried(collider)) 
+        if (CanBeCarried(collider)) {
+            if (collider.transform.parent != transform) {
+                originalParents[collider] = collider.transform.parent;
+            }
             collider.transform.SetParent(transform);
+        }
     }
     void OnTriggerExit2D(Collider2D collider) {
-        if (CanBeCarried(collider)) 
-            collider.transform.SetParent(null);
+        if (CanBeCarried(collider)) {
+            RestoreColliderParent(collider);
+        }
     }
 
     void OnDrawGizmos() {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 public class MovableObject : MonoBehaviour, IButtonControlled {
-    [SerializeField] Transform movableObject;
+    Transform movableObject;
     [SerializeField] bool autoMove;
     [SerializeField] Transform[] points;
     [SerializeField] float slowDownLength = 2f;
@@ -57,6 +57,7 @@ public class MovableObject : MonoBehaviour, IButtonControlled {
     }
 
     void Awake() {
+        movableObject = GetComponent<Transform>();
         currentMovementTarget = initialPositionIndex;
         currentPosition = points[initialPositionIndex].position;
         if (movableObject != null && points.Length >= 2) {

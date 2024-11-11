@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public class InputManager {
     static InputManager instance;
     public static InputManager Instance {

@@ -27,10 +27,10 @@ public class PauseGame : MonoBehaviour {
 
 
     void OnEnable() {
-        InputManager.Instance.Game.Actions.Pause.performed += Pause;
+        InputManager.Control.Game.Pause.performed += Pause;
     }
     void OnDisable() {
-        InputManager.Instance.Game.Actions.Pause.performed -= Pause;
+        InputManager.Control.Game.Pause.performed -= Pause;
     }
 
     void Pause(InputAction.CallbackContext context) {

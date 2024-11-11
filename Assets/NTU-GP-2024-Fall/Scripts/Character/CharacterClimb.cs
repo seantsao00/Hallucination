@@ -8,7 +8,7 @@ public class CharacterClimb : MonoBehaviour {
     }
 
     void Update() {
-        float direction = InputManager.Instance.Character.VerticalMove;
+        float direction = InputManager.Instance.CharacterVerticalMove;
 
         if (character.CurrentState is CharacterState.Free && character.OverlappedClimbable != null && direction != 0) {
             character.CurrentState = new CharacterState.Climbing();

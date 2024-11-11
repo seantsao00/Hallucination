@@ -9,12 +9,12 @@ public class CharacterGrab : MonoBehaviour {
         character = GetComponent<Character>();
     }
     void OnEnable() {
-        InputManager.Instance.Character.Actions.Grab.performed += Grab;
-        InputManager.Instance.Character.Actions.Grab.canceled += Grab;
+        InputManager.Control.Character.Grab.performed += Grab;
+        InputManager.Control.Character.Grab.canceled += Grab;
     }
     void OnDisable() {
-        InputManager.Instance.Character.Actions.Grab.performed -= Grab;
-        InputManager.Instance.Character.Actions.Grab.canceled -= Grab;
+        InputManager.Control.Character.Grab.performed -= Grab;
+        InputManager.Control.Character.Grab.canceled -= Grab;
     }
 
     void Grab(InputAction.CallbackContext context) {

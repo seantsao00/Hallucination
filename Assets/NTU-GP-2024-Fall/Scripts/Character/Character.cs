@@ -173,7 +173,7 @@ public class Character : MonoBehaviour {
         FacedMovableGameObject = Physics2D.OverlapCircle(faceCheck.position, faceCheckRadius, movableMask)?.gameObject;
         OverlappedClimbable = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, climbableLayerMask);
         if (CurrentState is not CharacterState.GrabbingMovable) {
-            float direction = InputManager.Instance.Character.HorizontalMove;
+            float direction = InputManager.Instance.CharacterHorizontalMove;
             if (direction != 0) FacingDirection = new(direction, 0);
         }
         if (Rb.velocity.x != 0) {

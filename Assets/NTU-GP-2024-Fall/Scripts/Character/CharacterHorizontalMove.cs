@@ -11,7 +11,7 @@ public class CharacterHorizontalMove : MonoBehaviour {
 
     void Update() {
         if (!character.CurrentMovement.IsHorizontalMoveEnabled) return;
-        float direction = InputManager.Instance.Character.HorizontalMove;
+        float direction = InputManager.Instance.CharacterHorizontalMove;
         rb.velocity = new Vector2(direction * character.CurrentMovement.HorizontalSpeed, rb.velocity.y);
     }
 }

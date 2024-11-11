@@ -14,10 +14,10 @@ public class SwitchController : MonoBehaviour {
     }
 
     void OnEnable() {
-        InputManager.Instance.Character.Actions.Interact.performed += Interact;
+        InputManager.Control.Character.Interact.performed += Interact;
     }
     void OnDisable() {
-        InputManager.Instance.Character.Actions.Interact.performed -= Interact;
+        InputManager.Control.Character.Interact.performed -= Interact;
     }
 
     void Interact(InputAction.CallbackContext context) {

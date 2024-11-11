@@ -30,10 +30,10 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     void OnEnable() {
-        InputManager.Instance.World.Actions.SwitchWorld.performed += SwitchWorld;
+        InputManager.Control.World.SwitchWorld.performed += SwitchWorld;
     }
     void OnDisable() {
-        InputManager.Instance.World.Actions.SwitchWorld.performed -= SwitchWorld;
+        InputManager.Control.World.SwitchWorld.performed -= SwitchWorld;
     }
 
     void Start() {

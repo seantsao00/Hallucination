@@ -30,12 +30,12 @@ public class CharacterJump : MonoBehaviour {
     }
 
     void OnEnable() {
-        InputManager.Instance.Character.Actions.Jump.performed += Jump;
-        InputManager.Instance.Character.Actions.Jump.canceled += Jump;
+        InputManager.Control.Character.Jump.performed += Jump;
+        InputManager.Control.Character.Jump.canceled += Jump;
     }
     void OnDisable() {
-        InputManager.Instance.Character.Actions.Jump.performed -= Jump;
-        InputManager.Instance.Character.Actions.Jump.canceled -= Jump;
+        InputManager.Control.Character.Jump.performed -= Jump;
+        InputManager.Control.Character.Jump.canceled -= Jump;
     }
 
     void Start() {

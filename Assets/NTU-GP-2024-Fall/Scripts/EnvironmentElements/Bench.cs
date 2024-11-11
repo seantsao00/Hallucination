@@ -31,8 +31,8 @@ public class Bench : MonoBehaviour {
     }
 
     private void Update() {
-        float horizontal = InputManager.Instance.Character.HorizontalMove;
-        float vertical = InputManager.Instance.Character.VerticalMove;
+        float horizontal = InputManager.Instance.CharacterHorizontalMove;
+        float vertical = InputManager.Instance.CharacterVerticalMove;
         if (IsBeingSat) {
             if (character != null && (horizontal != 0 || vertical != 0)) {
                 LeaveBench();

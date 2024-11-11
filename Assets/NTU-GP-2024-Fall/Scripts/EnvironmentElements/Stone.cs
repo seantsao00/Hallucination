@@ -18,7 +18,7 @@ public class Stone : MonoBehaviour {
 
     void Update() {
         if (!isLeashed) return;
-        float direction = InputManager.Instance.Character.HorizontalMove;
+        float direction = InputManager.Instance.CharacterHorizontalMove;
         rb.velocity = new Vector2(direction * horizontalGrabSpeed, rb.velocity.y);
     }
 

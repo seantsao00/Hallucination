@@ -30,10 +30,10 @@ public class CharacterDash : MonoBehaviour {
     }
 
     void OnEnable() {
-        InputManager.Instance.Character.Actions.Dash.performed += Dash;
+        InputManager.Control.Character.Dash.performed += Dash;
     }
     void OnDisable() {
-        InputManager.Instance.Character.Actions.Dash.performed -= Dash;
+        InputManager.Control.Character.Dash.performed -= Dash;
     }
 
     void Dash(InputAction.CallbackContext context) {

@@ -26,10 +26,10 @@ public class DialogueManager : MonoBehaviour {
     }
 
     void OnEnable() {
-        InputManager.Instance.Dialogue.Actions.Next.performed += NextDialogue;
+        InputManager.Control.Dialogue.Next.performed += NextDialogue;
     }
     void OnDisable() {
-        InputManager.Instance.Dialogue.Actions.Next.performed -= NextDialogue;
+        InputManager.Control.Dialogue.Next.performed -= NextDialogue;
     }
 
     void NextDialogue(InputAction.CallbackContext context) {

@@ -22,4 +22,17 @@ public class InputManager {
 
     public float CharacterHorizontalMove => Control.Character.HorizontalMove.ReadValue<float>();
     public float CharacterVerticalMove => Control.Character.VerticalMove.ReadValue<float>();
+
+    public void SetPauseMode() {
+        Control.Disable();
+        Control.Game.Enable();
+        Control.UI.Enable();
+    }
+
+    public void SetNormalMode() {
+        Control.Disable();
+        Control.Game.Enable();
+        Control.Character.Enable();
+        Control.World.Enable();
+    }
 }

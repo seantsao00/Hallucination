@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
@@ -16,7 +17,7 @@ public class WorldSwitchManager : MonoBehaviour {
         if (Instance != null && Instance != this) {
             Debug.LogWarning("WorldSwitchManager: " +
             "Duplicate instance detected and removed. Only one instance of WorldSwitchManager is allowed.");
-            Destroy(gameObject);
+            Destroy(Instance);
             return;
         }
         Instance = this;
@@ -28,14 +29,21 @@ public class WorldSwitchManager : MonoBehaviour {
         }
     }
 
+    void OnEnable() {
+        InputManager.Instance.World.Actions.SwitchWorld.performed += SwitchWorld;
+    }
+    void OnDisable() {
+        InputManager.Instance.World.Actions.SwitchWorld.performed -= SwitchWorld;
+    }
+
     void Start() {
         ActivateWorldFairy();
     }
 
-    void Update() {
-        if (Input.GetButtonDown("Switch World") && !disabled) {
-            StartCoroutine(SwitchWorldsWithFade());
-        }
+    void SwitchWorld(InputAction.CallbackContext context) {
+        // TODO: refactor this.
+        if (disabled) return;
+        StartCoroutine(SwitchWorldsWithFade());
     }
 
     IEnumerator SwitchWorldsWithFade() {

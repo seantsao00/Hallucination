@@ -113,7 +113,7 @@ public class Character : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 
     [SerializeField] TipManager tipManager;
-    [SerializeField] string grabTip = "Hold E or left shift to move the stone";
+    string grabTip = "Hold E or C to move the stone";
 
 
     void SetCurrentState(CharacterState.ICharacterState newState) {
@@ -144,7 +144,7 @@ public class Character : MonoBehaviour {
             stone = oldObject?.GetComponent<Stone>();
             if (stone != null) {
                 tipManager.ShowTip(false);
-                stone.HorizontalMove(0);
+                stone.Unleash();
                 CurrentState = new CharacterState.Free();
             }
             stone = gameObject?.GetComponent<Stone>();
@@ -173,8 +173,8 @@ public class Character : MonoBehaviour {
         FacedMovableGameObject = Physics2D.OverlapCircle(faceCheck.position, faceCheckRadius, movableMask)?.gameObject;
         OverlappedClimbable = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, climbableLayerMask);
         if (CurrentState is not CharacterState.GrabbingMovable) {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            if (horizontal != 0) FacingDirection = new(horizontal, 0);
+            float direction = InputManager.Instance.Character.HorizontalMove;
+            if (direction != 0) FacingDirection = new(direction, 0);
         }
         if (Rb.velocity.x != 0) {
             GetComponent<Animator>().SetBool("Movement", true);

@@ -15,10 +15,6 @@ public class ElevatorSwitchController : SwitchController {
     // Reference to the player's controller script
     Character character;
 
-    protected override void Update() {
-        base.Update(); // Call the base class Update method
-    }
-
     protected override void OnSwitchActivated() {
         if (!isMovingCharacter) {
             tipManager.ShowTip(false, "");

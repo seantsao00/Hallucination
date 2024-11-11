@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SwitchController : MonoBehaviour {
     public Color interactionColor = Color.green; // Color when the switch is activated
@@ -12,16 +13,20 @@ public class SwitchController : MonoBehaviour {
         originalColor = spriteRenderer.color;
     }
 
-    protected virtual void Update() {
-        // Check if the player is in range and presses the E key
-        if (isPlayerInRange && Input.GetButtonDown("Interact")) {
-            // Change the color of the object when E is pressed
-            print("Switch activated");
-            spriteRenderer.color = interactionColor;
+    void OnEnable() {
+        InputManager.Instance.Character.Actions.Interact.performed += Interact;
+    }
+    void OnDisable() {
+        InputManager.Instance.Character.Actions.Interact.performed -= Interact;
+    }
 
-            // Call the method that handles the switch activation
-            OnSwitchActivated();
-        }
+    void Interact(InputAction.CallbackContext context) {
+        if (!isPlayerInRange) return;
+        print("Switch activated");
+        spriteRenderer.color = interactionColor;
+
+        // Call the method that handles the switch activation
+        OnSwitchActivated();
     }
 
     // Method to be overridden by derived classes to add specific functionality

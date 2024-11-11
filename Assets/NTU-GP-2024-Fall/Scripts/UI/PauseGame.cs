@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PauseGame : MonoBehaviour {
     public GameObject pauseMenuUI; // Assign the Pause Menu UI in the Inspector
@@ -23,15 +24,20 @@ public class PauseGame : MonoBehaviour {
         bearClimb = bear.GetComponent<CharacterClimb>();
         worldSwitch = worldSwitchManager.GetComponent<WorldSwitchManager>();
     }
-    void Update() {
-        // Listen for the "Esc" key to toggle the pause state
-        
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (isPaused) {
-                Resume();
-            } else {
-                Pause();
-            }
+
+
+    void OnEnable() {
+        InputManager.Instance.Game.Actions.Pause.performed += Pause;
+    }
+    void OnDisable() {
+        InputManager.Instance.Game.Actions.Pause.performed -= Pause;
+    }
+
+    void Pause(InputAction.CallbackContext context) {
+        if (isPaused) {
+            Resume();
+        } else {
+            Pause();
         }
     }
 

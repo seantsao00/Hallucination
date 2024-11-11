@@ -1,8 +1,9 @@
-using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterJump : MonoBehaviour {
     Character character;
+    Rigidbody2D rb;
 
     [SerializeField] float maxJumpHeight = 3.5f;
     [Tooltip("Gravity multiplier applied when the player hold jump button and the character is jumping upward.")]
@@ -25,11 +26,31 @@ public class CharacterJump : MonoBehaviour {
     void Awake() {
         audioSource = GetComponent<AudioSource>();
         character = GetComponent<Character>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void OnEnable() {
+        InputManager.Instance.Character.Actions.Jump.performed += Jump;
+        InputManager.Instance.Character.Actions.Jump.canceled += Jump;
+    }
+    void OnDisable() {
+        InputManager.Instance.Character.Actions.Jump.performed -= Jump;
+        InputManager.Instance.Character.Actions.Jump.canceled -= Jump;
     }
 
     void Start() {
         jumpPower = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * character.NormalGravityScale *
             slowerFallGravityMultiplier * maxJumpHeight);
+    }
+
+    void Jump(InputAction.CallbackContext context) {
+        if (context.performed) {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        if (context.canceled && rb.velocity.y > 0) {
+            rb.gravityScale = character.NormalGravityScale;
+            rb.velocity = new Vector2(rb.velocity.x, releaseJumpSpeedMultiplier * rb.velocity.y);
+        }
     }
 
     void Update() {
@@ -38,25 +59,15 @@ public class CharacterJump : MonoBehaviour {
         } else {
             coyoteTimeCounter -= Time.deltaTime;
         }
+        jumpBufferCounter -= Time.deltaTime;
         if (!character.CurrentMovement.IsJumpEnabled) return;
 
-        if (Input.GetButtonDown("Jump")) {
-            jumpBufferCounter = jumpBufferTime;
-        } else {
-            jumpBufferCounter -= Time.deltaTime;
-        }
-
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f) {
-            character.Rb.velocity = new Vector2(character.Rb.velocity.x, jumpPower);
-            character.Rb.gravityScale = character.NormalGravityScale * slowerFallGravityMultiplier;
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+            rb.gravityScale = character.NormalGravityScale * slowerFallGravityMultiplier;
             if (jumpSound != null) audioSource.PlayOneShot(jumpSound);
             jumpBufferCounter = 0f;
             coyoteTimeCounter = 0f;
-        }
-        if (Input.GetButtonUp("Jump") && character.Rb.velocity.y > 0) {
-            character.Rb.gravityScale = character.NormalGravityScale;
-            character.Rb.velocity = new Vector2(character.Rb.velocity.x,
-                releaseJumpSpeedMultiplier * character.Rb.velocity.y);
         }
     }
 }

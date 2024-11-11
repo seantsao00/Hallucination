@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.IO;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour {
     public GameObject dialogueBox;
@@ -15,21 +16,24 @@ public class DialogueManager : MonoBehaviour {
     public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
 
 
-    void Start() {
+    void Awake() {
         dialogueLines = new Queue<DialogueLine>();
         LoadDialoguesFromFile();  // Load all dialogues from the JSON file
         dialogueBox.SetActive(false);  // Initially hide the dialogue box at the start
         leftImage.SetActive(false);  // Hide both images at the start
         rightImage.SetActive(false);
         // StartDialogue("quest_start");
-
     }
 
-    void Update() {
-        // Check if the player presses Enter and a sentence is not typing
-        if (Input.GetButtonDown("Interact")) {
-            DisplayNextSentence();
-        }
+    void OnEnable() {
+        InputManager.Instance.Dialogue.Actions.Next.performed += NextDialogue;
+    }
+    void OnDisable() {
+        InputManager.Instance.Dialogue.Actions.Next.performed -= NextDialogue;
+    }
+
+    void NextDialogue(InputAction.CallbackContext context) {
+        DisplayNextSentence();
     }
 
     // Load the entire JSON file containing multiple dialogues

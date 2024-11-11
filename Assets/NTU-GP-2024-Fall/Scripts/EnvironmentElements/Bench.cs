@@ -31,12 +31,14 @@ public class Bench : MonoBehaviour {
     }
 
     private void Update() {
+        float horizontal = InputManager.Instance.Character.HorizontalMove;
+        float vertical = InputManager.Instance.Character.VerticalMove;
         if (IsBeingSat) {
-            if (character != null && (Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Vertical"))) {
+            if (character != null && (horizontal != 0 || vertical != 0)) {
                 LeaveBench();
             }
         } else {
-            if (character != null && Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0) {
+            if (character != null && vertical > 0) {
                 SitOnBench();
             }
         }

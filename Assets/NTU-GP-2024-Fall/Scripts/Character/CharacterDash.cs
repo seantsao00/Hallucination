@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 
 public class CharacterDash : MonoBehaviour {
     [Header("Dash")]
@@ -14,6 +13,7 @@ public class CharacterDash : MonoBehaviour {
     float dashSpeed;
 
     Character character;
+    Rigidbody2D rb;
 
     bool isDashCooling = false;
     TrailRenderer dashTrailRenderer;
@@ -22,34 +22,38 @@ public class CharacterDash : MonoBehaviour {
 
     void Awake() {
         dashSpeed = dashLength / dashDuration;
-    }
-
-    void Start() {
+        rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();  // Get the AudioSource component
         character = GetComponent<Character>();
         Assert.IsTrue(dashDuration <= dashCooldown);
         dashTrailRenderer = GetComponent<TrailRenderer>();
     }
 
-    void Update() {
+    void OnEnable() {
+        InputManager.Instance.Character.Actions.Dash.performed += Dash;
+    }
+    void OnDisable() {
+        InputManager.Instance.Character.Actions.Dash.performed -= Dash;
+    }
+
+    void Dash(InputAction.CallbackContext context) {
         if (!character.CurrentMovement.IsDashEnabled) return;
 
-        if (!isDashCooling && Input.GetButtonDown("Dash")) {
-            // Play dash sound effect
+        if (!isDashCooling) {
             if (dashSound != null) {
                 audioSource.PlayOneShot(dashSound);  // Play the dash sound effect
             }
-            StartCoroutine(Dash());
+            StartCoroutine(StartDash());
         }
     }
 
-    IEnumerator Dash() {
+    IEnumerator StartDash() {
         isDashCooling = true;
         character.CurrentState = new CharacterState.Dashing();
 
-        float originalGravity = character.Rb.gravityScale;
-        character.Rb.gravityScale = dashGravityMultiplier * originalGravity;
-        character.Rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = dashGravityMultiplier * originalGravity;
+        rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
 
         dashTrailRenderer.emitting = true;
 
@@ -57,7 +61,7 @@ public class CharacterDash : MonoBehaviour {
 
         character.CurrentState = new CharacterState.Free();
 
-        character.Rb.gravityScale = originalGravity;
+        rb.gravityScale = originalGravity;
 
         dashTrailRenderer.emitting = false;
 

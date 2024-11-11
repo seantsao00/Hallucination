@@ -6,16 +6,28 @@ using TMPro;
 public class Stone : MonoBehaviour {
     Rigidbody2D rb;
     float horizontalGrabSpeed;
+    bool isLeashed;
 
-    void Start() {
+    void Awake() {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void HorizontalMove(float horizontalGrabSpeed) {
+    public void SetSpeed(float horizontalGrabSpeed) {
         this.horizontalGrabSpeed = horizontalGrabSpeed;
     }
 
-    void FixedUpdate() {
-        rb.velocity = new Vector2(horizontalGrabSpeed, rb.velocity.y);
+    void Update() {
+        if (!isLeashed) return;
+        float direction = InputManager.Instance.Character.HorizontalMove;
+        rb.velocity = new Vector2(direction * horizontalGrabSpeed, rb.velocity.y);
+    }
+
+    public void Leash() {
+        isLeashed = true;
+    }
+
+    public void Unleash() {
+        isLeashed = false;
+        rb.velocity = new Vector2(0, rb.velocity.y);
     }
 }

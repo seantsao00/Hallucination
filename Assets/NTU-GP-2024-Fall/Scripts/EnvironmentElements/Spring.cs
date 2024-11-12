@@ -9,10 +9,11 @@ public class Spring : MonoBehaviour
     {
         if (other.CompareTag("Player")) {
             Rigidbody2D playerRb = other.GetComponent<Rigidbody2D>();
+            Character character = other.GetComponent<Character>();
             if (playerRb != null)
             {
                 Vector2 launchVelocity = playerRb.velocity;
-                launchVelocity.x = horizontalLaunchSpeed;
+                character.CurrentMovement.LaunchSpring(horizontalLaunchSpeed);
                 launchVelocity.y = verticalLaunchSpeed;
                 
                 playerRb.velocity = launchVelocity;

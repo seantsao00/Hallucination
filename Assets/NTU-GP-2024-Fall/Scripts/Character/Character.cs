@@ -22,7 +22,6 @@ public class Character : MonoBehaviour {
         public float AirHangTimeThresholdSpeed = 0.5f;
         public float StickOnWallFallingSpeed = 3f;
         public float MaxFallingSpeed = 16f;
-
         [HideInInspector, NonSerialized] public float velocityEps = 1e-4f;
     }
 
@@ -33,13 +32,18 @@ public class Character : MonoBehaviour {
         /// The current horizontal movement speed applied to the character.
         /// Adjusts based on character state (e.g., reduced speed when pulling an object).
         /// </summary>
+        /// 
+        
+
         public float HorizontalSpeed;
 
         public float ClimbingSpeed;
+        public float SpringSpeed;
 
         public bool IsHorizontalMoveEnabled;
         public bool IsJumpEnabled;
         public bool IsDashEnabled;
+        public float lastSpringTime;
 
         public CharacterCurrentMovement(CharacterMovementAttributes attributes) {
             Init(attributes);
@@ -69,6 +73,10 @@ public class Character : MonoBehaviour {
             IsHorizontalMoveEnabled = false;
             IsJumpEnabled = false;
             IsDashEnabled = false;
+        }
+        public void LaunchSpring(float speed) {
+            SpringSpeed = speed;
+            lastSpringTime = Time.time;
         }
     }
 
@@ -115,7 +123,7 @@ public class Character : MonoBehaviour {
     [SerializeField] TipManager tipManager;
     string grabTip = "Hold E or C to move the stone";
 
-
+    
     void SetCurrentState(CharacterState.ICharacterState newState) {
         if (newState == currentState) return;
         currentState?.HandleStateChange(this, false);
@@ -172,6 +180,10 @@ public class Character : MonoBehaviour {
         IsGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayerMask | movableMask);
         FacedMovableGameObject = Physics2D.OverlapCircle(faceCheck.position, faceCheckRadius, movableMask)?.gameObject;
         OverlappedClimbable = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, climbableLayerMask);
+        if (IsGrounded && CurrentMovement.SpringSpeed != 0 && (Time.time - CurrentMovement.lastSpringTime) >= 0.2) CurrentMovement.SpringSpeed = 0;
+        if ((Time.time - CurrentMovement.lastSpringTime) >= 0.4) {
+            CurrentMovement.SpringSpeed *= 0.99f;
+        }
         if (CurrentState is not CharacterState.GrabbingMovable) {
             float direction = InputManager.Instance.CharacterHorizontalMove;
             if (direction != 0) FacingDirection = new(direction, 0);

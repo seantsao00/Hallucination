@@ -15,6 +15,10 @@ public class Syncable : MonoBehaviour {
     }
 
     protected void OnDisable() {
+        // WorldSwitchManager may be destroyed before this object
+        // We do not care about this case
+        if (WorldSwitchManager.Instance == null) return; 
+    
         WorldSwitchManager.Instance.OnWorldSwitch.RemoveListener(SyncState);
     }
 
@@ -39,7 +43,7 @@ public class Syncable : MonoBehaviour {
         // Draw a rim around the position in WorldFairyEnvironment's local space
         Gizmos.color = Color.cyan;
         Vector3 syncedPosition = SyncedPosition();
-        
+
         // Draw a wire sphere at this position
         Gizmos.DrawWireSphere(syncedPosition, 0.3f);
         // Gizmos.DrawIcon(syncedPosition, "sv_icon_dot14_sml");

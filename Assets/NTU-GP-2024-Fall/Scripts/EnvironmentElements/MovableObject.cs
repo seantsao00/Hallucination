@@ -74,7 +74,9 @@ public class MovableObject : MonoBehaviour, IButtonControlled {
     }
 
     void RestoreColliderParent(Collider2D collider) {
-        if(!originalParents.ContainsKey(collider)) return;
+        // The world of the collider may be Deactivated
+        // We do not care about this case
+        if (!originalParents[collider].gameObject.activeInHierarchy) return;
         collider.transform.SetParent(null);
         collider.transform.SetParent(originalParents[collider]);
     }

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fairy_fairyW
+  m_Name: fairy_idle
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,9 +21,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: 40cd95db5b3ffac4cb3b530db28ceb0c, type: 3}
+      value: {fileID: 21300000, guid: 8842da8cf3b20de49acac18a7c9d4961, type: 3}
     - time: 0.33333334
-      value: {fileID: 21300000, guid: 82978e6acb85a4c48bd426fc2a44221a, type: 3}
+      value: {fileID: 21300000, guid: 4278e484f356f174e86887671fd1cbdb, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,8 +46,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 40cd95db5b3ffac4cb3b530db28ceb0c, type: 3}
-    - {fileID: 21300000, guid: 82978e6acb85a4c48bd426fc2a44221a, type: 3}
+    - {fileID: 21300000, guid: 8842da8cf3b20de49acac18a7c9d4961, type: 3}
+    - {fileID: 21300000, guid: 4278e484f356f174e86887671fd1cbdb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

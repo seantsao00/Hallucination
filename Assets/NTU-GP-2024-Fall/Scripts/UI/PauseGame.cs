@@ -50,5 +50,6 @@ public class PauseGame : MonoBehaviour {
     public void RestartGame() {
         Time.timeScale = 1f;             // Ensure time is resumed
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
+        InputManager.Instance.SetNormalMode();
     }
 }

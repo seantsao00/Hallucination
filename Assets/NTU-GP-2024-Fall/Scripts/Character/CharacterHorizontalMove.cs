@@ -12,7 +12,6 @@ public class CharacterHorizontalMove : MonoBehaviour {
     void Update() {
         
         if (!character.CurrentMovement.IsHorizontalMoveEnabled) return;
-        print(rb.velocity + " " + character.CurrentMovement.SpringSpeed);
 
         float direction = InputManager.Instance.CharacterHorizontalMove;
         rb.velocity = new Vector2(direction * character.CurrentMovement.HorizontalSpeed + character.CurrentMovement.SpringSpeed, rb.velocity.y);

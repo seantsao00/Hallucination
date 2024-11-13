@@ -35,4 +35,8 @@ public class InputManager {
         Control.Character.Enable();
         Control.World.Enable();
     }
+
+    public void DisableAllInput() {
+        Control.Disable();
+    }
 }

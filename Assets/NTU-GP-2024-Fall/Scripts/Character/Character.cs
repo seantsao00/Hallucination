@@ -123,6 +123,7 @@ public class Character : MonoBehaviour {
     [SerializeField] TipManager tipManager;
     string grabTip = "Hold E or C to move the stone";
 
+    public bool LedgeDetected;
     
     void SetCurrentState(CharacterState.ICharacterState newState) {
         if (newState == currentState) return;

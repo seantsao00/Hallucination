@@ -12,13 +12,11 @@ public class LedgeDetection : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider) {
         if (((1 << collider.gameObject.layer) & GroundLayerMask) != 0) {
-            Debug.Log("Trigger Entered");
             facingWall = true;
         }
     }
     void OnTriggerExit2D(Collider2D collider) {
         if (((1 << collider.gameObject.layer) & GroundLayerMask) != 0) {
-            Debug.Log("Trigger Exited");
             facingWall = false;
         }
     }

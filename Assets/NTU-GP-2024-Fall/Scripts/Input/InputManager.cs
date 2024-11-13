@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class InputManager {
     static InputManager instance;
@@ -42,8 +43,13 @@ public class InputManager {
     public void SetNormalMode() {
         Control.Disable();
         Control.Game.Enable();
-        Control.Character.Enable();
-        Control.World.Enable();
+        GameObject currentPlayedCharacter;
+        if (WorldSwitchManager.Instance.currentWorld == World.Fairy) {
+            currentPlayedCharacter = GameObject.FindGameObjectsWithTag("fairy")[0];
+        } else {
+            currentPlayedCharacter = GameObject.FindGameObjectsWithTag("bear")[0];
+        }
+        UpdateInputAccordingToActiveState(currentPlayedCharacter.GetComponent<CharacterStateController>().ActiveStates);
     }
 
     public void DisableAllInput() {

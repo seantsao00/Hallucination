@@ -3,6 +3,8 @@ using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.InputSystem;
 
+public enum World { Fairy, Bear };
+
 public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
     public GameObject WorldFairyEnvironment;
@@ -12,6 +14,7 @@ public class WorldSwitchManager : MonoBehaviour {
 
     private bool isInWorldFairy = true;
     private bool disabled = false;
+    public World currentWorld { get; private set; }
 
     void Awake() {
         if (Instance != null && Instance != this) {
@@ -65,11 +68,13 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     void ActivateWorldFairy() {
+        currentWorld = World.Fairy;
         WorldFairyEnvironment.SetActive(true);
         WorldBearEnvironment.SetActive(false);
     }
 
     void ActivateWorldBear() {
+        currentWorld = World.Bear;
         WorldFairyEnvironment.SetActive(false);
         WorldBearEnvironment.SetActive(true);
     }

@@ -38,6 +38,8 @@ public class CharacterStateController : MonoBehaviour {
         return activeStates.Contains(state);
     }
 
+    public HashSet<CharacterState> ActiveStates => new HashSet<CharacterState>(activeStates);
+
     private void HandleStateChange(CharacterState state, bool added) {
         InputManager.Instance.UpdateInputAccordingToActiveState(activeStates);
     }

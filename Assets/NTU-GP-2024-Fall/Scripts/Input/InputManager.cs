@@ -32,6 +32,13 @@ public class InputManager {
         Control.UI.Enable();
     }
 
+    public void SetDialogueMode() {
+        Control.Disable();
+        Control.Game.Enable();
+        Control.UI.Enable();
+        Control.Dialogue.Enable();
+    }
+
     public void SetNormalMode() {
         Control.Disable();
         Control.Game.Enable();

@@ -30,17 +30,21 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     void OnEnable() {
-        InputManager.Control.World.SwitchWorld.performed += SwitchWorld;
+        InputManager.Control.World.SwitchWorld.performed += SwitchWorldByInput;
     }
     void OnDisable() {
-        InputManager.Control.World.SwitchWorld.performed -= SwitchWorld;
+        InputManager.Control.World.SwitchWorld.performed -= SwitchWorldByInput;
     }
 
     void Start() {
         ActivateWorldFairy();
     }
 
-    void SwitchWorld(InputAction.CallbackContext context) {
+    void SwitchWorldByInput(InputAction.CallbackContext context) {
+        SwitchWorld();
+    }
+
+    public void SwitchWorld() {
         // TODO: refactor this.
         if (disabled) return;
         StartCoroutine(SwitchWorldsWithFade());
@@ -72,10 +76,12 @@ public class WorldSwitchManager : MonoBehaviour {
 
     public void Enable() {
         disabled = false;
+        print(disabled);
     }
 
     public void Disable() {
         disabled = true;
+        print(disabled);
     }
 
     IEnumerator FadeOut() {

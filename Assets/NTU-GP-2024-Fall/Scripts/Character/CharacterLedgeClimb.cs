@@ -1,4 +1,4 @@
-using UnityEditor.Callbacks;
+using System.Collections;
 using UnityEngine;
 
 public class CharacterLedgeClimb : MonoBehaviour {
@@ -6,15 +6,19 @@ public class CharacterLedgeClimb : MonoBehaviour {
     [SerializeField] float testHaltInterval = 0.4f;
     Vector2 destination;
     Character character;
+    Rigidbody2D rb;
+    float eps = 1e-4f;
     bool isClimbingLedge;
 
     void Awake() {
         character = GetComponent<Character>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update() {
         if (!InputManager.Control.Character.HorizontalMove.enabled) return;
         if (isClimbingLedge) return;
+        if (Mathf.Abs(rb.velocity.y) > eps) return;
         if (character.IsLedgeDetected == false) return;
         float direction = InputManager.Instance.CharacterHorizontalMove;
         if (direction != 0) LedgeClimb();
@@ -34,6 +38,11 @@ public class CharacterLedgeClimb : MonoBehaviour {
     void LedgeClimbOver() {
         transform.position = destination;
         InputManager.Instance.SetNormalMode();
+        StartCoroutine(FinishClimb(0.05f));
+    }
+
+    IEnumerator FinishClimb(float shortDelay) {
+        yield return new WaitForSeconds(shortDelay);
         isClimbingLedge = false;
     }
     

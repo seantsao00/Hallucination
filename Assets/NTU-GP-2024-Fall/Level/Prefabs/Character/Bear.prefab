@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6083867850801044213}
   - component: {fileID: 3488439640596615668}
-  - component: {fileID: 8899162368332037489}
+  - component: {fileID: 5263834867057223048}
   m_Layer: 0
   m_Name: LedgeCheck
   m_TagString: Untagged
@@ -49,8 +49,8 @@ MonoBehaviour:
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 64
---- !u!68 &8899162368332037489
-EdgeCollider2D:
+--- !u!61 &5263834867057223048
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -81,15 +81,19 @@ EdgeCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.3}
+  m_Offset: {x: 0.2, y: 0.3}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6, y: 0.1}
   m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.1, y: 0}
-  - {x: 0.5, y: 0}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!1 &7284502025777276109
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,9 +357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5cd31d8409fce44b5afcee5b83acf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AheadGroundLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
   climbingSpeed: 5
 --- !u!114 &5740009272175121721
 MonoBehaviour:

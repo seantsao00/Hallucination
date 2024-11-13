@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Boundary : MonoBehaviour, ICheckpointControllable
-{
-    // Start is called before the first frame update
+public class Boundary : MonoBehaviour {
+    [SerializeField] Checkpoint checkpoint;
 
-    public void Activate() {
+    void Awake() {
+        checkpoint.CheckpointActivated += Activate;
+        checkpoint.CheckpointDeactivated += Deactivate;
+    }
+
+    void Activate(Checkpoint checkpoint) {
         gameObject.SetActive(true);
     }
 
-    public void Deactivate() {
+    void Deactivate(Checkpoint checkpoint) {
         gameObject.SetActive(false);
-    }
-
-    public GameObject GetGameObject() {
-        return gameObject;
     }
 }

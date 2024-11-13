@@ -43,12 +43,10 @@ public class InputManager {
     public void SetNormalMode() {
         Control.Disable();
         Control.Game.Enable();
+        Control.Character.Enable();
+        Control.World.Enable();
         GameObject currentPlayedCharacter;
-        if (WorldSwitchManager.Instance.currentWorld == World.Fairy) {
-            currentPlayedCharacter = GameObject.FindGameObjectsWithTag("fairy")[0];
-        } else {
-            currentPlayedCharacter = GameObject.FindGameObjectsWithTag("bear")[0];
-        }
+        currentPlayedCharacter = GameObject.FindGameObjectsWithTag("Player")[0];
         UpdateInputAccordingToActiveState(currentPlayedCharacter.GetComponent<CharacterStateController>().ActiveStates);
     }
 
@@ -85,6 +83,7 @@ public class InputManager {
             Control.Character.VerticalMove.Enable();
         }
         // Character.Jump
+        Control.Character.Jump.Enable();
         // Character.Dash
         if (characterBusy()) {
             Control.Character.Dash.Disable();

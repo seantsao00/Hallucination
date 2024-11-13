@@ -23,7 +23,7 @@ public class CharacterState {
             if (isActive) {
                 character.gameObject.layer = LayerMask.NameToLayer("AheadGround");
                 character.Rb.gravityScale = 0;
-                character.Rb.velocity = new Vector2(0, character.Rb.velocity.y);
+                character.Rb.velocity = new Vector2(0, 0);
             } else {
                 character.gameObject.layer = LayerMask.NameToLayer("Default");
                 character.Rb.gravityScale = character.NormalGravityScale;

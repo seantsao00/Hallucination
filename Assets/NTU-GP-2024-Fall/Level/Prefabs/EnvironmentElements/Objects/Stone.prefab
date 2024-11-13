@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 240516330264412358}
   - component: {fileID: 7490079267734063914}
   - component: {fileID: 6686374317713632299}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Stone
   m_TagString: Stone
   m_Icon: {fileID: 0}
@@ -106,10 +106,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295

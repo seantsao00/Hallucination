@@ -1,40 +1,47 @@
 using UnityEngine;
 
 public class CharacterClimb : MonoBehaviour {
+    // [SerializeField] LayerMask AheadGroundLayerMask;
+    [SerializeField] float climbingSpeed = 5f;
     Character character;
     Rigidbody2D rb;
+    CharacterStateController characterStateController;
 
-    void Start() {
+    void Awake() {
         character = GetComponent<Character>();
         rb = GetComponent<Rigidbody2D>();
+        characterStateController = GetComponent<CharacterStateController>();
     }
 
     void Update() {
         float direction = InputManager.Instance.CharacterVerticalMove;
 
-        if (character.CurrentState is CharacterState.Free) {
+        if (!characterStateController.HasState(CharacterState.Climbing)) {
             if (direction > 0 && character.IsBodyOnClimbable) StartClimb();
             if (direction < 0 && character.IsStandOnClimbable) StartClimb();
         }
-        if (character.CurrentState is CharacterState.Climbing) {
+        if (characterStateController.HasState(CharacterState.Climbing)) {
             if (character.IsGrounded) {
                 if (direction >= 0 && !character.IsBodyOnClimbable) BackToNormal();
                 if (direction <= 0 && !character.IsStandOnClimbable) BackToNormal();
             }
             if (!character.IsBodyOnClimbable && !character.IsStandOnClimbable) BackToNormal();
         }
-        if (character.CurrentState is CharacterState.Climbing) {
-            rb.velocity = new Vector2(0, direction * character.CurrentMovement.ClimbingSpeed);
+        if (characterStateController.HasState(CharacterState.Climbing)) {
+            rb.velocity = new Vector2(0, direction * climbingSpeed);
         }
     }
 
     void StartClimb() {
-        character.CurrentState = new CharacterState.Climbing();
+        rb.velocity = new Vector2(0, 0);
+        gameObject.layer = LayerMask.NameToLayer("AheadGround");
+        characterStateController.AddState(CharacterState.Climbing);
         GetComponent<Animator>().SetBool("Climb", true);
     }
 
     void BackToNormal() {
-        character.CurrentState = new CharacterState.Free();
+        gameObject.layer = 1 << 0; // default layer (0)
+        characterStateController.RemoveState(CharacterState.Climbing);
         GetComponent<Animator>().SetBool("Climb", false);
     }
 }

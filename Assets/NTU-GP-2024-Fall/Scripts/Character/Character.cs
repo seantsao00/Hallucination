@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -12,9 +13,6 @@ public class Character : MonoBehaviour {
     public class CharacterMovementAttributes {
         [Header("HorizontalMovement")]
         public float NormalHorizontalSpeed = 5f;
-        public float JumpPower = 12f;
-        public float ClimbingSpeed = 5f;
-        public float GrabbingHorizontalSpeed = 3f;
 
         [Header("Behavior")]
         [Tooltip("Gravity multiplier applied when the character’s vertical falling speed falls below the threshold.")]
@@ -33,16 +31,10 @@ public class Character : MonoBehaviour {
         /// Adjusts based on character state (e.g., reduced speed when pulling an object).
         /// </summary>
         /// 
-
-
         public float HorizontalSpeed;
 
-        public float ClimbingSpeed;
         public float SpringSpeed;
 
-        public bool IsHorizontalMoveEnabled;
-        public bool IsJumpEnabled;
-        public bool IsDashEnabled;
         public float lastSpringTime;
 
         public CharacterCurrentMovement(CharacterMovementAttributes attributes) {
@@ -54,25 +46,6 @@ public class Character : MonoBehaviour {
         }
         public void SetNormal() {
             HorizontalSpeed = attributes.NormalHorizontalSpeed;
-            ClimbingSpeed = attributes.ClimbingSpeed;
-            IsHorizontalMoveEnabled = true;
-            IsJumpEnabled = true;
-            IsDashEnabled = true;
-        }
-        public void SetDashing() {
-            SetNormal();
-            IsHorizontalMoveEnabled = false;
-        }
-        public void SetGrabbing() {
-            HorizontalSpeed = attributes.GrabbingHorizontalSpeed;
-            IsHorizontalMoveEnabled = true;
-            IsJumpEnabled = false;
-            IsDashEnabled = false;
-        }
-        public void SetTransporting() {
-            IsHorizontalMoveEnabled = false;
-            IsJumpEnabled = false;
-            IsDashEnabled = false;
         }
         public void LaunchSpring(float speed) {
             SpringSpeed = speed;
@@ -83,11 +56,7 @@ public class Character : MonoBehaviour {
     public CharacterMovementAttributes MovementAttributes;
     public CharacterCurrentMovement CurrentMovement;
 
-    CharacterState.ICharacterState currentState;
-    public CharacterState.ICharacterState CurrentState {
-        get { return currentState; }
-        set { SetCurrentState(value); }
-    }
+    CharacterStateController characterStateController;
 
     Vector2 facingDirection = new Vector2(1, 0);
     public Vector2 FacingDirection {
@@ -102,7 +71,6 @@ public class Character : MonoBehaviour {
     LayerMask movableMask;
 
     private Rigidbody2D rb;
-    public Rigidbody2D Rb { get { return rb; } }
     [HideInInspector] public bool IsGrounded;
     [HideInInspector] public bool IsStandOnClimbable;
     [HideInInspector] public bool IsBodyOnClimbable;
@@ -116,13 +84,6 @@ public class Character : MonoBehaviour {
     string grabTip = "Hold E or C to move the stone";
 
 
-    void SetCurrentState(CharacterState.ICharacterState newState) {
-        if (newState == currentState) return;
-        currentState?.HandleStateChange(this, false);
-        newState?.HandleStateChange(this, true);
-        currentState = newState;
-    }
-
     private void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;
         if (direction.x < 0) transform.rotation = Quaternion.Euler(angle.x, 180, angle.z);
@@ -134,12 +95,21 @@ public class Character : MonoBehaviour {
         movableMask = LayerMask.GetMask("Movable");
         CurrentMovement = new CharacterCurrentMovement(MovementAttributes);
         rb = GetComponent<Rigidbody2D>();
-        NormalGravityScale = Rb.gravityScale;
+        NormalGravityScale = rb.gravityScale;
+        characterStateController = GetComponent<CharacterStateController>();
+        characterStateController.OnStateChanged += HandleStateChange;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void Start() {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        CurrentState = new CharacterState.Free();
+    private void HandleStateChange(CharacterState state, bool added) {
+        if (characterStateController.HasState(CharacterState.Climbing) ||
+            characterStateController.HasState(CharacterState.Dashing)) {
+            rb.gravityScale = 0;
+        } else if (characterStateController.HasState(CharacterState.BeingBlown)) {
+            rb.gravityScale = NormalGravityScale * MovementAttributes.AirHangTimeGravityMultiplier;
+        } else {
+            rb.gravityScale = NormalGravityScale;
+        }
     }
 
     void Update() {
@@ -147,30 +117,29 @@ public class Character : MonoBehaviour {
         if ((Time.time - CurrentMovement.lastSpringTime) >= 0.4) {
             CurrentMovement.SpringSpeed *= 0.99f;
         }
-        if (CurrentState is not CharacterState.GrabbingMovable) {
+        if (!characterStateController.HasState(CharacterState.Grabbing)) {
             float direction = InputManager.Instance.CharacterHorizontalMove;
             if (direction != 0) FacingDirection = new(direction, 0);
         }
-        if (Rb.velocity.x != 0) {
+        if (rb.velocity.x != 0) {
             GetComponent<Animator>().SetBool("Movement", true);
         } else {
             GetComponent<Animator>().SetBool("Movement", false);
         }
-        if (Rb.velocity.y < -MovementAttributes.velocityEps &&
-            currentState is not CharacterState.Dashing &&
-            currentState is not CharacterState.Climbing) {
-            if (Mathf.Abs(Rb.velocity.y) < MovementAttributes.AirHangTimeThresholdSpeed) {
-                Rb.gravityScale = NormalGravityScale * MovementAttributes.AirHangTimeGravityMultiplier;
+        if (
+            rb.velocity.y < -MovementAttributes.velocityEps &&
+            !characterStateController.HasState(CharacterState.Dashing) &&
+            !characterStateController.HasState(CharacterState.BeingBlown) &&
+            !characterStateController.HasState(CharacterState.Climbing)
+        ) {
+            if (Mathf.Abs(rb.velocity.y) < MovementAttributes.AirHangTimeThresholdSpeed) {
+                rb.gravityScale = NormalGravityScale * MovementAttributes.AirHangTimeGravityMultiplier;
             } else {
-                Rb.gravityScale = NormalGravityScale;
+                rb.gravityScale = NormalGravityScale;
             }
         }
-        if (Rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {
-            Rb.velocity = new Vector2(Rb.velocity.x, -MovementAttributes.MaxFallingSpeed);
+        if (rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {
+            rb.velocity = new Vector2(rb.velocity.x, -MovementAttributes.MaxFallingSpeed);
         }
-    }
-
-    void OnDrawGizmos() {
-        Gizmos.color = Color.red;
     }
 }

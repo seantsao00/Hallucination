@@ -13,6 +13,7 @@ public class CharacterLedgeClimb : MonoBehaviour {
     }
 
     void Update() {
+        if (!InputManager.Control.Character.HorizontalMove.enabled) return;
         if (isClimbingLedge) return;
         if (character.IsLedgeDetected == false) return;
         float direction = InputManager.Instance.CharacterHorizontalMove;

@@ -8,7 +8,6 @@ public class CharacterDash : MonoBehaviour {
     [SerializeField] float dashLength = 4f;
     [SerializeField] float dashDuration = 0.2f;
     [SerializeField] float dashCooldown = 1f;
-    [SerializeField] float dashGravityMultiplier = 0f;
     [SerializeField] AudioClip dashSound;  // Drag and drop your dash sound effect here in the Inspector
     float dashSpeed;
 
@@ -19,6 +18,7 @@ public class CharacterDash : MonoBehaviour {
     TrailRenderer dashTrailRenderer;
 
     AudioSource audioSource;  // Reference to AudioSource component
+    CharacterStateController characterStateController;
 
     void Awake() {
         dashSpeed = dashLength / dashDuration;
@@ -27,6 +27,7 @@ public class CharacterDash : MonoBehaviour {
         character = GetComponent<Character>();
         Assert.IsTrue(dashDuration <= dashCooldown);
         dashTrailRenderer = GetComponent<TrailRenderer>();
+        characterStateController = GetComponent<CharacterStateController>();
     }
 
     void OnEnable() {
@@ -37,34 +38,24 @@ public class CharacterDash : MonoBehaviour {
     }
 
     void Dash(InputAction.CallbackContext context) {
-        if (!character.CurrentMovement.IsDashEnabled) return;
-
-        if (!isDashCooling) {
-            if (dashSound != null) {
-                audioSource.PlayOneShot(dashSound);  // Play the dash sound effect
-            }
-            StartCoroutine(StartDash());
+        if (isDashCooling) return;
+        if (dashSound != null) {
+            audioSource.PlayOneShot(dashSound);  // Play the dash sound effect
         }
+        StartCoroutine(StartDash());
     }
 
     IEnumerator StartDash() {
         isDashCooling = true;
-        character.CurrentState = new CharacterState.Dashing();
-
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = dashGravityMultiplier * originalGravity;
+        characterStateController.AddState(CharacterState.Dashing);
         rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
-
         dashTrailRenderer.emitting = true;
-
+        InputManager.Control.Character.HorizontalMove.Disable();
         yield return new WaitForSeconds(dashDuration);
 
-        character.CurrentState = new CharacterState.Free();
-
-        rb.gravityScale = originalGravity;
-
+        characterStateController.RemoveState(CharacterState.Dashing);
         dashTrailRenderer.emitting = false;
-
+        InputManager.Control.Character.HorizontalMove.Enable();
         yield return new WaitForSeconds(dashCooldown - dashDuration);
 
         isDashCooling = false;

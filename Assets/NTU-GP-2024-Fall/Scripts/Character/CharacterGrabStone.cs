@@ -1,12 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class CharacterGrabStone : MonoBehaviour {
+    [SerializeField] float grabSpeed = 3f;
     Character character;
     Stone stone => character.StoneWithinRange;
+    public bool IsLeashingStone { get; private set; }
+    CharacterStateController characterStateController;
 
     void Awake() {
         character = GetComponent<Character>();
+        characterStateController = GetComponent<CharacterStateController>();
     }
 
     void OnEnable() {
@@ -20,14 +25,22 @@ public class CharacterGrabStone : MonoBehaviour {
 
     void Grab(InputAction.CallbackContext context) {
         if (stone == null) return;
-        if (context.performed) {
-            character.CurrentState = new CharacterState.GrabbingMovable();
-            stone.SetSpeed(character.CurrentMovement.HorizontalSpeed);
-            stone.Leash();
-        }
-        if (context.canceled) {
-            character.CurrentState = new CharacterState.Free();
-            stone.Unleash();
-        }
+        if (!IsLeashingStone && context.performed) { LeashStone(); }
+        if (IsLeashingStone && context.canceled) { UnleashStone(); }
+    }
+
+    void LeashStone() {
+        stone.SetSpeed(grabSpeed);
+        stone.Leash();
+        character.CurrentMovement.HorizontalSpeed = grabSpeed;
+        IsLeashingStone = true;
+        characterStateController.AddState(CharacterState.Grabbing);
+    }
+
+    public void UnleashStone() {
+        stone.Unleash();
+        character.CurrentMovement.HorizontalSpeed = character.MovementAttributes.NormalHorizontalSpeed;
+        IsLeashingStone = false;
+        characterStateController.RemoveState(CharacterState.Grabbing);
     }
 }

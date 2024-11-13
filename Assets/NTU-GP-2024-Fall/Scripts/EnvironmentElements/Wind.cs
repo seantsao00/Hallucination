@@ -4,17 +4,19 @@ using UnityEditor;
 public class Wind : MonoBehaviour {
     Character character;
     CompositeCollider2D compositeCollider;
+    CharacterStateController characterStateController;
 
-    void OnTriggerStay2D(Collider2D collision) {
+    void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
             character = collision.GetComponent<Character>();
-            character.CurrentState = new CharacterState.BeingBlown();
+            characterStateController = collision.GetComponent<CharacterStateController>();
+            characterStateController.AddState(CharacterState.BeingBlown);
         }
     }
 
     void OnTriggerExit2D(Collider2D collision) {
         if (collision.CompareTag("Player") && character != null) {
-            character.CurrentState = new CharacterState.Free();
+            characterStateController.RemoveState(CharacterState.BeingBlown);
             character = null;
         }
     }

@@ -149,10 +149,11 @@ GameObject:
   - component: {fileID: 3064367424361827195}
   - component: {fileID: 43143662400375250}
   - component: {fileID: 3727498768843472702}
+  - component: {fileID: 7706779010662043586}
   - component: {fileID: -3669802901798649802}
   - component: {fileID: 6627739361679771361}
-  - component: {fileID: 7706779010662043586}
   - component: {fileID: 8280142412839437961}
+  - component: {fileID: 210263903891469126}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -256,47 +257,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-3669802901798649802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4106964555294187257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3edae7746902f6a43a0efa6719618def, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementAttributes:
-    NormalHorizontalSpeed: 5
-    JumpPower: 12
-    ClimbingSpeed: 5
-    GrabbingHorizontalSpeed: 3
-    AirHangTimeGravityMultiplier: 0.4
-    AirHangTimeThresholdSpeed: 0.5
-    StickOnWallFallingSpeed: 3
-    MaxFallingSpeed: 16
-  StoneWithinRange: {fileID: 0}
-  IsGrounded: 1
-  IsStandOnClimbable: 0
-  IsBodyOnClimbable: 0
-  IsLedgeDetected: 0
-  IsDead: 0
-  NormalGravityScale: 0
-  tipManager: {fileID: 0}
---- !u!114 &6627739361679771361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4106964555294187257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c548ecb7bdb10f4486c91f8f36a0c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &7706779010662043586
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -342,6 +302,47 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-3669802901798649802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4106964555294187257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3edae7746902f6a43a0efa6719618def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovementAttributes:
+    NormalHorizontalSpeed: 5
+    JumpPower: 12
+    ClimbingSpeed: 5
+    GrabbingHorizontalSpeed: 3
+    AirHangTimeGravityMultiplier: 0.4
+    AirHangTimeThresholdSpeed: 0.5
+    StickOnWallFallingSpeed: 3
+    MaxFallingSpeed: 16
+  StoneWithinRange: {fileID: 0}
+  IsGrounded: 1
+  IsStandOnClimbable: 0
+  IsBodyOnClimbable: 0
+  IsLedgeDetected: 0
+  IsDead: 0
+  NormalGravityScale: 0
+  tipManager: {fileID: 0}
+--- !u!114 &6627739361679771361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4106964555294187257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c548ecb7bdb10f4486c91f8f36a0c6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8280142412839437961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,5 +353,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d6855cbb1f372e4ebb3e79cab1c8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &210263903891469126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4106964555294187257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a792e9d5919f41c4f99df4d825e0f8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

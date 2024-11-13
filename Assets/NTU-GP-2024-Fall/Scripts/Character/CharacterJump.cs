@@ -15,13 +15,14 @@ public class CharacterJump : MonoBehaviour {
          + "ensuring intended jumps are more likely to succeed.")]
     [SerializeField] float jumpBufferTime = 0.1f;
 
-    float jumpPower;
-
     float coyoteTimeCounter;
     float jumpBufferCounter;
 
     [SerializeField] AudioClip jumpSound;
     AudioSource audioSource;
+
+    float jumpPower => Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * character.NormalGravityScale *
+             slowerFallGravityMultiplier * maxJumpHeight);
 
     void Awake() {
         audioSource = GetComponent<AudioSource>();
@@ -36,11 +37,6 @@ public class CharacterJump : MonoBehaviour {
     void OnDisable() {
         InputManager.Control.Character.Jump.performed -= Jump;
         InputManager.Control.Character.Jump.canceled -= Jump;
-    }
-
-    void Start() {
-        jumpPower = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * character.NormalGravityScale *
-            slowerFallGravityMultiplier * maxJumpHeight);
     }
 
     void Jump(InputAction.CallbackContext context) {
@@ -60,7 +56,6 @@ public class CharacterJump : MonoBehaviour {
             coyoteTimeCounter -= Time.deltaTime;
         }
         jumpBufferCounter -= Time.deltaTime;
-        if (!character.CurrentMovement.IsJumpEnabled) return;
 
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f) {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);

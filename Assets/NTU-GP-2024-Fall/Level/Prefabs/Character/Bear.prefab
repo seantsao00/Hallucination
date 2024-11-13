@@ -353,6 +353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5cd31d8409fce44b5afcee5b83acf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AheadGroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  climbingSpeed: 5
 --- !u!114 &5740009272175121721
 MonoBehaviour:
   m_ObjectHideFlags: 0

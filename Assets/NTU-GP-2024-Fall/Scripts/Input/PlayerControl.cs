@@ -330,6 +330,17 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchWorld"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17b62ef2-5689-4d1b-988e-3aec3ccaa639"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWorld"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },

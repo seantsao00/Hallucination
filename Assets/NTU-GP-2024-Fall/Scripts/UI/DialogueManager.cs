@@ -14,9 +14,16 @@ public class DialogueManager : MonoBehaviour {
 
     public GameObject leftImage;  // Reference to the left image GameObject (player's image)
     public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
-
+    public static DialogueManager Instance { get; private set; }
 
     void Awake() {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("DialogueManager: " +
+            "Duplicate instance detected and removed. Only one instance of DialogueManager is allowed.");
+            Destroy(Instance);
+            return;
+        }
+        Instance = this;
         dialogueLines = new Queue<DialogueLine>();
         LoadDialoguesFromFile();  // Load all dialogues from the JSON file
         dialogueBox.SetActive(false);  // Initially hide the dialogue box at the start
@@ -54,6 +61,7 @@ public class DialogueManager : MonoBehaviour {
 
     // Start a specific dialogue by its name
     public void StartDialogue(string dialogueName) {
+        InputManager.Instance.SetDialogueMode();
         if (dialogueData != null) {
             dialogueBox.SetActive(true);  // Show the dialogue box when dialogue starts
             // Find the correct dialogue by name
@@ -96,12 +104,12 @@ public class DialogueManager : MonoBehaviour {
         StartCoroutine(TypeSentence(dialogueLine));  // Display the dialogue line with a typing effect
     }
     void UpdateSpeakerImage(string speaker) {
-        if (speaker == "Player") {
-            leftImage.SetActive(true);  // Show player's image on the left
-            rightImage.SetActive(false);  // Hide the other character's image
+        if (speaker == "Fairy") {
+            leftImage.SetActive(true);
+            rightImage.SetActive(false);
         } else {
-            leftImage.SetActive(false);  // Hide player's image
-            rightImage.SetActive(true);  // Show the other character's image on the right
+            leftImage.SetActive(false);
+            rightImage.SetActive(true);
         }
     }
     IEnumerator TypeSentence(DialogueLine dialogueLine) {
@@ -115,6 +123,7 @@ public class DialogueManager : MonoBehaviour {
 
     void EndDialogue() {
         Debug.Log("End of dialogue");
+        InputManager.Instance.SetNormalMode();
         dialogueBox.SetActive(false);   // Hide the dialogue box when dialogue ends
         leftImage.SetActive(false);  // Hide both images when dialogue ends
         rightImage.SetActive(false);

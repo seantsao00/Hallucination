@@ -7,8 +7,8 @@ public enum World { Fairy, Bear };
 
 public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
-    public GameObject WorldFairyEnvironment;
-    public GameObject WorldBearEnvironment;
+    public GameObject[] WorldFairyEnvironment;
+    public GameObject[] WorldBearEnvironment;
     public CanvasGroup FadeCanvasGroup;
     public UnityEvent OnWorldSwitch;
 
@@ -69,14 +69,14 @@ public class WorldSwitchManager : MonoBehaviour {
 
     void ActivateWorldFairy() {
         currentWorld = World.Fairy;
-        WorldFairyEnvironment.SetActive(true);
-        WorldBearEnvironment.SetActive(false);
+        foreach (var environment in WorldFairyEnvironment) { environment.SetActive(true); }
+        foreach (var environment in WorldBearEnvironment) { environment.SetActive(false); }
     }
 
     void ActivateWorldBear() {
         currentWorld = World.Bear;
-        WorldFairyEnvironment.SetActive(false);
-        WorldBearEnvironment.SetActive(true);
+        foreach (var environment in WorldFairyEnvironment) { environment.SetActive(false); }
+        foreach (var environment in WorldBearEnvironment) { environment.SetActive(true); }
     }
 
     public void Enable() {

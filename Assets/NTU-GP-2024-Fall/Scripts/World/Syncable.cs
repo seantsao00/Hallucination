@@ -4,17 +4,17 @@ using UnityEditor;
 public class Syncable : MonoBehaviour {
     [SerializeField] protected GameObject syncedObject;
     [SerializeField] GameObject currentWorldReference, syncedWorldReference;
-    GameObject currentWorld, syncedWorld;
+    // GameObject currentWorld, syncedWorld;
 
     void Start() {
         Position();
     }
 
     void Position() {
-        currentWorld = CurrentWorld();
-        syncedWorld = SyncedWorld();
-        if (currentWorldReference == null) currentWorldReference = currentWorld;
-        if (syncedWorldReference == null) syncedWorldReference = syncedWorld;
+        // currentWorld = CurrentWorld();
+        // syncedWorld = SyncedWorld();
+        // if (currentWorldReference == null) currentWorldReference = currentWorld;
+        // if (syncedWorldReference == null) syncedWorldReference = syncedWorld;
     }
 
     protected void OnEnable() {
@@ -29,9 +29,9 @@ public class Syncable : MonoBehaviour {
         WorldSwitchManager.Instance.OnWorldSwitch.RemoveListener(SyncState);
     }
 
-    protected Vector3 CurrentWorldLocalPosition() {
-        return currentWorld.transform.InverseTransformPoint(transform.position);
-    }
+    // protected Vector3 CurrentWorldLocalPosition() {
+        // return currentWorld.transform.InverseTransformPoint(transform.position);
+    // }
 
     protected Vector3 CurrentWorldReferenceLocalPosition() {
         return currentWorldReference.transform.InverseTransformPoint(transform.position);
@@ -58,17 +58,5 @@ public class Syncable : MonoBehaviour {
         Gizmos.DrawWireSphere(syncedPosition, 0.3f);
         // Gizmos.DrawIcon(syncedPosition, "sv_icon_dot14_sml");
         Handles.Label(syncedPosition, "synced position");
-    }
-
-    protected GameObject CurrentWorld() {
-        GameObject fairyWorld = WorldSwitchManager.Instance.WorldFairyEnvironment;
-        GameObject bearWorld = WorldSwitchManager.Instance.WorldBearEnvironment;
-        return transform.IsChildOf(fairyWorld.transform) ? fairyWorld : bearWorld;
-    }
-
-    protected GameObject SyncedWorld() {
-        GameObject fairyWorld = WorldSwitchManager.Instance.WorldFairyEnvironment;
-        GameObject bearWorld = WorldSwitchManager.Instance.WorldBearEnvironment;
-        return transform.IsChildOf(bearWorld.transform) ? fairyWorld : bearWorld;
     }
 }

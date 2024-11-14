@@ -81,10 +81,12 @@ public class WorldSwitchManager : MonoBehaviour {
 
     public void Enable() {
         disabled = false;
+        print(disabled);
     }
 
     public void Disable() {
         disabled = true;
+        print(disabled);
     }
 
     IEnumerator FadeOut() {

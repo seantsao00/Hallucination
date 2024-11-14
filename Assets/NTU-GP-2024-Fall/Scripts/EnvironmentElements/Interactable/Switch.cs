@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 public interface ISwitchControlled {
-    void SetState(int index);
+    public void SetState(int index);
 }
 
 public class Switch : InteractableObjectBase {
@@ -15,7 +15,7 @@ public class Switch : InteractableObjectBase {
 
     List<ISwitchControlled> controlledList = new List<ISwitchControlled>();
 
-    private void Awake() {
+    void Awake() {
         currentStateIndex = startStateIndex;
         foreach (var obj in controlledObjects) {
             ISwitchControlled controlled = obj.GetComponent<ISwitchControlled>();
@@ -36,13 +36,13 @@ public class Switch : InteractableObjectBase {
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             isPlayerInRange = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             isPlayerInRange = false;
         }

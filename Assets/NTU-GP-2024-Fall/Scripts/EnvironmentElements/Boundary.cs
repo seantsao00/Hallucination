@@ -2,27 +2,17 @@ using UnityEngine;
 
 public class Boundary : MonoBehaviour {
     [SerializeField] Checkpoint checkpoint;
-    [SerializeField] bool enableIfCheckpointCompleted;
 
     void Awake() {
-        if (enableIfCheckpointCompleted) {
-            checkpoint.CheckpointCompleted += enable;
-            disable(checkpoint);
-        }
-        else {
-            checkpoint.CheckpointCompleted += disable;
-            enable(checkpoint);
-        }
+        checkpoint.CheckpointActivated += Activate;
+        checkpoint.CheckpointDeactivated += Deactivate;
     }
 
-    void enable(Checkpoint checkpoint) {
-        // print("Boundary enabled");
+    void Activate(Checkpoint checkpoint) {
         gameObject.SetActive(true);
     }
 
-    void disable(Checkpoint checkpoint) {
-        // print("Boundary disabled");
+    void Deactivate(Checkpoint checkpoint) {
         gameObject.SetActive(false);
     }
-    
 }

@@ -2,12 +2,19 @@ using UnityEngine;
 using UnityEditor;
 
 public class Syncable : MonoBehaviour {
-    public GameObject SyncedObject;
+    [SerializeField] protected GameObject syncedObject;
+    [SerializeField] GameObject currentWorldReference, syncedWorldReference;
     GameObject currentWorld, syncedWorld;
 
     void Start() {
+        Position();
+    }
+
+    void Position() {
         currentWorld = CurrentWorld();
         syncedWorld = SyncedWorld();
+        if (currentWorldReference == null) currentWorldReference = currentWorld;
+        if (syncedWorldReference == null) syncedWorldReference = syncedWorld;
     }
 
     protected void OnEnable() {
@@ -26,19 +33,22 @@ public class Syncable : MonoBehaviour {
         return currentWorld.transform.InverseTransformPoint(transform.position);
     }
 
+    protected Vector3 CurrentWorldReferenceLocalPosition() {
+        return currentWorldReference.transform.InverseTransformPoint(transform.position);
+    }
+
     protected virtual Vector3 SyncedPosition() {
-        Vector3 currentWorldPosition = CurrentWorldLocalPosition();
-        return syncedWorld.transform.TransformPoint(currentWorldPosition);
+        return syncedWorldReference.transform.TransformPoint(CurrentWorldReferenceLocalPosition());
     }
 
     public virtual void SyncState() {
-        SyncedObject.transform.position = SyncedPosition();
+        syncedObject.transform.position = SyncedPosition();
     }
 
     void OnDrawGizmosSelected() {
-        if (SyncedObject == null || WorldSwitchManager.Instance?.WorldFairyEnvironment == null) return;
-        currentWorld = CurrentWorld();
-        syncedWorld = SyncedWorld();
+        if (syncedObject == null || WorldSwitchManager.Instance?.WorldFairyEnvironment == null) return;
+
+        Position();
 
         // Draw a rim around the position in WorldFairyEnvironment's local space
         Gizmos.color = Color.cyan;

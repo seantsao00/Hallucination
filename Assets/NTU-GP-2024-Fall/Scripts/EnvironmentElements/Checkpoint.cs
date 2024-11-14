@@ -16,7 +16,7 @@ class Checkpoint : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        print("triggered");
+        // print("triggered");
         if (other.CompareTag("Player") && !reached) {
             reached = true;
             CheckpointCompleted?.Invoke(this);

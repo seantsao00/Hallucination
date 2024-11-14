@@ -16,12 +16,12 @@ public class Boundary : MonoBehaviour {
     }
 
     void enable(Checkpoint checkpoint) {
-        print("Boundary enabled");
+        // print("Boundary enabled");
         gameObject.SetActive(true);
     }
 
     void disable(Checkpoint checkpoint) {
-        print("Boundary disabled");
+        // print("Boundary disabled");
         gameObject.SetActive(false);
     }
     

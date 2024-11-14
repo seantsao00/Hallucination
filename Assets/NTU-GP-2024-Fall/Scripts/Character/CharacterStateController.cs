@@ -8,6 +8,7 @@ public enum CharacterState {
     Dashing,
     Grabbing,
     BeingBlown,
+    LedgeClimbing,
     NotStandingOnGround
 }
 

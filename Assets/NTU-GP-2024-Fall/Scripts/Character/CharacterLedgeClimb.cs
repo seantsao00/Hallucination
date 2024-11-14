@@ -9,10 +9,12 @@ public class CharacterLedgeClimb : MonoBehaviour {
     Rigidbody2D rb;
     float eps = 1e-4f;
     bool isClimbingLedge;
+    CharacterStateController characterStateController;
 
     void Awake() {
         character = GetComponent<Character>();
         rb = GetComponent<Rigidbody2D>();
+        characterStateController = GetComponent<CharacterStateController>();
     }
 
     void Update() {
@@ -26,10 +28,11 @@ public class CharacterLedgeClimb : MonoBehaviour {
 
     void LedgeClimb() {
         isClimbingLedge = true;
-        InputManager.Instance.DisableAllInput();
         Vector2 currentPosition = transform.position;
         if (character.FacingDirection.x > 0) destination = currentPosition + ledgeClimbOffset;
         else destination = currentPosition + new Vector2(-ledgeClimbOffset.x, ledgeClimbOffset.y);
+        characterStateController.AddState(CharacterState.LedgeClimbing);
+        rb.bodyType = RigidbodyType2D.Static;
         // TODO: We should invoke ledge climb animation in the animator.
         Invoke("LedgeClimbOver", testHaltInterval);
         // TODO: We should invoke the function LedgeClimbOver in the animator.
@@ -37,7 +40,8 @@ public class CharacterLedgeClimb : MonoBehaviour {
 
     void LedgeClimbOver() {
         transform.position = destination;
-        InputManager.Instance.SetNormalMode();
+        characterStateController.RemoveState(CharacterState.LedgeClimbing);
+        rb.bodyType = RigidbodyType2D.Dynamic;
         StartCoroutine(FinishClimb(0.05f));
     }
 

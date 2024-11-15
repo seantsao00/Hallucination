@@ -15,7 +15,7 @@ public class Switch : InteractableObjectBase {
 
     List<ISwitchControlled> controlledList = new List<ISwitchControlled>();
 
-    void Awake() {
+    void Start() {
         currentStateIndex = startStateIndex;
         foreach (var obj in controlledObjects) {
             ISwitchControlled controlled = obj.GetComponent<ISwitchControlled>();

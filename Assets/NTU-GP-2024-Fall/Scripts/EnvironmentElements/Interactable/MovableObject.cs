@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-public class MovableObject : MonoBehaviour, IButtonControlled {
+public class MovableObject : MonoBehaviour, IButtonControlled, ISwitchControlled {
     Transform movableObject;
     [SerializeField] bool autoMove;
     [SerializeField] Transform[] points;
@@ -31,6 +31,10 @@ public class MovableObject : MonoBehaviour, IButtonControlled {
 
     public void Deactivate() {
         currentMovementTarget = 0;
+    }
+
+    public void SetState(int index) {
+        currentMovementTarget = index % points.Length;
     }
 
     void Update() {

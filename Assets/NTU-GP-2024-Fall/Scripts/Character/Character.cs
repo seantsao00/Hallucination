@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 /// <summary>
@@ -70,7 +71,16 @@ public class Character : MonoBehaviour {
     LayerMask movableMask;
 
     private Rigidbody2D rb;
-    [HideInInspector] public bool IsGrounded;
+    bool isGrounded;
+    [HideInInspector]
+    public bool IsGrounded {
+        get => isGrounded;
+        set {
+            isGrounded = value;
+            if (isGrounded) characterStateController.RemoveState(CharacterState.NotStandingOnGround);
+            else characterStateController.AddState(CharacterState.NotStandingOnGround);
+        }
+    }
     [HideInInspector] public bool IsStandOnClimbable;
     [HideInInspector] public bool IsBodyOnClimbable;
     [HideInInspector] public bool IsLedgeDetected;

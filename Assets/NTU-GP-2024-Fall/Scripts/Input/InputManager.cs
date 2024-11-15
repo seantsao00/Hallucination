@@ -79,8 +79,7 @@ public class InputManager {
             if (
                 activeStates.Contains(CharacterState.Grabbing) ||
                 activeStates.Contains(CharacterState.Dashing) ||
-                activeStates.Contains(CharacterState.BeingBlown) ||
-                activeStates.Contains(CharacterState.NotStandingOnGround)
+                activeStates.Contains(CharacterState.BeingBlown)
             ) {
                 Control.Character.VerticalMove.Disable();
             } else {
@@ -89,7 +88,12 @@ public class InputManager {
             // Character.Jump
             Control.Character.Jump.Enable();
             // Character.Dash
-            if (characterBusy()) {
+            if (
+                activeStates.Contains(CharacterState.Grabbing) ||
+                activeStates.Contains(CharacterState.Dashing) ||
+                activeStates.Contains(CharacterState.Climbing) ||
+                activeStates.Contains(CharacterState.LedgeClimbing)
+            ) {
                 Control.Character.Dash.Disable();
             } else {
                 Control.Character.Dash.Enable();

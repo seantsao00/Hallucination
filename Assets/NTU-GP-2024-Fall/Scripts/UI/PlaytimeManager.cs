@@ -16,7 +16,6 @@ public class PlaytimeManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Persist across scenes
             SceneManager.sceneLoaded += OnSceneLoaded; // Add scene load listener
-
         } else {
             Destroy(gameObject); // Destroy duplicate
         }

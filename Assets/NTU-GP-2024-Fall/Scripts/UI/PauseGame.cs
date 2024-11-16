@@ -49,7 +49,6 @@ public class PauseGame : MonoBehaviour {
     // Function to restart the current level
     public void RestartGame() {
         Time.timeScale = 1f;             // Ensure time is resumed
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
-        InputManager.Instance.SetNormalMode();
+        LevelNavigator.Instance.RestartCurrentLevel();
     }
 }

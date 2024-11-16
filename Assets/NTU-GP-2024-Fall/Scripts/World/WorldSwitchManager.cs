@@ -15,7 +15,6 @@ public class WorldSwitchManager : MonoBehaviour {
     public UnityEvent OnWorldSwitch;
 
     private bool isInWorldFairy = true;
-    private bool disabled = false;
     public World currentWorld { get; private set; }
 
     /// <summary>
@@ -36,7 +35,10 @@ public class WorldSwitchManager : MonoBehaviour {
         UpdateWorldSwitchIcon();
         return success;
     }
-
+    public void ClearLocks() {
+        locks.Clear();
+        UpdateWorldSwitchIcon();
+    }
 
     void Awake() {
         if (Instance != null && Instance != this) {
@@ -70,8 +72,15 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     public void SwitchWorld() {
-        if (disabled) return;
         if (locks.Count != 0) return;
+        StartCoroutine(SwitchWorldsWithFade());
+    }
+
+    public void ForceSwitchWorld() {
+        if (locks.Count != 0) {
+            Debug.LogWarning("Lock count is not 0. Automatically release all locks.");
+            locks.Clear();
+        }
         StartCoroutine(SwitchWorldsWithFade());
     }
 
@@ -99,14 +108,6 @@ public class WorldSwitchManager : MonoBehaviour {
         currentWorld = World.Bear;
         foreach (var environment in WorldFairyEnvironment) { environment.SetActive(false); }
         foreach (var environment in WorldBearEnvironment) { environment.SetActive(true); }
-    }
-
-    public void Enable() {
-        disabled = false;
-    }
-
-    public void Disable() {
-        disabled = true;
     }
 
     IEnumerator FadeOut() {

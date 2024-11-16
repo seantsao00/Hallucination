@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class InteractableObjectBase: MonoBehaviour {
+public abstract class InteractableObjectBase : MonoBehaviour {
     public abstract void Interact(InputAction.CallbackContext context);
 
     protected virtual void OnEnable() {

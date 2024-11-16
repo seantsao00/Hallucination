@@ -24,13 +24,13 @@ public class Syncable : MonoBehaviour {
     protected void OnDisable() {
         // WorldSwitchManager may be destroyed before this object
         // We do not care about this case
-        if (WorldSwitchManager.Instance == null) return; 
-    
+        if (WorldSwitchManager.Instance == null) return;
+
         WorldSwitchManager.Instance.OnWorldSwitch.RemoveListener(SyncState);
     }
 
     // protected Vector3 CurrentWorldLocalPosition() {
-        // return currentWorld.transform.InverseTransformPoint(transform.position);
+    // return currentWorld.transform.InverseTransformPoint(transform.position);
     // }
 
     protected Vector3 CurrentWorldReferenceLocalPosition() {

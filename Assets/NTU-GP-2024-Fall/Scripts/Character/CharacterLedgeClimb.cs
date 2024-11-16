@@ -50,5 +50,5 @@ public class CharacterLedgeClimb : MonoBehaviour {
         yield return new WaitForSeconds(shortDelay);
         isClimbingLedge = false;
     }
-    
+
 }

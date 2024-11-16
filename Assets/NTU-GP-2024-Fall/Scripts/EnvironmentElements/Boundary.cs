@@ -8,8 +8,7 @@ public class Boundary : MonoBehaviour {
         if (enableIfCheckpointCompleted) {
             checkpoint.CheckpointCompleted += enable;
             disable(checkpoint);
-        }
-        else {
+        } else {
             checkpoint.CheckpointCompleted += disable;
             enable(checkpoint);
         }
@@ -24,5 +23,5 @@ public class Boundary : MonoBehaviour {
         // print("Boundary disabled");
         gameObject.SetActive(false);
     }
-    
+
 }

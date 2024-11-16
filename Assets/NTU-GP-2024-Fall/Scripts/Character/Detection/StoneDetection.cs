@@ -9,7 +9,7 @@ public class StoneDetection : MonoBehaviour {
         characterGrabStone = transform.parent.GetComponent<CharacterGrabStone>();
         if (characterGrabStone == null) {
             Debug.LogWarning(
-                $"No {typeof(CharacterGrabStone).Name} component is found in the parent object." + 
+                $"No {typeof(CharacterGrabStone).Name} component is found in the parent object." +
                 $"Automatically disable the {typeof(StoneDetection).Name} component."
             );
             gameObject.SetActive(false);

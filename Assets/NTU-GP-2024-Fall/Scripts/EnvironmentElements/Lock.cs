@@ -14,7 +14,7 @@ public class Lock : MonoBehaviour, Lockable {
             isLocked = true;
             Unlock();
         }
-    } 
+    }
 
     public bool checkIfLocked(Key[] keys) {
         foreach (var key in keys) {

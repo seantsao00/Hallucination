@@ -15,11 +15,9 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @PlayerControl: IInputActionCollection2, IDisposable
-{
+public partial class @PlayerControl : IInputActionCollection2, IDisposable {
     public InputActionAsset asset { get; }
-    public @PlayerControl()
-    {
+    public @PlayerControl() {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerControl"",
     ""maps"": [
@@ -1044,59 +1042,49 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
     }
 
-    public void Dispose()
-    {
+    public void Dispose() {
         UnityEngine.Object.Destroy(asset);
     }
 
-    public InputBinding? bindingMask
-    {
+    public InputBinding? bindingMask {
         get => asset.bindingMask;
         set => asset.bindingMask = value;
     }
 
-    public ReadOnlyArray<InputDevice>? devices
-    {
+    public ReadOnlyArray<InputDevice>? devices {
         get => asset.devices;
         set => asset.devices = value;
     }
 
     public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
 
-    public bool Contains(InputAction action)
-    {
+    public bool Contains(InputAction action) {
         return asset.Contains(action);
     }
 
-    public IEnumerator<InputAction> GetEnumerator()
-    {
+    public IEnumerator<InputAction> GetEnumerator() {
         return asset.GetEnumerator();
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
+    IEnumerator IEnumerable.GetEnumerator() {
         return GetEnumerator();
     }
 
-    public void Enable()
-    {
+    public void Enable() {
         asset.Enable();
     }
 
-    public void Disable()
-    {
+    public void Disable() {
         asset.Disable();
     }
 
     public IEnumerable<InputBinding> bindings => asset.bindings;
 
-    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
-    {
+    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false) {
         return asset.FindAction(actionNameOrId, throwIfNotFound);
     }
 
-    public int FindBinding(InputBinding bindingMask, out InputAction action)
-    {
+    public int FindBinding(InputBinding bindingMask, out InputAction action) {
         return asset.FindBinding(bindingMask, out action);
     }
 
@@ -1109,8 +1097,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Dash;
     private readonly InputAction m_Character_Interact;
     private readonly InputAction m_Character_Grab;
-    public struct CharacterActions
-    {
+    public struct CharacterActions {
         private @PlayerControl m_Wrapper;
         public CharacterActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @HorizontalMove => m_Wrapper.m_Character_HorizontalMove;
@@ -1124,8 +1111,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
         public static implicit operator InputActionMap(CharacterActions set) { return set.Get(); }
-        public void AddCallbacks(ICharacterActions instance)
-        {
+        public void AddCallbacks(ICharacterActions instance) {
             if (instance == null || m_Wrapper.m_CharacterActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_CharacterActionsCallbackInterfaces.Add(instance);
             @HorizontalMove.started += instance.OnHorizontalMove;
@@ -1148,8 +1134,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Grab.canceled += instance.OnGrab;
         }
 
-        private void UnregisterCallbacks(ICharacterActions instance)
-        {
+        private void UnregisterCallbacks(ICharacterActions instance) {
             @HorizontalMove.started -= instance.OnHorizontalMove;
             @HorizontalMove.performed -= instance.OnHorizontalMove;
             @HorizontalMove.canceled -= instance.OnHorizontalMove;
@@ -1170,14 +1155,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Grab.canceled -= instance.OnGrab;
         }
 
-        public void RemoveCallbacks(ICharacterActions instance)
-        {
+        public void RemoveCallbacks(ICharacterActions instance) {
             if (m_Wrapper.m_CharacterActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(ICharacterActions instance)
-        {
+        public void SetCallbacks(ICharacterActions instance) {
             foreach (var item in m_Wrapper.m_CharacterActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
             m_Wrapper.m_CharacterActionsCallbackInterfaces.Clear();
@@ -1190,8 +1173,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_World;
     private List<IWorldActions> m_WorldActionsCallbackInterfaces = new List<IWorldActions>();
     private readonly InputAction m_World_SwitchWorld;
-    public struct WorldActions
-    {
+    public struct WorldActions {
         private @PlayerControl m_Wrapper;
         public WorldActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @SwitchWorld => m_Wrapper.m_World_SwitchWorld;
@@ -1200,8 +1182,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
         public static implicit operator InputActionMap(WorldActions set) { return set.Get(); }
-        public void AddCallbacks(IWorldActions instance)
-        {
+        public void AddCallbacks(IWorldActions instance) {
             if (instance == null || m_Wrapper.m_WorldActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_WorldActionsCallbackInterfaces.Add(instance);
             @SwitchWorld.started += instance.OnSwitchWorld;
@@ -1209,21 +1190,18 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @SwitchWorld.canceled += instance.OnSwitchWorld;
         }
 
-        private void UnregisterCallbacks(IWorldActions instance)
-        {
+        private void UnregisterCallbacks(IWorldActions instance) {
             @SwitchWorld.started -= instance.OnSwitchWorld;
             @SwitchWorld.performed -= instance.OnSwitchWorld;
             @SwitchWorld.canceled -= instance.OnSwitchWorld;
         }
 
-        public void RemoveCallbacks(IWorldActions instance)
-        {
+        public void RemoveCallbacks(IWorldActions instance) {
             if (m_Wrapper.m_WorldActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IWorldActions instance)
-        {
+        public void SetCallbacks(IWorldActions instance) {
             foreach (var item in m_Wrapper.m_WorldActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
             m_Wrapper.m_WorldActionsCallbackInterfaces.Clear();
@@ -1236,8 +1214,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Dialogue;
     private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
     private readonly InputAction m_Dialogue_Next;
-    public struct DialogueActions
-    {
+    public struct DialogueActions {
         private @PlayerControl m_Wrapper;
         public DialogueActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Next => m_Wrapper.m_Dialogue_Next;
@@ -1246,8 +1223,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
         public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
-        public void AddCallbacks(IDialogueActions instance)
-        {
+        public void AddCallbacks(IDialogueActions instance) {
             if (instance == null || m_Wrapper.m_DialogueActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DialogueActionsCallbackInterfaces.Add(instance);
             @Next.started += instance.OnNext;
@@ -1255,21 +1231,18 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Next.canceled += instance.OnNext;
         }
 
-        private void UnregisterCallbacks(IDialogueActions instance)
-        {
+        private void UnregisterCallbacks(IDialogueActions instance) {
             @Next.started -= instance.OnNext;
             @Next.performed -= instance.OnNext;
             @Next.canceled -= instance.OnNext;
         }
 
-        public void RemoveCallbacks(IDialogueActions instance)
-        {
+        public void RemoveCallbacks(IDialogueActions instance) {
             if (m_Wrapper.m_DialogueActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IDialogueActions instance)
-        {
+        public void SetCallbacks(IDialogueActions instance) {
             foreach (var item in m_Wrapper.m_DialogueActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
             m_Wrapper.m_DialogueActionsCallbackInterfaces.Clear();
@@ -1282,8 +1255,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Game;
     private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
     private readonly InputAction m_Game_Pause;
-    public struct GameActions
-    {
+    public struct GameActions {
         private @PlayerControl m_Wrapper;
         public GameActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pause => m_Wrapper.m_Game_Pause;
@@ -1292,8 +1264,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
         public static implicit operator InputActionMap(GameActions set) { return set.Get(); }
-        public void AddCallbacks(IGameActions instance)
-        {
+        public void AddCallbacks(IGameActions instance) {
             if (instance == null || m_Wrapper.m_GameActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GameActionsCallbackInterfaces.Add(instance);
             @Pause.started += instance.OnPause;
@@ -1301,21 +1272,18 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Pause.canceled += instance.OnPause;
         }
 
-        private void UnregisterCallbacks(IGameActions instance)
-        {
+        private void UnregisterCallbacks(IGameActions instance) {
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
         }
 
-        public void RemoveCallbacks(IGameActions instance)
-        {
+        public void RemoveCallbacks(IGameActions instance) {
             if (m_Wrapper.m_GameActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IGameActions instance)
-        {
+        public void SetCallbacks(IGameActions instance) {
             foreach (var item in m_Wrapper.m_GameActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
             m_Wrapper.m_GameActionsCallbackInterfaces.Clear();
@@ -1337,8 +1305,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
-    public struct UIActions
-    {
+    public struct UIActions {
         private @PlayerControl m_Wrapper;
         public UIActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
@@ -1356,8 +1323,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
         public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
-        public void AddCallbacks(IUIActions instance)
-        {
+        public void AddCallbacks(IUIActions instance) {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
             @Navigate.started += instance.OnNavigate;
@@ -1392,8 +1358,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
         }
 
-        private void UnregisterCallbacks(IUIActions instance)
-        {
+        private void UnregisterCallbacks(IUIActions instance) {
             @Navigate.started -= instance.OnNavigate;
             @Navigate.performed -= instance.OnNavigate;
             @Navigate.canceled -= instance.OnNavigate;
@@ -1426,14 +1391,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
         }
 
-        public void RemoveCallbacks(IUIActions instance)
-        {
+        public void RemoveCallbacks(IUIActions instance) {
             if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IUIActions instance)
-        {
+        public void SetCallbacks(IUIActions instance) {
             foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
             m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
@@ -1442,52 +1405,41 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     }
     public UIActions @UI => new UIActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
-    public InputControlScheme KeyboardMouseScheme
-    {
-        get
-        {
+    public InputControlScheme KeyboardMouseScheme {
+        get {
             if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard&Mouse");
             return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
         }
     }
     private int m_GamepadSchemeIndex = -1;
-    public InputControlScheme GamepadScheme
-    {
-        get
-        {
+    public InputControlScheme GamepadScheme {
+        get {
             if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
     private int m_TouchSchemeIndex = -1;
-    public InputControlScheme TouchScheme
-    {
-        get
-        {
+    public InputControlScheme TouchScheme {
+        get {
             if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
             return asset.controlSchemes[m_TouchSchemeIndex];
         }
     }
     private int m_JoystickSchemeIndex = -1;
-    public InputControlScheme JoystickScheme
-    {
-        get
-        {
+    public InputControlScheme JoystickScheme {
+        get {
             if (m_JoystickSchemeIndex == -1) m_JoystickSchemeIndex = asset.FindControlSchemeIndex("Joystick");
             return asset.controlSchemes[m_JoystickSchemeIndex];
         }
     }
     private int m_XRSchemeIndex = -1;
-    public InputControlScheme XRScheme
-    {
-        get
-        {
+    public InputControlScheme XRScheme {
+        get {
             if (m_XRSchemeIndex == -1) m_XRSchemeIndex = asset.FindControlSchemeIndex("XR");
             return asset.controlSchemes[m_XRSchemeIndex];
         }
     }
-    public interface ICharacterActions
-    {
+    public interface ICharacterActions {
         void OnHorizontalMove(InputAction.CallbackContext context);
         void OnVerticalMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
@@ -1495,20 +1447,16 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
     }
-    public interface IWorldActions
-    {
+    public interface IWorldActions {
         void OnSwitchWorld(InputAction.CallbackContext context);
     }
-    public interface IDialogueActions
-    {
+    public interface IDialogueActions {
         void OnNext(InputAction.CallbackContext context);
     }
-    public interface IGameActions
-    {
+    public interface IGameActions {
         void OnPause(InputAction.CallbackContext context);
     }
-    public interface IUIActions
-    {
+    public interface IUIActions {
         void OnNavigate(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);

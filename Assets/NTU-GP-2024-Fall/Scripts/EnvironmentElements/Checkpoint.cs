@@ -6,6 +6,7 @@ class Checkpoint : MonoBehaviour {
     public delegate void CheckpointCompletedHandler(Checkpoint checkpoint);
     public event CheckpointCompletedHandler CheckpointCompleted;
 
+    public int changeLevel;
     public bool switchWorld;
     public bool enableSwitchWorld;
 
@@ -19,6 +20,9 @@ class Checkpoint : MonoBehaviour {
         if (other.CompareTag("Player") && !reached) {
             reached = true;
             CheckpointCompleted?.Invoke(this);
+            if (changeLevel != -1) {
+                LevelManager.Instance.ChangeLevel(changeLevel);
+            }
             if (switchWorld) WorldSwitchManager.Instance.SwitchWorld();
             if (enableSwitchWorld) WorldSwitchManager.Instance.Enable();
             else WorldSwitchManager.Instance.Disable();
@@ -28,5 +32,6 @@ class Checkpoint : MonoBehaviour {
             }
         }
     }
+
 }
 

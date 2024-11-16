@@ -90,6 +90,7 @@ public class Character : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 
     [SerializeField] TipManager tipManager;
+    public bool isFairy;
     string grabTip = "Hold E or C to move the stone";
 
 
@@ -108,6 +109,11 @@ public class Character : MonoBehaviour {
         characterStateController = GetComponent<CharacterStateController>();
         characterStateController.OnStateChanged += HandleStateChange;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (LevelManager.Instance.GetCurrentLevelData() != null) {
+            if (isFairy) RespawnAt(LevelManager.Instance.GetCurrentLevelData().fairyRespawnPosition);
+            else RespawnAt(LevelManager.Instance.GetCurrentLevelData().bearRespawnPosition);
+        }
+        
     }
 
     private void HandleStateChange(CharacterState state, bool added) {
@@ -150,5 +156,9 @@ public class Character : MonoBehaviour {
         if (rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {
             rb.velocity = new Vector2(rb.velocity.x, -MovementAttributes.MaxFallingSpeed);
         }
+    }
+
+    void RespawnAt(Vector3 position) {
+        gameObject.transform.position = position;
     }
 }

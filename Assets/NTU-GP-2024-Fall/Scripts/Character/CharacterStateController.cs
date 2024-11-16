@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum CharacterState {
@@ -43,8 +44,12 @@ public class CharacterStateController : MonoBehaviour {
 
     private void HandleStateChange(CharacterState state, bool added) {
         UpdateInput();
-        if (CharacterBusy) WorldSwitchManager.Instance.Locks.Add(gameObject);
-        else WorldSwitchManager.Instance.Locks.Remove(gameObject);
+        // Debug.Log($"{CharacterBusy}, states: {string.Join(", ", ActiveStates.ToArray())}");
+        if (CharacterBusy) {
+            WorldSwitchManager.Instance.Lock(gameObject);
+        } else {
+            WorldSwitchManager.Instance.Unlock(gameObject);
+        }
     }
 
     public bool CharacterBusy =>

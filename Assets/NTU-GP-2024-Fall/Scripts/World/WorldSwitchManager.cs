@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public enum World { Fairy, Bear };
 
 public class WorldSwitchManager : MonoBehaviour {
+    [SerializeField] GameObject WorldSwitchIcon;
     public static WorldSwitchManager Instance { get; private set; }
     public GameObject[] WorldFairyEnvironment;
     public GameObject[] WorldBearEnvironment;
@@ -23,7 +24,18 @@ public class WorldSwitchManager : MonoBehaviour {
     /// Usage: <code>WorldSwitchManager.Instance.Locks.Add(gameObject);</code>
     /// If this collection contains any entries, the player will be unable to perform a world switch.
     /// </summary>
-    public HashSet<GameObject> Locks = new HashSet<GameObject>();
+    HashSet<GameObject> locks = new HashSet<GameObject>();
+    void UpdateWorldSwitchIcon() => WorldSwitchIcon.SetActive(locks.Count == 0);
+    public bool Lock(GameObject gameObject) {
+        bool success = locks.Add(gameObject);
+        UpdateWorldSwitchIcon();
+        return success;
+    }
+    public bool Unlock(GameObject gameObject) {
+        bool success = locks.Remove(gameObject);
+        UpdateWorldSwitchIcon();
+        return success;
+    }
 
 
     void Awake() {
@@ -59,7 +71,7 @@ public class WorldSwitchManager : MonoBehaviour {
 
     public void SwitchWorld() {
         if (disabled) return;
-        if (Locks.Count != 0) return;
+        if (locks.Count != 0) return;
         StartCoroutine(SwitchWorldsWithFade());
     }
 

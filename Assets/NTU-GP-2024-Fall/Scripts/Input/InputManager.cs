@@ -45,83 +45,12 @@ public class InputManager {
         Control.Game.Enable();
         Control.Character.Enable();
         Control.World.Enable();
-        GameObject currentPlayedCharacter;
-        currentPlayedCharacter = GameObject.FindGameObjectsWithTag("Player")[0];
-        UpdateInputAccordingToActiveState(currentPlayedCharacter.GetComponent<CharacterStateController>().ActiveStates);
+        GameObject currentPlayedCharacter = Utils.FindCurrentPlayedCharacter();
+        CharacterStateController characterStateController = currentPlayedCharacter.GetComponent<CharacterStateController>();
+        characterStateController.UpdateInput();
     }
 
     public void DisableAllInput() {
         Control.Disable();
-    }
-
-    public void UpdateInputAccordingToActiveState(HashSet<CharacterState> activeStates) {
-        Func<bool> characterBusy = () =>
-            activeStates.Contains(CharacterState.Grabbing) ||
-            activeStates.Contains(CharacterState.Dashing) ||
-            activeStates.Contains(CharacterState.Climbing) ||
-            activeStates.Contains(CharacterState.BeingBlown) ||
-            activeStates.Contains(CharacterState.NotStandingOnGround) ||
-            activeStates.Contains(CharacterState.LedgeClimbing)
-        ;
-
-        if (activeStates.Contains(CharacterState.LedgeClimbing)) {
-            Control.Character.Disable();
-        } else {
-            // Character.HorizontalMove
-            if (
-                activeStates.Contains(CharacterState.Climbing)
-            ) {
-                Control.Character.HorizontalMove.Disable();
-            } else {
-                Control.Character.HorizontalMove.Enable();
-            }
-            // Character.VerticalMove
-            if (
-                activeStates.Contains(CharacterState.Grabbing) ||
-                activeStates.Contains(CharacterState.Dashing) ||
-                activeStates.Contains(CharacterState.BeingBlown)
-            ) {
-                Control.Character.VerticalMove.Disable();
-            } else {
-                Control.Character.VerticalMove.Enable();
-            }
-            // Character.Jump
-            Control.Character.Jump.Enable();
-            // Character.Dash
-            if (
-                activeStates.Contains(CharacterState.Grabbing) ||
-                activeStates.Contains(CharacterState.Dashing) ||
-                activeStates.Contains(CharacterState.Climbing) ||
-                activeStates.Contains(CharacterState.LedgeClimbing)
-            ) {
-                Control.Character.Dash.Disable();
-            } else {
-                Control.Character.Dash.Enable();
-            }
-            // Character.Interact
-            if (characterBusy()) {
-                Control.Character.Interact.Disable();
-            } else {
-                Control.Character.Interact.Enable();
-            }
-            // Character.Grab
-            if (
-                activeStates.Contains(CharacterState.Dashing) ||
-                activeStates.Contains(CharacterState.Climbing) ||
-                activeStates.Contains(CharacterState.BeingBlown) ||
-                activeStates.Contains(CharacterState.NotStandingOnGround)
-            ) {
-                Control.Character.Grab.Disable();
-            } else {
-                Control.Character.Grab.Enable();
-            }
-        }
-
-        // World
-        if (characterBusy()) {
-            Control.World.Disable();
-        } else {
-            Control.World.Enable();
-        }
     }
 }

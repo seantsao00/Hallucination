@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public enum World { Fairy, Bear };
 
@@ -15,6 +16,15 @@ public class WorldSwitchManager : MonoBehaviour {
     private bool isInWorldFairy = true;
     private bool disabled = false;
     public World currentWorld { get; private set; }
+
+    /// <summary>
+    /// A collection of locks that restrict the world switch operation.
+    /// 
+    /// Usage: <code>WorldSwitchManager.Instance.Locks.Add(gameObject);</code>
+    /// If this collection contains any entries, the player will be unable to perform a world switch.
+    /// </summary>
+    public HashSet<GameObject> Locks = new HashSet<GameObject>();
+
 
     void Awake() {
         if (Instance != null && Instance != this) {
@@ -48,8 +58,8 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     public void SwitchWorld() {
-        // TODO: refactor this.
         if (disabled) return;
+        if (Locks.Count != 0) return;
         StartCoroutine(SwitchWorldsWithFade());
     }
 
@@ -81,12 +91,10 @@ public class WorldSwitchManager : MonoBehaviour {
 
     public void Enable() {
         disabled = false;
-        print(disabled);
     }
 
     public void Disable() {
         disabled = true;
-        print(disabled);
     }
 
     IEnumerator FadeOut() {

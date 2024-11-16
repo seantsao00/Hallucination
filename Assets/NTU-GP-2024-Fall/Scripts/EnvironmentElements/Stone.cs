@@ -1,7 +1,4 @@
 using UnityEngine;
-using System;
-using UnityEngine.UI;  // For handling UI elements
-using TMPro;
 
 public class Stone : MonoBehaviour {
     Rigidbody2D rb;
@@ -19,7 +16,7 @@ public class Stone : MonoBehaviour {
     void Update() {
         if (!isLeashed) return;
         float direction = InputManager.Instance.CharacterHorizontalMove;
-        rb.velocity = new Vector2(direction * horizontalGrabSpeed, rb.velocity.y);
+        transform.position = transform.position + new Vector3(direction * horizontalGrabSpeed * Time.deltaTime, 0, 0);
     }
 
     public void Leash() {

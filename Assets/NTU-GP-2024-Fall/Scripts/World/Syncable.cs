@@ -57,6 +57,8 @@ public class Syncable : MonoBehaviour {
         // Draw a wire sphere at this position
         Gizmos.DrawWireSphere(syncedPosition, 0.3f);
         // Gizmos.DrawIcon(syncedPosition, "sv_icon_dot14_sml");
+        #if UNITY_EDITOR
         Handles.Label(syncedPosition, "synced position");
+        #endif
     }
 }

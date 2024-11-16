@@ -34,8 +34,10 @@ public class Wind : MonoBehaviour {
             compositeCollider.GetPath(i, points);
 
             // Draw filled shape
+            #if UNITY_EDITOR
             Handles.color = fillColor;
             Handles.DrawAAConvexPolygon(System.Array.ConvertAll(points, p => (Vector3)transform.TransformPoint(p)));
+            #endif
 
             // Draw outline
             Gizmos.color = outlineColor;

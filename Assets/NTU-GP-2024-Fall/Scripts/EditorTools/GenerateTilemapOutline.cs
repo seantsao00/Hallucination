@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(GenerateTilemapOutline))]
 public class GenerateTilemapOutlineInspector : Editor {
     public override void OnInspectorGUI() {
@@ -12,6 +13,7 @@ public class GenerateTilemapOutlineInspector : Editor {
         }
     }
 }
+#endif
 
 public class GenerateTilemapOutline : MonoBehaviour {
     [SerializeField] Tilemap[] sourceTilemaps;

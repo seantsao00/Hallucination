@@ -16,12 +16,15 @@ public class LevelNavigator : MonoBehaviour {
         if (Instance != null && Instance != this) {
             Destroy(gameObject);
         } else {
-            Instance = this;
             DontDestroyOnLoad(gameObject);
+            Instance = this;
             currentLevelIndex = Array.IndexOf(levels, startLevel);
-            SceneManager.sceneLoaded += OnSceneLoaded;
             levelNames = levels.Select(level => level.gameObject.name).ToArray();
         }
+    }
+
+    void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void Start() {
@@ -31,9 +34,6 @@ public class LevelNavigator : MonoBehaviour {
     public void RestartCurrentLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         // Debug.Log($"Scene Restarted. Current level: {currentLevelIndex}");
-        InputManager.Instance.SetNormalMode();
-        WorldSwitchManager.Instance.ClearLocks();
-        CurrentLevel.RestartLevel();
     }
 
     public void CompleteCurrentLevel() {
@@ -54,6 +54,9 @@ public class LevelNavigator : MonoBehaviour {
         });
 
         levels = newLevels;
+        InputManager.Instance.SetNormalMode();
+        WorldSwitchManager.Instance.ClearLocks();
+        CurrentLevel.RestartLevel();
     }
 
     void OnDestroy() {

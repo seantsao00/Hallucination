@@ -13,9 +13,11 @@ public class LevelController : MonoBehaviour {
     [SerializeField] GameObject fairySpawnPoint, bearSpawnPoint;
     [SerializeField] GameObject fairyRespawnPoint, bearRespawnPoint;
     [SerializeField] CheckpointData[] checkpointDataList;
+    GameObject testObject;
 
     void Start() {
         RegisterHandler();
+        Debug.Log(testObject == fairyObject);
     }
 
     void RegisterHandler() {
@@ -42,6 +44,7 @@ public class LevelController : MonoBehaviour {
             fairyObject.transform.position = fairyRespawnPoint.transform.position;
         if (bearRespawnPoint != null)
             bearObject.transform.position = bearRespawnPoint.transform.position;
+        testObject = fairyObject;
         Debug.Log("Restarted");
     }
 

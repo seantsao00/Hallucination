@@ -1,15 +1,16 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-class Checkpoint : MonoBehaviour {
-    bool reached;
-
-    public delegate void CheckpointCompletedHandler(Checkpoint checkpoint);
-    public event CheckpointCompletedHandler CheckpointCompleted;
+public class LevelCheckpoint : MonoBehaviour
+{
+    public UnityEvent CheckpointCompleted;
 
     public bool switchWorld;
     public bool enableSwitchWorld;
 
     public string dialogueName;
+
+    private bool reached;
 
     void Awake() {
         reached = false;
@@ -18,7 +19,7 @@ class Checkpoint : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player") && !reached) {
             reached = true;
-            CheckpointCompleted?.Invoke(this);
+            CheckpointCompleted?.Invoke();
             if (switchWorld) WorldSwitchManager.Instance.SwitchWorld();
             if (enableSwitchWorld) WorldSwitchManager.Instance.Enable();
             else WorldSwitchManager.Instance.Disable();
@@ -29,4 +30,3 @@ class Checkpoint : MonoBehaviour {
         }
     }
 }
-

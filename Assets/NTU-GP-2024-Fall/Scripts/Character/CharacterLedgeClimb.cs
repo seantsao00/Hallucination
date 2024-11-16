@@ -33,15 +33,17 @@ public class CharacterLedgeClimb : MonoBehaviour {
         if (character.FacingDirection.x > 0) destination = currentPosition + ledgeClimbOffset;
         else destination = currentPosition + new Vector2(-ledgeClimbOffset.x, ledgeClimbOffset.y);
         characterStateController.AddState(CharacterState.LedgeClimbing);
+        GetComponent<Animator>().SetBool("LedgeClimb", true);       // I'm not sure is it okay to put here
         rb.bodyType = RigidbodyType2D.Static;
         // TODO: We should invoke ledge climb animation in the animator.
-        Invoke("LedgeClimbOver", testHaltInterval);
+        // Invoke("LedgeClimbOver", testHaltInterval);
         // TODO: We should invoke the function LedgeClimbOver in the animator.
     }
 
     void LedgeClimbOver() {
         transform.position = destination;
         characterStateController.RemoveState(CharacterState.LedgeClimbing);
+        GetComponent<Animator>().SetBool("LedgeClimb", false);
         rb.bodyType = RigidbodyType2D.Dynamic;
         StartCoroutine(FinishClimb(0.05f));
     }

@@ -40,4 +40,13 @@ public class LevelManager : MonoBehaviour {
         return null;
     }
     
+    public LevelData FindLevelData(int levelIndex) {
+        foreach (var levelData in levelDatas) {
+            if (levelData.levelIndex == levelIndex) {
+                return levelData;
+            }
+        }
+        return null;
+    }
+
 }

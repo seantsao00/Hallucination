@@ -10,13 +10,10 @@ public class Level : MonoBehaviour
     public int levelIndex;
     void Start() {
         LevelData levelData = new LevelData();
-        if (LevelManager.Instance.FindLevelData(levelIndex) == null) {
-            levelData.levelIndex = levelIndex;
-            levelData.fairyRespawnPosition = fairyRespawnPoint.transform.position;
-            levelData.bearRespawnPosition = bearRespawnPoint.transform.position;
-            LevelManager.Instance.AddLevel(levelData);
-        }
-        
+        levelData.levelIndex = levelIndex;
+        levelData.fairyRespawnPosition = fairyRespawnPoint.transform.position;
+        levelData.bearRespawnPosition = bearRespawnPoint.transform.position;
+        LevelManager.Instance.AddLevel(levelData);
     }
     
 }

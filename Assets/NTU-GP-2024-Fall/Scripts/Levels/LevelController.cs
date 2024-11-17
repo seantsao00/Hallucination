@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -13,11 +14,13 @@ public class LevelController : MonoBehaviour {
     }
     [SerializeField] GameObject fairyObject, bearObject;
     [SerializeField] CheckpointData startData;
-    [SerializeField] CheckpointData restartData = new CheckpointData{
+    [SerializeField]
+    CheckpointData restartData = new CheckpointData {
         WorldToSwitch = CharacterTypeEnum.Bear,
         unlockWorldSwitch = true
     };
     [SerializeField] CheckpointData[] checkpointDataList;
+    int numberOfFulfilledCheckpoints;
 
     void Awake() {
         if (restartData.WorldToSwitch == CharacterTypeEnum.None) {
@@ -44,10 +47,18 @@ public class LevelController : MonoBehaviour {
         }
     }
 
+    void FulfillCheckpoint() {
+        numberOfFulfilledCheckpoints++;
+        if (numberOfFulfilledCheckpoints == checkpointDataList.Length) {
+            LevelNavigator.Instance.CompleteCurrentLevel();
+        }
+    }
+
     void RegisterHandler() {
         foreach (var checkpointData in checkpointDataList) {
             checkpointData.checkpoint.CheckpointCompleted.AddListener(Action => {
                 LoadCheckpointData(checkpointData);
+                FulfillCheckpoint();
             });
         }
     }

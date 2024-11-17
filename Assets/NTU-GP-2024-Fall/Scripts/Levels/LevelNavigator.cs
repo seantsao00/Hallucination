@@ -44,6 +44,7 @@ public class LevelNavigator : MonoBehaviour {
         if (currentLevelIndex == levels.Length) {
             Debug.LogWarning("The last level completed");
         } else {
+            // Debug.Log($"New Level: {CurrentLevel.gameObject.name}");
             CurrentLevel.StartLevel();
         }
     }

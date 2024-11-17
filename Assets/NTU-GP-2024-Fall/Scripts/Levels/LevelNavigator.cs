@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net.WebSockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,7 @@ public class LevelNavigator : MonoBehaviour {
     [SerializeField] LevelController[] levels;
     string[] levelNames;
     int currentLevelIndex;
+    bool firstLoad = true;
 
     public LevelController CurrentLevel => levels[currentLevelIndex];
 
@@ -33,6 +35,7 @@ public class LevelNavigator : MonoBehaviour {
 
     public void RestartCurrentLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        InputManager.Instance.SetNormalMode();
         // Debug.Log($"Scene Restarted. Current level: {currentLevelIndex}");
     }
 
@@ -54,9 +57,12 @@ public class LevelNavigator : MonoBehaviour {
         });
 
         levels = newLevels;
-        InputManager.Instance.SetNormalMode();
-        WorldSwitchManager.Instance.ClearLocks();
-        CurrentLevel.RestartLevel();
+        if (firstLoad) {
+            firstLoad = false;
+            CurrentLevel.StartLevel();
+        } else {
+            CurrentLevel.RestartLevel();
+        }
     }
 
     void OnDestroy() {

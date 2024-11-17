@@ -25,21 +25,17 @@ public class CharacterDeath : MonoBehaviour {
         //     audioSource.PlayOneShot(deathSound);
         // }
 
-        // Optional: Play death particle effects
         if (deathParticles != null) {
             Instantiate(deathParticles, transform.position, Quaternion.identity).Play();
         }
 
-        // Disable character movement or other components
         GetComponent<Character>().IsDead = true;
 
-        // Reset the scene after a short delay
         Invoke(nameof(ResetScene), deathDelay);
     }
 
     void ResetScene() {
-        // Reload the current scene to reset everything
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        LevelNavigator.Instance.RestartCurrentLevel();
     }
 
     // Detect when the character falls into the DeathZone

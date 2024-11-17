@@ -14,7 +14,7 @@ public class Character : MonoBehaviour {
         public float NormalHorizontalSpeed = 5f;
 
         [Header("Behavior")]
-        [Tooltip("Gravity multiplier applied when the character’s vertical falling speed falls below the threshold.")]
+        [Tooltip("Gravity multiplier applied when the character's vertical falling speed falls below the threshold.")]
         public float AirHangTimeGravityMultiplier = 0.4f;
         public float AirHangTimeThresholdSpeed = 0.5f;
         public float StickOnWallFallingSpeed = 3f;
@@ -92,7 +92,6 @@ public class Character : MonoBehaviour {
     public bool isFairy;
     string grabTip = "Hold E or C to move the stone";
 
-
     private void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;
         if (direction.x < 0) transform.rotation = Quaternion.Euler(angle.x, 180, angle.z);
@@ -101,6 +100,9 @@ public class Character : MonoBehaviour {
     }
 
     void Awake() {
+        if (gameObject.name == "Fairy") {
+            Debug.Log(transform.position);
+        }
         movableMask = LayerMask.GetMask("Movable");
         CurrentMovement = new CharacterCurrentMovement(MovementAttributes);
         rb = GetComponent<Rigidbody2D>();
@@ -108,11 +110,12 @@ public class Character : MonoBehaviour {
         characterStateController = GetComponent<CharacterStateController>();
         characterStateController.OnStateChanged += HandleStateChange;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (LevelManager.Instance.GetCurrentLevelData() != null) {
-            if (isFairy) RespawnAt(LevelManager.Instance.GetCurrentLevelData().fairyRespawnPosition);
-            else RespawnAt(LevelManager.Instance.GetCurrentLevelData().bearRespawnPosition);
+    }
+
+    void Start() {
+        if (gameObject.name == "Fairy") {
+            Debug.Log(transform.position);
         }
-        
     }
 
     private void HandleStateChange(CharacterState state, bool added) {
@@ -155,9 +158,5 @@ public class Character : MonoBehaviour {
         if (rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {
             rb.velocity = new Vector2(rb.velocity.x, -MovementAttributes.MaxFallingSpeed);
         }
-    }
-
-    void RespawnAt(Vector3 position) {
-        gameObject.transform.position = position;
     }
 }

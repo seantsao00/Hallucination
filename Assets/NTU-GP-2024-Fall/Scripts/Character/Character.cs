@@ -100,9 +100,6 @@ public class Character : MonoBehaviour {
     }
 
     void Awake() {
-        if (gameObject.name == "Fairy") {
-            Debug.Log(transform.position);
-        }
         movableMask = LayerMask.GetMask("Movable");
         CurrentMovement = new CharacterCurrentMovement(MovementAttributes);
         rb = GetComponent<Rigidbody2D>();
@@ -110,12 +107,6 @@ public class Character : MonoBehaviour {
         characterStateController = GetComponent<CharacterStateController>();
         characterStateController.OnStateChanged += HandleStateChange;
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    void Start() {
-        if (gameObject.name == "Fairy") {
-            Debug.Log(transform.position);
-        }
     }
 
     private void HandleStateChange(CharacterState state, bool added) {

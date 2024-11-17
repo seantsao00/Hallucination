@@ -18,7 +18,6 @@ public class Utils {
         Debug.LogError("Can't find Bear Object");
         return null;
     }
-
     static public GameObject FindCurrentPlayedCharacter() {
         GameObject[] searchResults = GameObject.FindGameObjectsWithTag("Player");
         Assert.IsTrue(searchResults.Length == 1);

@@ -7,6 +7,7 @@ public class LevelController : MonoBehaviour {
         public LevelCheckpoint checkpoint;
         public bool switchWorld;
         public bool lockWorldSwitch;
+        public bool unlockWorldSwitch;
         public string dialogueName;
     }
     [SerializeField] GameObject fairyObject, bearObject;
@@ -23,6 +24,7 @@ public class LevelController : MonoBehaviour {
             checkpointData.checkpoint.CheckpointCompleted.AddListener(Action => {
                 if (checkpointData.switchWorld) WorldSwitchManager.Instance.ForceSwitchWorld();
                 if (checkpointData.lockWorldSwitch) WorldSwitchManager.Instance.Lock(gameObject);
+                if (checkpointData.unlockWorldSwitch) WorldSwitchManager.Instance.Unlock(gameObject);
                 if (checkpointData.dialogueName != "") {
                     DialogueManager.Instance.StartDialogue(checkpointData.dialogueName);
                 }
@@ -42,7 +44,6 @@ public class LevelController : MonoBehaviour {
             fairyObject.transform.position = fairyRespawnPoint.transform.position;
         if (bearRespawnPoint != null)
             bearObject.transform.position = bearRespawnPoint.transform.position;
-        Debug.Log("Restarted");
     }
 
     public void CompleteLevel() {

@@ -42,7 +42,7 @@ public class WorldSwitchManager : MonoBehaviour {
 
     void Awake() {
         if (Instance != null && Instance != this) {
-            Debug.LogWarning("WorldSwitchManager: " +
+            Debug.LogWarning($"{typeof(WorldSwitchManager)}: " +
             "Duplicate instance detected and removed. Only one instance of WorldSwitchManager is allowed.");
             Destroy(Instance);
             return;
@@ -85,6 +85,7 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     IEnumerator SwitchWorldsWithFade() {
+        InputManager.Instance.DisableAllInput();
         yield return StartCoroutine(FadeOut());
 
         OnWorldSwitch?.Invoke();
@@ -94,6 +95,7 @@ public class WorldSwitchManager : MonoBehaviour {
         } else {
             ActivateWorldBear();
         }
+        InputManager.Instance.SetNormalMode();
 
         yield return StartCoroutine(FadeIn());
     }

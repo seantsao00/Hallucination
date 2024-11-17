@@ -79,23 +79,6 @@ public class WorldSwitchManager : MonoBehaviour {
         StartCoroutine(SwitchWorldsWithFade());
     }
 
-    IEnumerator SwitchWorldsWithFade() {
-        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Cinematic;
-        yield return StartCoroutine(FadeOut());
-
-        OnWorldSwitch?.Invoke();
-        if (currentWorld == CharacterTypeEnum.Bear) {
-            SetWorldFairy();
-        } else if (currentWorld == CharacterTypeEnum.Fairy) {
-            SetWorldBear();
-        } else {
-            Debug.LogError($"Unexpected {nameof(currentWorld)} value: {currentWorld}");
-        }
-
-        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Normal;
-        yield return StartCoroutine(FadeIn());
-    }
-
     IEnumerator SwitchWorldsWithFade(CharacterTypeEnum world) {
         GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Cinematic;
         yield return StartCoroutine(FadeOut());
@@ -111,6 +94,17 @@ public class WorldSwitchManager : MonoBehaviour {
 
         GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Normal;
         yield return StartCoroutine(FadeIn());
+    }
+
+    IEnumerator SwitchWorldsWithFade() {
+        if (currentWorld == CharacterTypeEnum.Bear) {
+            StartCoroutine(SwitchWorldsWithFade(CharacterTypeEnum.Fairy));
+        } else if (currentWorld == CharacterTypeEnum.Fairy) {
+            StartCoroutine(SwitchWorldsWithFade(CharacterTypeEnum.Bear));
+        } else {
+            Debug.LogError($"Unexpected {nameof(currentWorld)} value: {currentWorld}");
+        }
+        yield return null;
     }
 
     public void SetWorldFairy() {

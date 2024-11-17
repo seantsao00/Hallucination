@@ -436,6 +436,14 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[5].second.m_TileObjectToInstantiateIndex
       value: 65535
       objectReference: {fileID: 0}
+    - target: {fileID: 3930003841540556765, guid: 2faaf5b7af1dc884cbb521d587f2108d, type: 3}
+      propertyPath: m_SortingLayer
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3930003841540556765, guid: 2faaf5b7af1dc884cbb521d587f2108d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -753518471
+      objectReference: {fileID: 0}
     - target: {fileID: 7691792239201023591, guid: 2faaf5b7af1dc884cbb521d587f2108d, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 1
@@ -594,7 +602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc94d8040e252ef44ac621f6787f3c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movableObject: {fileID: 855871677092666305}
   autoMove: 0
   points:
   - {fileID: 6152548738504648083}

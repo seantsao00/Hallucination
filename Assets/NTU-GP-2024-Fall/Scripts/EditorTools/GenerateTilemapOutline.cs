@@ -20,6 +20,7 @@ public class GenerateTilemapOutline : MonoBehaviour {
     [SerializeField] Tile outlineTile;
     [SerializeField] Color outlineColor = Color.black;
     [SerializeField] string outlineName = "Outline";
+    [SerializeField] int sortingOrder = -100;
 
     public void GenerateOutline() {
         foreach (var sourceTilemap in sourceTilemaps) {
@@ -32,7 +33,9 @@ public class GenerateTilemapOutline : MonoBehaviour {
             outlineTilemapGameObject.transform.position = outlinePosition;
             outlineTilemapGameObject.transform.parent = sourceTilemap.transform;
             outlineTilemap = outlineTilemapGameObject.AddComponent<Tilemap>();
-            outlineTilemapGameObject.AddComponent<TilemapRenderer>();
+            var renderer = outlineTilemapGameObject.AddComponent<TilemapRenderer>();
+            renderer.sortingOrder = sortingOrder;
+            renderer.sortingLayerID = sourceTilemap.GetComponent<TilemapRenderer>().sortingLayerID;
             // outlineTilemap.ClearAllTiles();
             outlineTilemap.color = outlineColor;
             BoundsInt bounds = sourceTilemap.cellBounds;

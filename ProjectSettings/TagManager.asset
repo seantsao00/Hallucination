@@ -49,7 +49,16 @@ TagManager:
   - name: AheadDefault
     uniqueID: 1334939969
     locked: 0
-  - name: Chracter
+  - name: BehindGround
+    uniqueID: 3541448825
+    locked: 0
+  - name: Ground
+    uniqueID: 3933753777
+    locked: 0
+  - name: AheadGround
+    uniqueID: 3974661735
+    locked: 0
+  - name: Character
     uniqueID: 1146502153
     locked: 0
   - name: AheadCharacter

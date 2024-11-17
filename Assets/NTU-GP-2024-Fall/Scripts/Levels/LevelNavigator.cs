@@ -36,7 +36,6 @@ public class LevelNavigator : MonoBehaviour {
     public void RestartCurrentLevel() {
         // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-        InputManager.Instance.SetNormalMode();
         // Debug.Log($"Scene Restarted. Current level: {currentLevelIndex}");
     }
 

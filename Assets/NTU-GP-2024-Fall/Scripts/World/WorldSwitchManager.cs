@@ -21,7 +21,9 @@ public class WorldSwitchManager : MonoBehaviour {
     /// If this collection contains any entries, the player will be unable to perform a world switch.
     /// </summary>
     HashSet<GameObject> locks = new HashSet<GameObject>();
-    void UpdateWorldSwitchIcon() => WorldSwitchIcon.SetActive(locks.Count == 0);
+    public void UpdateWorldSwitchIcon() => WorldSwitchIcon.SetActive(
+        locks.Count == 0 && InputManager.Control.World.SwitchWorld.enabled
+    );
     public bool Lock(GameObject gameObject) {
         bool success = locks.Add(gameObject);
         UpdateWorldSwitchIcon();
@@ -78,7 +80,7 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     IEnumerator SwitchWorldsWithFade() {
-        InputManager.Instance.DisableAllInput();
+        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Cinematic;
         yield return StartCoroutine(FadeOut());
 
         OnWorldSwitch?.Invoke();
@@ -89,8 +91,8 @@ public class WorldSwitchManager : MonoBehaviour {
         } else {
             Debug.LogError($"Unexpected {nameof(currentWorld)} value: {currentWorld}");
         }
-        InputManager.Instance.SetNormalMode();
 
+        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Normal;
         yield return StartCoroutine(FadeIn());
     }
 

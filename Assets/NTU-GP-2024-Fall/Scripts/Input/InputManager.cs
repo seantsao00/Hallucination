@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputManager {
@@ -11,6 +9,8 @@ public class InputManager {
                 instance.control.Character.Enable();
                 instance.control.World.Enable();
                 instance.control.Game.Enable();
+                GameStateManager.Instance.GameStateChangedEvent.AddListener(instance.SetInputAccordingToGameState);
+                GameStateManager.Instance.GamePlayStateChangedEvent.AddListener(instance.SetInputAccordingToGamePlayState);
             }
             return instance;
         }
@@ -27,30 +27,44 @@ public class InputManager {
     public float CharacterHorizontalMove => Control.Character.HorizontalMove.ReadValue<float>();
     public float CharacterVerticalMove => Control.Character.VerticalMove.ReadValue<float>();
 
-    public void SetPauseMode() {
+    void SetInputAccordingToGameState(GameState state) {
         Control.Disable();
-        Control.Game.Enable();
-        Control.UI.Enable();
+        switch (state) {
+            case GameState.MainMenu:
+                Control.UI.Enable();
+                break;
+            case GameState.Paused:
+                Control.UI.Enable();
+                Control.Game.Enable();
+                break;
+            case GameState.Play:
+                SetInputAccordingToGamePlayState(GameStateManager.Instance.CurrentGamePalyState);
+                break;
+            default:
+                break;
+        }
+        WorldSwitchManager.Instance.UpdateWorldSwitchIcon();
     }
 
-    public void SetDialogueMode() {
+    void SetInputAccordingToGamePlayState(GamePlayState state) {
         Control.Disable();
-        Control.Game.Enable();
-        Control.UI.Enable();
-        Control.Dialogue.Enable();
-    }
-
-    public void SetNormalMode() {
-        Control.Disable();
-        Control.Game.Enable();
-        Control.Character.Enable();
-        Control.World.Enable();
-        GameObject currentPlayedCharacter = Utils.FindCurrentPlayedCharacter();
-        CharacterStateController characterStateController = currentPlayedCharacter.GetComponent<CharacterStateController>();
-        characterStateController.UpdateInput();
-    }
-
-    public void DisableAllInput() {
-        Control.Disable();
+        switch (state) {
+            case GamePlayState.Normal:
+                Control.Game.Enable();
+                Control.Character.Enable();
+                Control.World.Enable();
+                GameObject currentPlayedCharacter = Utils.FindCurrentPlayedCharacter();
+                CharacterStateController characterStateController = currentPlayedCharacter.GetComponent<CharacterStateController>();
+                characterStateController.UpdateInput();
+                break;
+            case GamePlayState.DialogueActive:
+                Control.Game.Enable();
+                Control.UI.Enable();
+                Control.Dialogue.Enable();
+                break;
+            default:
+                break;
+        }
+        WorldSwitchManager.Instance.UpdateWorldSwitchIcon();
     }
 }

@@ -1,58 +1,78 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public enum GameState {
-    Menu,
+    MainMenu,
     Paused,
-    Playing
+    Play
 }
-public enum InGameState {
+public enum GamePlayState {
     None,
+    Cinematic,
     Normal,
-    HavingConversation
+    DialogueActive
 }
 
 public class GameStateManager {
     static GameStateManager instance;
     public static GameStateManager Instance {
         get {
-            if (instance == null) {
-                instance = new GameStateManager();
-            }
+            instance ??= new GameStateManager();
             return instance;
         }
     }
 
-    public GameState CurrentGameState = GameState.Playing;
-    public InGameState CurrentInGameState = InGameState.Normal;
+    public UnityEvent<GameState> GameStateChangedEvent = new UnityEvent<GameState>();
+    public UnityEvent<GamePlayState> GamePlayStateChangedEvent = new UnityEvent<GamePlayState>();
 
-    public void Resume() {
+    private GameState currentGameState = GameState.Play;
+    public GameState CurrentGameState {
+        get => currentGameState;
+        set {
+            GameState oldState = currentGameState;
+            currentGameState = value;
+            if (oldState != currentGameState) GameStateChangedEvent?.Invoke(currentGameState);
+        }
+    }
+    private GamePlayState currentGamePlayState = GamePlayState.Normal;
+    public GamePlayState CurrentGamePalyState {
+        get => currentGamePlayState;
+        set {
+            GamePlayState oldState = currentGamePlayState;
+            currentGamePlayState = value;
+            if (oldState != currentGamePlayState) GamePlayStateChangedEvent?.Invoke(currentGamePlayState);
+        }
+    }
+
+    public void StartGame() {
+        Assert.IsTrue(CurrentGameState != GameState.Paused && CurrentGameState != GameState.Play);
+        CurrentGameState = GameState.Play;
+        Time.timeScale = 1f;
+    }
+
+    public void ResumeGame() {
         Assert.IsTrue(CurrentGameState == GameState.Paused);
+        CurrentGameState = GameState.Play;
         Time.timeScale = 1f;
-        InputManager.Instance.SetNormalMode();
     }
 
-    // Function to pause the game
-    void Pause() {
-        Time.timeScale = 0f;
+    void PauseGame() {
         CurrentGameState = GameState.Paused;
-        InputManager.Instance.SetPauseMode();
+        Time.timeScale = 0f;
     }
 
-    // Function to go back to the main menu
     public void GoToMainMenu() {
+        CurrentGameState = GameState.MainMenu;
+        CurrentGamePalyState = GamePlayState.None;
         Time.timeScale = 1f;
-        CurrentGameState = GameState.Menu;
-        CurrentInGameState = InGameState.None;
         SceneManager.LoadScene("MainMenu");
     }
 
-    // Function to restart the current level
     public void RestartGame() {
+        CurrentGameState = GameState.Play;
         Time.timeScale = 1f;
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-        InputManager.Instance.SetNormalMode();
+        LevelNavigator.Instance.RestartCurrentLevel();
     }
 }

@@ -660,19 +660,37 @@ CompositeCollider2D:
   - m_Collider: {fileID: 6068360473657125027}
     m_ColliderPaths:
     - - X: -210000000
-        Y: 190000000
+        Y: 50000040
+      - X: -209999984
+        Y: 50000040
+      - X: -209999984
+        Y: 160000032
+      - X: -209999968
+        Y: 160000032
+      - X: -209999968
+        Y: 190000032
+      - X: -229999968
+        Y: 190000032
+      - X: -229999968
+        Y: 160000032
+      - X: -229999984
+        Y: 160000032
+      - X: -229999984
+        Y: 50000040
       - X: -230000000
-        Y: 190000000
+        Y: 50000040
       - X: -230000000
-        Y: 0
+        Y: 41
+      - X: -220000000
+        Y: 39
       - X: -210000000
-        Y: 0
+        Y: 36
   m_CompositePaths:
     m_Paths:
-    - - {x: -21.000029, y: 0}
-      - {x: -21.000029, y: 19}
-      - {x: -23, y: 18.999971}
-      - {x: -22.999971, y: 0}
+    - - {x: -21.000029, y: 0.0000036000001}
+      - {x: -21.000027, y: 19.000004}
+      - {x: -22.999996, y: 18.999975}
+      - {x: -22.999971, y: 0.0000041}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -692,7 +710,7 @@ AreaEffector2D:
     m_Bits: 4294967295
   m_UseGlobalAngle: 0
   m_ForceAngle: 90
-  m_ForceMagnitude: 400
+  m_ForceMagnitude: 3000
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 1
@@ -5549,7 +5567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6324629018712749703}
   m_Layer: 0
-  m_Name: Wind
+  m_Name: HorizontalWind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5563,7 +5581,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2984837801330467839}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 18, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5573,7 +5591,7 @@ Transform:
   - {fileID: 3730805686198958661}
   - {fileID: 2557369236721312453}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &4224252842189553158
 GameObject:
   m_ObjectHideFlags: 0
@@ -5912,20 +5930,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 3733602233266864319}
     m_ColliderPaths:
-    - - X: -210000000
-        Y: 190000000
-      - X: -230000000
-        Y: 190000000
-      - X: -230000000
-        Y: 160000000
-      - X: -210000000
-        Y: 160000000
+    - - X: -209999968
+        Y: 190000032
+      - X: -229999968
+        Y: 190000032
+      - X: -229999968
+        Y: 160000032
+      - X: -209999968
+        Y: 160000032
   m_CompositePaths:
     m_Paths:
-    - - {x: -21.000029, y: 16}
-      - {x: -21.000029, y: 19}
-      - {x: -23, y: 18.999971}
-      - {x: -22.999971, y: 16}
+    - - {x: -21.000027, y: 16.000004}
+      - {x: -21.000027, y: 19.000004}
+      - {x: -22.999996, y: 18.999975}
+      - {x: -22.999968, y: 16.000004}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -5945,7 +5963,7 @@ AreaEffector2D:
     m_Bits: 4294967295
   m_UseGlobalAngle: 0
   m_ForceAngle: 90
-  m_ForceMagnitude: 200
+  m_ForceMagnitude: 1000
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 5
@@ -6289,19 +6307,25 @@ CompositeCollider2D:
   - m_Collider: {fileID: 1790298637036076125}
     m_ColliderPaths:
     - - X: -210000000
-        Y: 30000000
+        Y: 30000038
+      - X: -220000000
+        Y: 30000038
+      - X: -220000000
+        Y: 30000040
       - X: -230000000
-        Y: 30000000
+        Y: 30000042
       - X: -230000000
-        Y: 0
+        Y: 41
+      - X: -220000000
+        Y: 39
       - X: -210000000
-        Y: 0
+        Y: 36
   m_CompositePaths:
     m_Paths:
-    - - {x: -21.000029, y: 0}
-      - {x: -21.000029, y: 3}
-      - {x: -23, y: 2.999971}
-      - {x: -22.999971, y: 0}
+    - - {x: -21.000029, y: 0.0000036000001}
+      - {x: -21.000029, y: 3.0000038}
+      - {x: -23, y: 2.9999747}
+      - {x: -22.999971, y: 0.0000041}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -6321,7 +6345,7 @@ AreaEffector2D:
     m_Bits: 4294967295
   m_UseGlobalAngle: 0
   m_ForceAngle: 90
-  m_ForceMagnitude: 800
+  m_ForceMagnitude: 5000
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 5

@@ -4,8 +4,6 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-public enum World { Fairy, Bear };
-
 public class WorldSwitchManager : MonoBehaviour {
     [SerializeField] GameObject WorldSwitchIcon;
     public static WorldSwitchManager Instance { get; private set; }
@@ -14,8 +12,7 @@ public class WorldSwitchManager : MonoBehaviour {
     public CanvasGroup FadeCanvasGroup;
     public UnityEvent OnWorldSwitch;
 
-    private bool isInWorldFairy = true;
-    public World currentWorld { get; private set; }
+    public CharacterTypeEnum currentWorld { get; private set; }
 
     /// <summary>
     /// A collection of locks that restrict the world switch operation.
@@ -63,10 +60,6 @@ public class WorldSwitchManager : MonoBehaviour {
         InputManager.Control.World.SwitchWorld.performed -= SwitchWorldByInput;
     }
 
-    void Start() {
-        ActivateWorldFairy();
-    }
-
     void SwitchWorldByInput(InputAction.CallbackContext context) {
         SwitchWorld();
     }
@@ -89,27 +82,34 @@ public class WorldSwitchManager : MonoBehaviour {
         yield return StartCoroutine(FadeOut());
 
         OnWorldSwitch?.Invoke();
-        isInWorldFairy = !isInWorldFairy;
-        if (isInWorldFairy) {
-            ActivateWorldFairy();
+        if (currentWorld == CharacterTypeEnum.Bear) {
+            SetWorldFairy();
+        } else if (currentWorld == CharacterTypeEnum.Fairy) {
+            SetWorldBear();
         } else {
-            ActivateWorldBear();
+            Debug.LogError($"Unexpected {nameof(currentWorld)} value: {currentWorld}");
         }
         InputManager.Instance.SetNormalMode();
 
         yield return StartCoroutine(FadeIn());
     }
 
-    void ActivateWorldFairy() {
-        currentWorld = World.Fairy;
+    public void SetWorldFairy() {
+        currentWorld = CharacterTypeEnum.Fairy;
         foreach (var environment in WorldFairyEnvironment) { environment.SetActive(true); }
         foreach (var environment in WorldBearEnvironment) { environment.SetActive(false); }
     }
 
-    void ActivateWorldBear() {
-        currentWorld = World.Bear;
+    public void SetWorldBear() {
+        currentWorld = CharacterTypeEnum.Bear;
         foreach (var environment in WorldFairyEnvironment) { environment.SetActive(false); }
         foreach (var environment in WorldBearEnvironment) { environment.SetActive(true); }
+    }
+
+    public void SwitchToWorld(CharacterTypeEnum world) {
+        if (world == CharacterTypeEnum.None) return;
+        if (world == CharacterTypeEnum.Bear) SetWorldBear();
+        if (world == CharacterTypeEnum.Fairy) SetWorldFairy();
     }
 
     IEnumerator FadeOut() {
@@ -132,9 +132,5 @@ public class WorldSwitchManager : MonoBehaviour {
             yield return null;
         }
         FadeCanvasGroup.alpha = 0;
-    }
-
-    void OnDrawGizmos() {
-        Awake();
     }
 }

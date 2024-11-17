@@ -5,9 +5,6 @@ using UnityEngine.InputSystem;
 public class PauseGame : MonoBehaviour {
     public GameObject pauseMenuUI; // Assign the Pause Menu UI in the Inspector
     bool isPaused = false;
-    void Start() {
-    }
-
 
     void OnEnable() {
         InputManager.Control.Game.Pause.performed += Pause;
@@ -49,7 +46,8 @@ public class PauseGame : MonoBehaviour {
     // Function to restart the current level
     public void RestartGame() {
         Time.timeScale = 1f;             // Ensure time is resumed
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name); // Reload the current scene
+        // SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name); // Reload the current scene
+        LevelNavigator.Instance.RestartCurrentLevel();
         InputManager.Instance.SetNormalMode();
     }
 }

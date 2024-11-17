@@ -122,7 +122,7 @@ public class DialogueManager : MonoBehaviour {
     }
 
     void EndDialogue() {
-        Debug.Log("End of dialogue");
+        // Debug.Log("End of dialogue");
         InputManager.Instance.SetNormalMode();
         dialogueBox.SetActive(false);   // Hide the dialogue box when dialogue ends
         leftImage.SetActive(false);  // Hide both images when dialogue ends

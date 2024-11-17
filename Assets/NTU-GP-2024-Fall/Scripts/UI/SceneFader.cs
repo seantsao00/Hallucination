@@ -31,6 +31,6 @@ public class SceneFader : MonoBehaviour {
 
         // Ensure the alpha is fully set to 1
         fadeCanvasGroup.alpha = 1f;
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadSceneAsync(sceneName);
     }
 }

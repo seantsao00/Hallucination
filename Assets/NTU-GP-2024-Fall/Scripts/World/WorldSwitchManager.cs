@@ -4,8 +4,6 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-public enum World { Fairy, Bear };
-
 public class WorldSwitchManager : MonoBehaviour {
     [SerializeField] GameObject WorldSwitchIcon;
     public static WorldSwitchManager Instance { get; private set; }
@@ -14,9 +12,7 @@ public class WorldSwitchManager : MonoBehaviour {
     public CanvasGroup FadeCanvasGroup;
     public UnityEvent OnWorldSwitch;
 
-    private bool isInWorldFairy = true;
-    private bool disabled = false;
-    public World currentWorld { get; private set; }
+    public CharacterTypeEnum currentWorld { get; private set; }
 
     /// <summary>
     /// A collection of locks that restrict the world switch operation.
@@ -25,7 +21,9 @@ public class WorldSwitchManager : MonoBehaviour {
     /// If this collection contains any entries, the player will be unable to perform a world switch.
     /// </summary>
     HashSet<GameObject> locks = new HashSet<GameObject>();
-    void UpdateWorldSwitchIcon() => WorldSwitchIcon.SetActive(locks.Count == 0);
+    public void UpdateWorldSwitchIcon() => WorldSwitchIcon.SetActive(
+        locks.Count == 0 && InputManager.Control.World.SwitchWorld.enabled
+    );
     public bool Lock(GameObject gameObject) {
         bool success = locks.Add(gameObject);
         UpdateWorldSwitchIcon();
@@ -36,11 +34,14 @@ public class WorldSwitchManager : MonoBehaviour {
         UpdateWorldSwitchIcon();
         return success;
     }
-
+    public void ClearLocks() {
+        locks.Clear();
+        UpdateWorldSwitchIcon();
+    }
 
     void Awake() {
         if (Instance != null && Instance != this) {
-            Debug.LogWarning("WorldSwitchManager: " +
+            Debug.LogWarning($"{typeof(WorldSwitchManager)}: " +
             "Duplicate instance detected and removed. Only one instance of WorldSwitchManager is allowed.");
             Destroy(Instance);
             return;
@@ -61,52 +62,56 @@ public class WorldSwitchManager : MonoBehaviour {
         InputManager.Control.World.SwitchWorld.performed -= SwitchWorldByInput;
     }
 
-    void Start() {
-        ActivateWorldFairy();
-    }
-
     void SwitchWorldByInput(InputAction.CallbackContext context) {
         SwitchWorld();
     }
 
     public void SwitchWorld() {
-        if (disabled) return;
         if (locks.Count != 0) return;
         StartCoroutine(SwitchWorldsWithFade());
     }
 
+    public void ForceSwitchWorld() {
+        if (locks.Count != 0) {
+            Debug.LogWarning("Lock count is not 0. Automatically release all locks.");
+            locks.Clear();
+        }
+        StartCoroutine(SwitchWorldsWithFade());
+    }
+
     IEnumerator SwitchWorldsWithFade() {
+        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Cinematic;
         yield return StartCoroutine(FadeOut());
 
         OnWorldSwitch?.Invoke();
-        isInWorldFairy = !isInWorldFairy;
-        if (isInWorldFairy) {
-            ActivateWorldFairy();
+        if (currentWorld == CharacterTypeEnum.Bear) {
+            SetWorldFairy();
+        } else if (currentWorld == CharacterTypeEnum.Fairy) {
+            SetWorldBear();
         } else {
-            ActivateWorldBear();
+            Debug.LogError($"Unexpected {nameof(currentWorld)} value: {currentWorld}");
         }
 
+        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Normal;
         yield return StartCoroutine(FadeIn());
     }
 
-    void ActivateWorldFairy() {
-        currentWorld = World.Fairy;
+    public void SetWorldFairy() {
+        currentWorld = CharacterTypeEnum.Fairy;
         foreach (var environment in WorldFairyEnvironment) { environment.SetActive(true); }
         foreach (var environment in WorldBearEnvironment) { environment.SetActive(false); }
     }
 
-    void ActivateWorldBear() {
-        currentWorld = World.Bear;
+    public void SetWorldBear() {
+        currentWorld = CharacterTypeEnum.Bear;
         foreach (var environment in WorldFairyEnvironment) { environment.SetActive(false); }
         foreach (var environment in WorldBearEnvironment) { environment.SetActive(true); }
     }
 
-    public void Enable() {
-        disabled = false;
-    }
-
-    public void Disable() {
-        disabled = true;
+    public void SwitchToWorld(CharacterTypeEnum world) {
+        if (world == CharacterTypeEnum.None) return;
+        if (world == CharacterTypeEnum.Bear) SetWorldBear();
+        if (world == CharacterTypeEnum.Fairy) SetWorldFairy();
     }
 
     IEnumerator FadeOut() {
@@ -129,9 +134,5 @@ public class WorldSwitchManager : MonoBehaviour {
             yield return null;
         }
         FadeCanvasGroup.alpha = 0;
-    }
-
-    void OnDrawGizmos() {
-        Awake();
     }
 }

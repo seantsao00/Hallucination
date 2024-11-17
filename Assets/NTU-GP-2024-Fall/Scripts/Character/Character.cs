@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+public enum CharacterTypeEnum { None, Fairy, Bear };
+
 /// <summary>
 /// The <c>Character</c> class maintains the character's current state, including movement states 
 /// (e.g., jumping, dashing) and speed control (e.g., maximum fall speed).
@@ -8,13 +10,13 @@ using UnityEngine;
 /// that updates notify all necessary dependencies.
 /// </summary>
 public class Character : MonoBehaviour {
-    [System.Serializable]
+    [Serializable]
     public class CharacterMovementAttributes {
         [Header("HorizontalMovement")]
         public float NormalHorizontalSpeed = 5f;
 
         [Header("Behavior")]
-        [Tooltip("Gravity multiplier applied when the character’s vertical falling speed falls below the threshold.")]
+        [Tooltip("Gravity multiplier applied when the character's vertical falling speed falls below the threshold.")]
         public float AirHangTimeGravityMultiplier = 0.4f;
         public float AirHangTimeThresholdSpeed = 0.5f;
         public float StickOnWallFallingSpeed = 3f;
@@ -89,8 +91,8 @@ public class Character : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 
     [SerializeField] TipManager tipManager;
+    public bool isFairy;
     string grabTip = "Hold E or C to move the stone";
-
 
     private void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;

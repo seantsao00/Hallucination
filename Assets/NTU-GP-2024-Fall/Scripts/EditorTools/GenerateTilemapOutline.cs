@@ -27,7 +27,9 @@ public class GenerateTilemapOutline : MonoBehaviour {
             sourceTilemap.CompressBounds();
             GameObject outlineTilemapGameObject = new GameObject();
             outlineTilemapGameObject.name = outlineName;
-            outlineTilemapGameObject.transform.position = sourceTilemap.transform.position;
+            Vector3 outlinePosition = sourceTilemap.transform.position;
+            // outlinePosition.z += 1;
+            outlineTilemapGameObject.transform.position = outlinePosition;
             outlineTilemapGameObject.transform.parent = sourceTilemap.transform;
             outlineTilemap = outlineTilemapGameObject.AddComponent<Tilemap>();
             outlineTilemapGameObject.AddComponent<TilemapRenderer>();

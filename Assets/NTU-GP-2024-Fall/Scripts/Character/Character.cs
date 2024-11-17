@@ -112,11 +112,6 @@ public class Character : MonoBehaviour {
             float direction = InputManager.Instance.CharacterHorizontalMove;
             if (direction != 0) FacingDirection = new(direction, 0);
         }
-        if (rb.velocity.x != 0) {
-            GetComponent<Animator>().SetBool("Movement", true);
-        } else {
-            GetComponent<Animator>().SetBool("Movement", false);
-        }
         if (rb.velocity.y < -MovementAttributes.velocityEps) {
             if (Mathf.Abs(rb.velocity.y) < MovementAttributes.AirHangTimeThresholdSpeed) {
                 characterStateController.AddState(CharacterState.AirHanging);

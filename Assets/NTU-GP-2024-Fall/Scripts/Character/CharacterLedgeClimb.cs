@@ -32,7 +32,6 @@ public class CharacterLedgeClimb : MonoBehaviour {
         if (character.FacingDirection.x > 0) destination = currentPosition + ledgeClimbOffset;
         else destination = currentPosition + new Vector2(-ledgeClimbOffset.x, ledgeClimbOffset.y);
         characterStateController.AddState(CharacterState.LedgeClimbing);
-        GetComponent<Animator>().SetBool("LedgeClimb", true);       // I'm not sure is it okay to put here
         rb.bodyType = RigidbodyType2D.Static;
     }
 
@@ -40,7 +39,6 @@ public class CharacterLedgeClimb : MonoBehaviour {
     void LedgeClimbOver() {
         transform.position = destination;
         characterStateController.RemoveState(CharacterState.LedgeClimbing);
-        GetComponent<Animator>().SetBool("LedgeClimb", false);
         rb.bodyType = RigidbodyType2D.Dynamic;
         StartCoroutine(FinishClimb(0.05f));
     }

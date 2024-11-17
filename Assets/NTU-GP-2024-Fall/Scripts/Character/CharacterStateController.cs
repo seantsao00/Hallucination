@@ -26,11 +26,13 @@ public class CharacterStateController : MonoBehaviour {
 
     Rigidbody2D rb;
     public float NormalGravityScale { get; private set; }
+    Animator animator;
 
     void Awake() {
         OnStateChanged += HandleStateChange;
         rb = GetComponent<Rigidbody2D>();
         NormalGravityScale = rb.gravityScale;
+        animator = GetComponent<Animator>();
     }
 
     void OnDestroy() { OnStateChanged -= HandleStateChange; }
@@ -56,6 +58,7 @@ public class CharacterStateController : MonoBehaviour {
     private void HandleStateChange(CharacterState state, bool added) {
         UpdateInput();
         UpdateGravity();
+        UpdateAnimator();
         // Debug.Log($"{CharacterBusy}, states: {string.Join(", ", ActiveStates.ToArray())}");
         if (CharacterBusy) {
             WorldSwitchManager.Instance.Lock(gameObject);
@@ -77,6 +80,24 @@ public class CharacterStateController : MonoBehaviour {
             rb.gravityScale = NormalGravityScale * GetComponent<CharacterJump>().PreReleaseGravityMultiplier;
         } else {
             rb.gravityScale = NormalGravityScale;
+        }
+    }
+
+    public void UpdateAnimator() {
+        if (HasState(CharacterState.Walking)) {
+            animator.SetBool("Movement", true);
+        } else {
+            animator.SetBool("Movement", false);
+        }
+        if (HasState(CharacterState.Climbing)) {
+            animator.SetBool("Climb", true);
+        } else {
+            animator.SetBool("Climb", false);
+        }
+        if (HasState(CharacterState.LedgeClimbing)) {
+            animator.SetBool("LedgeClimb", true);
+        } else {
+            animator.SetBool("LedgeClimb", false);
         }
     }
 

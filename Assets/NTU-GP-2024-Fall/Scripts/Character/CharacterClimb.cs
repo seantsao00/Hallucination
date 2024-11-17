@@ -36,12 +36,10 @@ public class CharacterClimb : MonoBehaviour {
         rb.velocity = new Vector2(0, 0);
         gameObject.layer = LayerMask.NameToLayer("AheadGround");
         characterStateController.AddState(CharacterState.Climbing);
-        GetComponent<Animator>().SetBool("Climb", true);
     }
 
     void BackToNormal() {
         gameObject.layer = 1 << 0; // default layer (0)
         characterStateController.RemoveState(CharacterState.Climbing);
-        GetComponent<Animator>().SetBool("Climb", false);
     }
 }

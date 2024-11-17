@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 public class CharacterGrabStone : MonoBehaviour {
     [SerializeField] float grabSpeed = 3f;

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 
 // Represents a single line of dialogue with a speaker and a sentence
 [System.Serializable]

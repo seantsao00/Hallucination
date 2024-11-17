@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 public class MovableObject : MonoBehaviour, IButtonControlled, ISwitchControlled {
     Transform movableObject;

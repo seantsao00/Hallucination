@@ -4,22 +4,34 @@ using UnityEngine;
 public enum CharacterState {
     Idle,
     Walking,
+    PreReleaseJumping,
     Climbing,
     Dashing,
     Grabbing,
     BeingBlown,
     LedgeClimbing,
-    NotStandingOnGround
+    NotStandingOnGround,
+    AirHanging
 }
 
 public class CharacterStateController : MonoBehaviour {
+    [Header("Gravity")]
+    public float BeingBlownGravityMultiplier = 0.4f;
+    public float AirHangingGravityMultiplier = 0.4f;
 
     HashSet<CharacterState> activeStates = new HashSet<CharacterState>();
 
     public delegate void StateChangedHandler(CharacterState state, bool added);
     public event StateChangedHandler OnStateChanged;
 
-    void Awake() { OnStateChanged += HandleStateChange; }
+    Rigidbody2D rb;
+    public float NormalGravityScale { get; private set; }
+
+    void Awake() {
+        OnStateChanged += HandleStateChange;
+        rb = GetComponent<Rigidbody2D>();
+        NormalGravityScale = rb.gravityScale;
+    }
 
     void OnDestroy() { OnStateChanged -= HandleStateChange; }
 
@@ -43,11 +55,28 @@ public class CharacterStateController : MonoBehaviour {
 
     private void HandleStateChange(CharacterState state, bool added) {
         UpdateInput();
+        UpdateGravity();
         // Debug.Log($"{CharacterBusy}, states: {string.Join(", ", ActiveStates.ToArray())}");
         if (CharacterBusy) {
             WorldSwitchManager.Instance.Lock(gameObject);
         } else {
             WorldSwitchManager.Instance.Unlock(gameObject);
+        }
+    }
+
+    public void UpdateGravity() {
+        if (HasState(CharacterState.Climbing)) {
+            rb.gravityScale = 0;
+        } else if (HasState(CharacterState.Dashing)) {
+            rb.gravityScale = 0;
+        } else if (HasState(CharacterState.BeingBlown)) {
+            rb.gravityScale = NormalGravityScale * BeingBlownGravityMultiplier;
+        } else if (HasState(CharacterState.AirHanging)) {
+            rb.gravityScale = NormalGravityScale * AirHangingGravityMultiplier;
+        } else if (HasState(CharacterState.PreReleaseJumping)) {
+            rb.gravityScale = NormalGravityScale * GetComponent<CharacterJump>().PreReleaseGravityMultiplier;
+        } else {
+            rb.gravityScale = NormalGravityScale;
         }
     }
 

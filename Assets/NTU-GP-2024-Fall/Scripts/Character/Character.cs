@@ -16,8 +16,6 @@ public class Character : MonoBehaviour {
         public float NormalHorizontalSpeed = 5f;
 
         [Header("Behavior")]
-        [Tooltip("Gravity multiplier applied when the character's vertical falling speed falls below the threshold.")]
-        public float AirHangTimeGravityMultiplier = 0.4f;
         public float AirHangTimeThresholdSpeed = 0.5f;
         public float StickOnWallFallingSpeed = 3f;
         public float MaxFallingSpeed = 16f;
@@ -87,12 +85,9 @@ public class Character : MonoBehaviour {
     [HideInInspector] public bool IsLedgeDetected;
 
     [HideInInspector] public bool IsDead = false;
-    [HideInInspector] public float NormalGravityScale;
-    SpriteRenderer spriteRenderer;
 
     [SerializeField] TipManager tipManager;
     public bool isFairy;
-    string grabTip = "Hold E or C to move the stone";
 
     private void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;
@@ -105,21 +100,7 @@ public class Character : MonoBehaviour {
         movableMask = LayerMask.GetMask("Movable");
         CurrentMovement = new CharacterCurrentMovement(MovementAttributes);
         rb = GetComponent<Rigidbody2D>();
-        NormalGravityScale = rb.gravityScale;
         characterStateController = GetComponent<CharacterStateController>();
-        characterStateController.OnStateChanged += HandleStateChange;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void HandleStateChange(CharacterState state, bool added) {
-        if (characterStateController.HasState(CharacterState.Climbing) ||
-            characterStateController.HasState(CharacterState.Dashing)) {
-            rb.gravityScale = 0;
-        } else if (characterStateController.HasState(CharacterState.BeingBlown)) {
-            rb.gravityScale = NormalGravityScale * MovementAttributes.AirHangTimeGravityMultiplier;
-        } else {
-            rb.gravityScale = NormalGravityScale;
-        }
     }
 
     void Update() {
@@ -136,16 +117,12 @@ public class Character : MonoBehaviour {
         } else {
             GetComponent<Animator>().SetBool("Movement", false);
         }
-        if (
-            rb.velocity.y < -MovementAttributes.velocityEps &&
-            !characterStateController.HasState(CharacterState.Dashing) &&
-            !characterStateController.HasState(CharacterState.BeingBlown) &&
-            !characterStateController.HasState(CharacterState.Climbing)
-        ) {
+        if (rb.velocity.y < -MovementAttributes.velocityEps) {
             if (Mathf.Abs(rb.velocity.y) < MovementAttributes.AirHangTimeThresholdSpeed) {
-                rb.gravityScale = NormalGravityScale * MovementAttributes.AirHangTimeGravityMultiplier;
+                characterStateController.AddState(CharacterState.AirHanging);
             } else {
-                rb.gravityScale = NormalGravityScale;
+                characterStateController.RemoveState(CharacterState.AirHanging);
+                characterStateController.RemoveState(CharacterState.PreReleaseJumping);
             }
         }
         if (rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {

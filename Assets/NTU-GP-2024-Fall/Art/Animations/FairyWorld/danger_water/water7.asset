@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: water7
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 259213429, guid: 1d825d61c5f0cab48b2c0856e489a3ba, type: 3}
-  - {fileID: -1835929094, guid: 1d825d61c5f0cab48b2c0856e489a3ba, type: 3}
-  m_MinSpeed: 3
-  m_MaxSpeed: 3
+  - {fileID: 2033035155, guid: 1d825d61c5f0cab48b2c0856e489a3ba, type: 3}
+  - {fileID: 1922958868, guid: 1d825d61c5f0cab48b2c0856e489a3ba, type: 3}
+  - {fileID: -1356446854, guid: 1d825d61c5f0cab48b2c0856e489a3ba, type: 3}
+  - {fileID: 672875042, guid: 1d825d61c5f0cab48b2c0856e489a3ba, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 5
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0

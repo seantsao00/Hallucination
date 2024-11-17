@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 public enum GameState {
@@ -33,6 +31,22 @@ public class GameStateManager {
         set {
             GameState oldState = currentGameState;
             currentGameState = value;
+            switch (currentGameState) {
+                case GameState.MainMenu:
+                    CurrentGamePalyState = GamePlayState.None;
+                    break;
+                case GameState.Paused:
+                    Time.timeScale = 0f;
+                    break;
+                case GameState.Play:
+                    Time.timeScale = 1f;
+                    currentGamePlayState = GamePlayState.Normal;
+                    break;
+                default:
+                    Debug.LogError($"Unhandled {nameof(CurrentGameState)}: {CurrentGameState}");
+                    break;
+            }
+
             if (oldState != currentGameState) GameStateChangedEvent?.Invoke(currentGameState);
         }
     }
@@ -44,35 +58,5 @@ public class GameStateManager {
             currentGamePlayState = value;
             if (oldState != currentGamePlayState) GamePlayStateChangedEvent?.Invoke(currentGamePlayState);
         }
-    }
-
-    public void StartGame() {
-        Assert.IsTrue(CurrentGameState != GameState.Paused && CurrentGameState != GameState.Play);
-        CurrentGameState = GameState.Play;
-        Time.timeScale = 1f;
-    }
-
-    public void ResumeGame() {
-        Assert.IsTrue(CurrentGameState == GameState.Paused);
-        CurrentGameState = GameState.Play;
-        Time.timeScale = 1f;
-    }
-
-    void PauseGame() {
-        CurrentGameState = GameState.Paused;
-        Time.timeScale = 0f;
-    }
-
-    public void GoToMainMenu() {
-        CurrentGameState = GameState.MainMenu;
-        CurrentGamePalyState = GamePlayState.None;
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    public void RestartGame() {
-        CurrentGameState = GameState.Play;
-        Time.timeScale = 1f;
-        LevelNavigator.Instance.RestartCurrentLevel();
     }
 }

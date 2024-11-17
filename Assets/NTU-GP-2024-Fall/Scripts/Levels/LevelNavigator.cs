@@ -49,6 +49,7 @@ public class LevelNavigator : MonoBehaviour {
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        if (scene.name == "MainMenu") return;
         var newLevels = FindObjectsOfType<LevelController>();
         Array.Sort(newLevels, (a, b) => {
             int indexA = Array.FindIndex(levelNames, name => name == a.gameObject.name);
@@ -63,6 +64,7 @@ public class LevelNavigator : MonoBehaviour {
         } else {
             CurrentLevel.RestartLevel();
         }
+        GameStateManager.Instance.CurrentGameState = GameState.Play;
     }
 
     void OnDestroy() {

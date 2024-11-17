@@ -48,9 +48,9 @@ public class InputManager {
 
     void SetInputAccordingToGamePlayState(GamePlayState state) {
         Control.Disable();
+        Control.Game.Enable();
         switch (state) {
             case GamePlayState.Normal:
-                Control.Game.Enable();
                 Control.Character.Enable();
                 Control.World.Enable();
                 GameObject currentPlayedCharacter = Utils.FindCurrentPlayedCharacter();
@@ -58,7 +58,6 @@ public class InputManager {
                 characterStateController.UpdateInput();
                 break;
             case GamePlayState.DialogueActive:
-                Control.Game.Enable();
                 Control.UI.Enable();
                 Control.Dialogue.Enable();
                 break;

@@ -1,12 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
-public class PauseGame : MonoBehaviour {
-    [SerializeField] GameObject pauseMenuUI;
+public class PauseGameMenu : MonoBehaviour {
 
     void Awake() {
         GameStateManager.Instance.GameStateChangedEvent.AddListener(HandleGameStateChange);
         InputManager.Control.Game.Pause.performed += PauseHandler;
+        gameObject.SetActive(false);
+    }
+
+    public void Restart() {
+        LevelNavigator.Instance.RestartCurrentLevel();
+    }
+
+    public void BackToMainMenu() {
+        GameStateManager.Instance.CurrentGameState = GameState.MainMenu;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void PauseHandler(InputAction.CallbackContext context) {
@@ -24,13 +34,14 @@ public class PauseGame : MonoBehaviour {
     }
 
     void OnDestroy() {
-        GameStateManager.Instance.GameStateChangedEvent.AddListener(HandleGameStateChange);
+        GameStateManager.Instance.GameStateChangedEvent.RemoveListener(HandleGameStateChange);
+        InputManager.Control.Game.Pause.performed -= PauseHandler;
     }
 
     public void HandleGameStateChange(GameState state) {
         if (state == GameState.Paused)
-            pauseMenuUI.SetActive(true);
+            gameObject.SetActive(true);
         else
-            pauseMenuUI.SetActive(false);
+            gameObject.SetActive(false);
     }
 }

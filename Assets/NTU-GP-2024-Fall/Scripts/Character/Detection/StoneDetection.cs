@@ -19,6 +19,7 @@ public class StoneDetection : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.CompareTag("Stone") && character.StoneWithinRange == null) {
             character.StoneWithinRange = collider.GetComponent<Stone>();
+            TipManager.Instance.ShowInteractableObjectTip(gameObject);
         }
     }
     void OnTriggerExit2D(Collider2D collider) {
@@ -27,6 +28,7 @@ public class StoneDetection : MonoBehaviour {
                 characterGrabStone.UnleashStone();
             }
             character.StoneWithinRange = null;
+            TipManager.Instance.CloseInteractableObjectTip(gameObject);
         }
     }
 }

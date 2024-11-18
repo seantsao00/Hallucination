@@ -38,12 +38,14 @@ public class Switch : InteractableObjectBase {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
+            TipManager.Instance.ShowInteractableObjectTip(gameObject);
             isPlayerInRange = true;
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
+            TipManager.Instance.CloseInteractableObjectTip(gameObject);
             isPlayerInRange = false;
         }
     }

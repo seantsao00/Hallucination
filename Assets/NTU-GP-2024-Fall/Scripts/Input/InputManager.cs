@@ -40,6 +40,8 @@ public class InputManager {
             case GameState.Play:
                 SetInputAccordingToGamePlayState(GameStateManager.Instance.CurrentGamePlayState);
                 break;
+            case GameState.End:
+                break;
             default:
                 break;
         }
@@ -53,7 +55,7 @@ public class InputManager {
             case GamePlayState.Normal:
                 Control.Character.Enable();
                 Control.World.Enable();
-                GameObject currentPlayedCharacter = Utils.FindCurrentPlayedCharacter();
+                GameObject currentPlayedCharacter = Util.FindCurrentPlayedCharacter();
                 CharacterStateController characterStateController = currentPlayedCharacter.GetComponent<CharacterStateController>();
                 characterStateController.UpdateInput();
                 break;

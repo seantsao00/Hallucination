@@ -39,6 +39,11 @@ public class MovableObject : MonoBehaviour, IButtonControlled, ISwitchControlled
     void Update() {
         Vector3 target = points[currentMovementTarget].position;
         Vector3 offset = target - currentPosition;
+        if (offset.magnitude < eps) {
+            WorldSwitchManager.Instance.Unlock(gameObject);
+        } else {
+            WorldSwitchManager.Instance.Lock(gameObject);
+        }
         Vector3 Movement;
         if (offset.magnitude > slowDownLength) {
             Movement = Vector3.ClampMagnitude(offset, speed * Time.deltaTime);

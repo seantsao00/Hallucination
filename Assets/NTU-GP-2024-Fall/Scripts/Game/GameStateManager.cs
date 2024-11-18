@@ -4,7 +4,8 @@ using UnityEngine.Events;
 public enum GameState {
     MainMenu,
     Paused,
-    Play
+    Play,
+    End
 }
 public enum GamePlayState {
     None,

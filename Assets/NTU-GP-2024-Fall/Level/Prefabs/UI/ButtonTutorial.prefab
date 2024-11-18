@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 13.93, y: 7.43}
+  m_AnchoredPosition: {x: 13.929993, y: 7.4299927}
   m_SizeDelta: {x: 5, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1738489655161888080
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8379018501925774378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialText: {fileID: 7373595128478755473}
   fairy: {fileID: 0}
-  MaxDistance: 5
+  MaxDistance: 3.5
   MinDistance: 2
 --- !u!1 &7972053637381329409
 GameObject:

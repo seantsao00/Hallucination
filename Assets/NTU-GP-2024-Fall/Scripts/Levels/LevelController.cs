@@ -141,6 +141,8 @@ public class LevelController : MonoBehaviour {
             }
             LoadCheckpointData(startData);
 
+            StartCoroutine(Util.FadeIn(1f, WorldSwitchManager.Instance.FadingMask));
+
             transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(true);
             transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(true);
         }
@@ -156,6 +158,8 @@ public class LevelController : MonoBehaviour {
                 );
             }
             LoadCheckpointData(restartData);
+
+            StartCoroutine(Util.FadeIn(1f, WorldSwitchManager.Instance.FadingMask));
 
             transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(true);
             transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(true);

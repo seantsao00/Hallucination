@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NTU-GP-2024-Fall/Level/Scenes/MainMenu.unity
     guid: 2d403c1b55d92664c96f3e4a5af2cd20
+  - enabled: 1
+    path: Assets/NTU-GP-2024-Fall/Level/Scenes/Intro.unity
+    guid: 5e93a71e18a5d554cb8531e2777de6cc
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7317521e9af0c914b95205d9d8652e24, type: 2}

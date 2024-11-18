@@ -51,7 +51,20 @@ public class LevelController : MonoBehaviour {
             }
             return;
         }
+        // StartCoroutine(PerformApplyCharacterSyncMethods(character, method));
         Destroy(character.GetComponent<Syncable>());
+        if (method != null) {
+            var syncable = character.AddComponent<Syncable>();
+            Syncable.CopyData(method, syncable);
+            // Debug.Log($"{syncable.syncedObject}, {syncable.currentWorldReference}, {syncable.syncedWorldReference}");
+            syncable.enabled = true;
+        }
+    }
+
+    IEnumerator PerformApplyCharacterSyncMethods(GameObject character, Syncable method) {
+        Destroy(fairyWorldFairy.GetComponent<Syncable>());
+        yield return null;
+        
         if (method != null) {
             var syncable = character.AddComponent<Syncable>();
             Syncable.CopyData(method, syncable);
@@ -105,10 +118,15 @@ public class LevelController : MonoBehaviour {
     }
 
     void ApplyCharacterSyncMethods() {
+        StartCoroutine(PerformApplyCharacterSyncMethods());
+    }
+
+    IEnumerator PerformApplyCharacterSyncMethods() {
         ApplyCharacterSyncMethod(fairyWorldFairy, characterSyncMethod.fairyWorldFairy);
         ApplyCharacterSyncMethod(bearWorldBear, characterSyncMethod.bearWorldBear);
         ApplyCharacterSyncMethod(fairyWorldBear, characterSyncMethod.fairyWorldBear);
         ApplyCharacterSyncMethod(bearWorldFairy, characterSyncMethod.bearWorldFairy);
+        yield return null;
         fairyWorldFairy.GetComponent<Syncable>()?.SyncState();
         bearWorldBear.GetComponent<Syncable>()?.SyncState();
     }

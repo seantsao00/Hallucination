@@ -16,7 +16,7 @@ public class Bubble : Syncable {
     }
     public void turnOff() {
         isGlowing = false;
-        spriteRenderer.color = Color.black;
+        spriteRenderer.color = Color.gray;
     }
 
     override public void SyncState() {

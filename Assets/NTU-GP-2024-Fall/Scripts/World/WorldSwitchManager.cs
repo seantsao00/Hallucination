@@ -10,7 +10,8 @@ public class WorldSwitchManager : MonoBehaviour {
     public GameObject[] WorldFairyEnvironment;
     public GameObject[] WorldBearEnvironment;
     public CanvasGroup FadingMask;
-    public UnityEvent OnWorldSwitch;
+    public UnityEvent WorldSwitching;
+    public UnityEvent WorldSwitched;
 
     public CharacterTypeEnum currentWorld { get; private set; }
 
@@ -99,7 +100,8 @@ public class WorldSwitchManager : MonoBehaviour {
     public void SwitchToWorld(CharacterTypeEnum world) {
         if (world == CharacterTypeEnum.None || currentWorld == world || locks.Count != 0) return;
 
-        OnWorldSwitch?.Invoke();
+        WorldSwitching?.Invoke();
+        WorldSwitched?.Invoke();
         if (world == CharacterTypeEnum.Bear) {
             SetWorldBear();
         } else if (world == CharacterTypeEnum.Fairy) {
@@ -119,9 +121,10 @@ public class WorldSwitchManager : MonoBehaviour {
 
     IEnumerator PerformSwitchToWorldWithFade(CharacterTypeEnum world) {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.SwitchingWorld;
+        WorldSwitching?.Invoke();
         yield return StartCoroutine(Util.FadeOut(0.4f, FadingMask));
 
-        OnWorldSwitch?.Invoke();
+        WorldSwitched?.Invoke();
         if (world == CharacterTypeEnum.Bear) {
             SetWorldBear();
         } else if (world == CharacterTypeEnum.Fairy) {
@@ -129,8 +132,8 @@ public class WorldSwitchManager : MonoBehaviour {
         } else {
             Debug.LogError($"Unexpected {nameof(world)} value: {world}");
         }
-        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
         yield return StartCoroutine(Util.FadeIn(0.4f, FadingMask));
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
     }
 
     void SetWorldFairy() {

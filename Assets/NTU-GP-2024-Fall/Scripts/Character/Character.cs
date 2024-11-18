@@ -101,6 +101,13 @@ public class Character : MonoBehaviour {
         CurrentMovement = new CharacterCurrentMovement(MovementAttributes);
         rb = GetComponent<Rigidbody2D>();
         characterStateController = GetComponent<CharacterStateController>();
+        WorldSwitchManager.Instance.WorldSwitching.AddListener(StopMotion);
+        WorldSwitchManager.Instance.WorldSwitched.AddListener(StopMotion);
+    }
+
+    void OnDestroy() {
+        WorldSwitchManager.Instance.WorldSwitching.RemoveListener(StopMotion);
+        WorldSwitchManager.Instance.WorldSwitched.RemoveListener(StopMotion);
     }
 
     void Update() {
@@ -123,5 +130,9 @@ public class Character : MonoBehaviour {
         if (rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {
             rb.velocity = new Vector2(rb.velocity.x, -MovementAttributes.MaxFallingSpeed);
         }
+    }
+
+    public void StopMotion() {
+        rb.velocity = new Vector2(0, 0);
     }
 }

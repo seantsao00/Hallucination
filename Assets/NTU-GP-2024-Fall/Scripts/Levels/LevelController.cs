@@ -1,22 +1,26 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class LevelController : MonoBehaviour {
     [System.Serializable]
     public class CheckpointData {
-        public LevelCheckpoint checkpoint;
+        public LevelCheckpoint Checkpoint;
         public CharacterTypeEnum WorldToSwitch;
-        public GameObject fairySpawnPoint, bearSpawnPoint;
-        public bool lockWorldSwitch;
-        public bool unlockWorldSwitch;
-        public string dialogueName;
+        public GameObject FairySpawnPoint, BearSpawnPoint;
+        public bool LockWorldSwitch;
+        public bool UnlockWorldSwitch;
+        public string DialogueName;
+        public UnityEvent DialogueEndedEvent;
     }
     [SerializeField] GameObject fairyObject, bearObject;
     [SerializeField] CheckpointData startData;
     [SerializeField]
     CheckpointData restartData = new CheckpointData {
         WorldToSwitch = CharacterTypeEnum.Bear,
-        unlockWorldSwitch = true
+        UnlockWorldSwitch = true
     };
     [SerializeField] CheckpointData[] checkpointDataList;
     int numberOfFulfilledCheckpoints;
@@ -33,18 +37,32 @@ public class LevelController : MonoBehaviour {
 
     void LoadCheckpointData(CheckpointData checkpointData) {
         WorldSwitchManager.Instance.SwitchToWorld(checkpointData.WorldToSwitch);
-        if (checkpointData.lockWorldSwitch) WorldSwitchManager.Instance.Lock(gameObject);
-        if (checkpointData.unlockWorldSwitch) WorldSwitchManager.Instance.Unlock(gameObject);
-        if (checkpointData.fairySpawnPoint != null) {
-            fairyObject.transform.position = checkpointData.fairySpawnPoint.transform.position;
+        if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.Lock(gameObject);
+        if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.Unlock(gameObject);
+        if (checkpointData.FairySpawnPoint != null) {
+            fairyObject.transform.position = checkpointData.FairySpawnPoint.transform.position;
         }
-        if (checkpointData.bearSpawnPoint != null) {
-            bearObject.transform.position = checkpointData.bearSpawnPoint.transform.position;
+        if (checkpointData.BearSpawnPoint != null) {
+            bearObject.transform.position = checkpointData.BearSpawnPoint.transform.position;
         }
-        if (!string.IsNullOrEmpty(checkpointData.dialogueName)) {
-            DialogueManager.Instance.StartDialogue(checkpointData.dialogueName);
+        if (!string.IsNullOrEmpty(checkpointData.DialogueName)) {
+            StartCoroutine(WaitForWorldSwitchingAndStartDialogue(
+                checkpointData.DialogueName,
+                checkpointData.DialogueEndedEvent
+            ));
         }
     }
+
+    IEnumerator WaitForWorldSwitchingAndStartDialogue(string dialogueName, UnityEvent dialogueEndedEvent) {
+        yield return new WaitUntil(
+            () => GameStateManager.Instance.CurrentGamePalyState != GamePlayState.SwitchingWorld
+        );
+        DialogueManager.Instance.StartDialogue(
+            dialogueName,
+            () => dialogueEndedEvent?.Invoke()
+        );
+    }
+
 
     void FulfillCheckpoint() {
         numberOfFulfilledCheckpoints++;
@@ -55,7 +73,7 @@ public class LevelController : MonoBehaviour {
 
     void RegisterHandler() {
         foreach (var checkpointData in checkpointDataList) {
-            checkpointData.checkpoint.CheckpointCompleted.AddListener(Action => {
+            checkpointData.Checkpoint.CheckpointCompleted.AddListener(Action => {
                 LoadCheckpointData(checkpointData);
                 FulfillCheckpoint();
             });
@@ -64,7 +82,7 @@ public class LevelController : MonoBehaviour {
 
     public void StartLevel() {
         if (startData != null) {
-            if (startData.checkpoint != null) {
+            if (startData.Checkpoint != null) {
                 Debug.LogWarning(
                     $"The {nameof(LevelCheckpoint)} assignment in start data is redundant and will have no effect."
                 );
@@ -75,7 +93,7 @@ public class LevelController : MonoBehaviour {
 
     public void RestartLevel() {
         if (restartData != null) {
-            if (restartData.checkpoint != null) {
+            if (restartData.Checkpoint != null) {
                 Debug.LogWarning(
                     $"The {nameof(LevelCheckpoint)} assignment in restart data is redundant and will have no effect."
                 );

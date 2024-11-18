@@ -10,7 +10,10 @@ public enum GamePlayState {
     None,
     Cinematic,
     Normal,
-    DialogueActive
+    DialogueActive,
+    SwitchingWorld,
+    FullScreenTip,
+    AllInputDisabled
 }
 
 public class GameStateManager {
@@ -55,6 +58,17 @@ public class GameStateManager {
         get => currentGamePlayState;
         set {
             GamePlayState oldState = currentGamePlayState;
+            if (
+                oldState == GamePlayState.SwitchingWorld && 
+                value != GamePlayState.Normal &&
+                value != GamePlayState.None
+            ) {
+                Debug.LogError(
+                    $"You tried to switch the state to {value}" +
+                    $"You must switch the state back to {nameof(GamePlayState.Normal)} or {nameof(GamePlayState.None)}" +
+                    $"from {nameof(GamePlayState.SwitchingWorld)}"
+                );
+            }
             currentGamePlayState = value;
             if (oldState != currentGamePlayState) GamePlayStateChangedEvent?.Invoke(currentGamePlayState);
         }

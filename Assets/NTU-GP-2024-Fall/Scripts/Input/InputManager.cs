@@ -61,6 +61,16 @@ public class InputManager {
                 Control.UI.Enable();
                 Control.Dialogue.Enable();
                 break;
+            case GamePlayState.FullScreenTip:
+                Control.Tip.Enable();
+                Control.Game.Disable();
+                break;
+            case GamePlayState.SwitchingWorld:
+                Control.Disable();
+                break;
+            case GamePlayState.AllInputDisabled:
+                Control.Disable();
+                break;
             default:
                 break;
         }

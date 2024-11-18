@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.IO;
 using UnityEngine.InputSystem;
+using System;
 
 public class DialogueManager : MonoBehaviour {
     public GameObject dialogueBox;
@@ -15,6 +16,8 @@ public class DialogueManager : MonoBehaviour {
     public GameObject leftImage;  // Reference to the left image GameObject (player's image)
     public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
     public static DialogueManager Instance { get; private set; }
+
+    Action callbackAfterDialogue;
 
     void Awake() {
         if (Instance != null && Instance != this) {
@@ -60,7 +63,8 @@ public class DialogueManager : MonoBehaviour {
     }
 
     // Start a specific dialogue by its name
-    public void StartDialogue(string dialogueName) {
+    public void StartDialogue(string dialogueName, Action callback = null) {
+        callbackAfterDialogue = callback;
         GameStateManager.Instance.CurrentGamePalyState = GamePlayState.DialogueActive;
         if (dialogueData != null) {
             dialogueBox.SetActive(true);  // Show the dialogue box when dialogue starts
@@ -127,5 +131,6 @@ public class DialogueManager : MonoBehaviour {
         dialogueBox.SetActive(false);   // Hide the dialogue box when dialogue ends
         leftImage.SetActive(false);  // Hide both images when dialogue ends
         rightImage.SetActive(false);
+        callbackAfterDialogue?.Invoke();
     }
 }

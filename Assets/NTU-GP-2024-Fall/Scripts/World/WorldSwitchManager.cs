@@ -80,7 +80,8 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     IEnumerator SwitchWorldsWithFade(CharacterTypeEnum world) {
-        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Cinematic;
+        // Debug.Log(originalState);
+        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.SwitchingWorld;
         yield return StartCoroutine(FadeOut());
 
         OnWorldSwitch?.Invoke();
@@ -91,7 +92,6 @@ public class WorldSwitchManager : MonoBehaviour {
         } else {
             Debug.LogError($"Unexpected {nameof(world)} value: {world}");
         }
-
         GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Normal;
         yield return StartCoroutine(FadeIn());
     }
@@ -121,9 +121,6 @@ public class WorldSwitchManager : MonoBehaviour {
 
     public void SwitchToWorld(CharacterTypeEnum world) {
         if (world == CharacterTypeEnum.None) return;
-
-        Debug.Log($"Switching to {world}");
-
         StartCoroutine(SwitchWorldsWithFade(world));
     }
 

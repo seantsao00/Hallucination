@@ -352,7 +352,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""name"": ""Next"",
                     ""type"": ""Button"",
                     ""id"": ""a4ad933c-8d95-4613-983c-c698e2035ccd"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -402,7 +402,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""587d3ec0-4259-4561-ab99-b16e8e5df242"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -428,6 +428,172 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Tip"",
+            ""id"": ""094d2dc0-cf86-42bb-ba8f-9c2807ac5159"",
+            ""actions"": [
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad8f8d0a-b46a-4c93-8b8f-05e9b8f4c1b2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b7df9652-72f5-4479-89c6-b0940f41b5da"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b89c3d9d-288f-4021-a2a9-24dc1c67074b"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c889bdc-9b94-48d4-bd91-4ae8348a4e27"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4fa33db8-45a6-4f4b-a99b-43f89bb61d65"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""036939be-f1c7-45cd-81f9-eed420e8d929"",
+                    ""path"": ""<Keyboard>/capsLock"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcbb2f28-9f99-4f05-a28e-fa5093c74897"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab9de230-cdbf-45e6-a953-a8d765f36c43"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Animation"",
+            ""id"": ""ee2065c7-ea77-4c1a-955d-9e5eb9a1866b"",
+            ""actions"": [
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""0370d964-4aff-445e-938f-095f15cb414d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6115c10c-b409-4a88-89da-1140c66c548b"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ecfdb75-f572-4b5b-b22f-434777a1c90d"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac130fc7-ea2c-48c8-a2c0-e4082a790968"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5d1e045-db4a-4ff9-80dd-2932914c57c8"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c20bab24-f05e-4ac8-8468-573d232f68f5"",
+                    ""path"": ""<Keyboard>/capsLock"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Confirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1030,6 +1196,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         // Game
         m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
         m_Game_Pause = m_Game.FindAction("Pause", throwIfNotFound: true);
+        // Tip
+        m_Tip = asset.FindActionMap("Tip", throwIfNotFound: true);
+        m_Tip_Confirm = m_Tip.FindAction("Confirm", throwIfNotFound: true);
+        // Animation
+        m_Animation = asset.FindActionMap("Animation", throwIfNotFound: true);
+        m_Animation_Confirm = m_Animation.FindAction("Confirm", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1050,6 +1222,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_World.enabled, "This will cause a leak and performance issues, PlayerControl.World.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Dialogue.enabled, "This will cause a leak and performance issues, PlayerControl.Dialogue.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Game.enabled, "This will cause a leak and performance issues, PlayerControl.Game.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Tip.enabled, "This will cause a leak and performance issues, PlayerControl.Tip.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Animation.enabled, "This will cause a leak and performance issues, PlayerControl.Animation.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerControl.UI.Disable() has not been called.");
     }
 
@@ -1333,6 +1507,98 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     }
     public GameActions @Game => new GameActions(this);
 
+    // Tip
+    private readonly InputActionMap m_Tip;
+    private List<ITipActions> m_TipActionsCallbackInterfaces = new List<ITipActions>();
+    private readonly InputAction m_Tip_Confirm;
+    public struct TipActions
+    {
+        private @PlayerControl m_Wrapper;
+        public TipActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Confirm => m_Wrapper.m_Tip_Confirm;
+        public InputActionMap Get() { return m_Wrapper.m_Tip; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TipActions set) { return set.Get(); }
+        public void AddCallbacks(ITipActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TipActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TipActionsCallbackInterfaces.Add(instance);
+            @Confirm.started += instance.OnConfirm;
+            @Confirm.performed += instance.OnConfirm;
+            @Confirm.canceled += instance.OnConfirm;
+        }
+
+        private void UnregisterCallbacks(ITipActions instance)
+        {
+            @Confirm.started -= instance.OnConfirm;
+            @Confirm.performed -= instance.OnConfirm;
+            @Confirm.canceled -= instance.OnConfirm;
+        }
+
+        public void RemoveCallbacks(ITipActions instance)
+        {
+            if (m_Wrapper.m_TipActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITipActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TipActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TipActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TipActions @Tip => new TipActions(this);
+
+    // Animation
+    private readonly InputActionMap m_Animation;
+    private List<IAnimationActions> m_AnimationActionsCallbackInterfaces = new List<IAnimationActions>();
+    private readonly InputAction m_Animation_Confirm;
+    public struct AnimationActions
+    {
+        private @PlayerControl m_Wrapper;
+        public AnimationActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Confirm => m_Wrapper.m_Animation_Confirm;
+        public InputActionMap Get() { return m_Wrapper.m_Animation; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AnimationActions set) { return set.Get(); }
+        public void AddCallbacks(IAnimationActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AnimationActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AnimationActionsCallbackInterfaces.Add(instance);
+            @Confirm.started += instance.OnConfirm;
+            @Confirm.performed += instance.OnConfirm;
+            @Confirm.canceled += instance.OnConfirm;
+        }
+
+        private void UnregisterCallbacks(IAnimationActions instance)
+        {
+            @Confirm.started -= instance.OnConfirm;
+            @Confirm.performed -= instance.OnConfirm;
+            @Confirm.canceled -= instance.OnConfirm;
+        }
+
+        public void RemoveCallbacks(IAnimationActions instance)
+        {
+            if (m_Wrapper.m_AnimationActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAnimationActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AnimationActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AnimationActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AnimationActions @Animation => new AnimationActions(this);
+
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
@@ -1515,6 +1781,14 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     public interface IGameActions
     {
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface ITipActions
+    {
+        void OnConfirm(InputAction.CallbackContext context);
+    }
+    public interface IAnimationActions
+    {
+        void OnConfirm(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

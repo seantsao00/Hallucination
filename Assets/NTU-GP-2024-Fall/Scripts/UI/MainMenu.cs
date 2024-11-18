@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour {
     public void PlayGame() {
         // Use the SceneFader to fade and load the game scene
         // sceneFader.FadeOutAndSwitchScene("SampleScene");
-        SceneManager.LoadSceneAsync("SampleScene");
+        SceneManager.LoadSceneAsync("Intro");
     }
 
     public void QuitGame() {

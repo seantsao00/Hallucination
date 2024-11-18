@@ -109,6 +109,14 @@ public class WorldSwitchManager : MonoBehaviour {
         }
     }
 
+    public void ForceSwitchToWorldWithFade(CharacterTypeEnum world) {
+        if (locks.Count != 0) {
+            Debug.LogWarning("Lock count is not 0. Automatically release all locks.");
+            locks.Clear();
+        }
+        StartCoroutine(PerformSwitchToWorldWithFade(world));
+    }
+
     IEnumerator PerformSwitchToWorldWithFade(CharacterTypeEnum world) {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.SwitchingWorld;
         yield return StartCoroutine(Util.FadeOut(0.4f, FadingMask));

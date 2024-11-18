@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class WorldSwitchManager : MonoBehaviour {
     [SerializeField] GameObject WorldSwitchIcon;
+    // [SerializeField] CharacterTypeEnum initialWorld;
     public static WorldSwitchManager Instance { get; private set; }
     public GameObject[] WorldFairyEnvironment;
     public GameObject[] WorldBearEnvironment;
@@ -47,6 +48,7 @@ public class WorldSwitchManager : MonoBehaviour {
             return;
         }
         Instance = this;
+        SetWorldBear();
     }
 
     private void OnDestroy() {
@@ -96,13 +98,8 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     IEnumerator SwitchWorldsWithFade() {
-        if (currentWorld == CharacterTypeEnum.Bear) {
-            StartCoroutine(SwitchWorldsWithFade(CharacterTypeEnum.Fairy));
-        } else if (currentWorld == CharacterTypeEnum.Fairy) {
-            StartCoroutine(SwitchWorldsWithFade(CharacterTypeEnum.Bear));
-        } else {
-            Debug.LogError($"Unexpected {nameof(currentWorld)} value: {currentWorld}");
-        }
+        CharacterTypeEnum targetWorld = currentWorld == CharacterTypeEnum.Bear ? CharacterTypeEnum.Fairy : CharacterTypeEnum.Bear;
+        StartCoroutine(SwitchWorldsWithFade(targetWorld));
         yield return null;
     }
 
@@ -119,7 +116,7 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     public void SwitchToWorld(CharacterTypeEnum world) {
-        if (world == CharacterTypeEnum.None) return;
+        if (world == CharacterTypeEnum.None || currentWorld == world) return;
         StartCoroutine(SwitchWorldsWithFade(world));
     }
 

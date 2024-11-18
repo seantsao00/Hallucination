@@ -40,6 +40,8 @@ public class InputManager {
             case GameState.Play:
                 SetInputAccordingToGamePlayState(GameStateManager.Instance.CurrentGamePlayState);
                 break;
+            case GameState.End:
+                break;
             default:
                 break;
         }

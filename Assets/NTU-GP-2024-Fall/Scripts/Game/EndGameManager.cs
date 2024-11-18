@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EndGameManager : MonoBehaviour {
     public void EndGame() {
+        GameStateManager.Instance.CurrentGameState = GameState.End;
         SceneManager.LoadScene("EndGame");
     }
 }

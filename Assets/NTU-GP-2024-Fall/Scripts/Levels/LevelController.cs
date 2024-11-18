@@ -24,6 +24,8 @@ public class LevelController : MonoBehaviour {
     [SerializeField] GameObject fairyWorldFairy, fairyWorldBear, bearWorldFairy, bearWorldBear;
     [SerializeField] CharacterSyncMethod characterSyncMethod;
     [SerializeField] CheckpointData startData;
+    // For debugging (directly start the game with any level)
+    public bool CanBeStartLevel => startData.WorldToSwitch != CharacterTypeEnum.None;
     [SerializeField]
     CheckpointData restartData = new CheckpointData {
         WorldToSwitch = CharacterTypeEnum.Bear,

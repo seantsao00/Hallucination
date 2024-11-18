@@ -60,7 +60,15 @@ public class LevelNavigator : MonoBehaviour {
         levels = newLevels;
         if (firstLoad) {
             firstLoad = false;
-            CurrentLevel.StartLevel();
+            if (CurrentLevel.CanBeStartLevel) {
+                CurrentLevel.StartLevel();
+            } else {
+                Debug.LogWarning(
+                    $"Start the game from a level {CurrentLevel} that does not set start world." +
+                    "Automatically invoke restart."
+                );
+                CurrentLevel.RestartLevel();
+            }
         } else {
             CurrentLevel.RestartLevel();
         }

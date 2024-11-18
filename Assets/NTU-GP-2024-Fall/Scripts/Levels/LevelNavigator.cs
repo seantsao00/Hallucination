@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,9 +30,12 @@ public class LevelNavigator : MonoBehaviour {
     }
 
     public void RestartCurrentLevel() {
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-        // Debug.Log($"Scene Restarted. Current level: {currentLevelIndex}");
+        StartCoroutine(PerformSceneRestart());
+    }
+
+    IEnumerator PerformSceneRestart() {
+        yield return Util.FadeOut(1f, WorldSwitchManager.Instance.FadingMask);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void CompleteCurrentLevel() {

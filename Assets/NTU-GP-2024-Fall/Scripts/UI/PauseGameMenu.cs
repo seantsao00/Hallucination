@@ -11,6 +11,7 @@ public class PauseGameMenu : MonoBehaviour {
     }
 
     public void Restart() {
+        GameStateManager.Instance.CurrentGameState = GameState.Play;
         LevelNavigator.Instance.RestartCurrentLevel();
     }
 

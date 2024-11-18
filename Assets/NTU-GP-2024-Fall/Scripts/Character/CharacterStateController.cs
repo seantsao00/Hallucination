@@ -119,7 +119,8 @@ public class CharacterStateController : MonoBehaviour {
         } else {
             // Character.HorizontalMove
             if (
-                activeStates.Contains(CharacterState.Climbing)
+                activeStates.Contains(CharacterState.Climbing) ||
+                activeStates.Contains(CharacterState.Dashing)
             ) {
                 Control.Character.HorizontalMove.Disable();
             } else {
@@ -166,6 +167,13 @@ public class CharacterStateController : MonoBehaviour {
                 Control.Character.Grab.Enable();
             }
         }
+    }
+
+    public void LogCurrentStates() {
+        Debug.Log(
+            $"Current {typeof(CharacterState)}:" +
+            string.Join(", ", ActiveStates)
+        );
     }
 }
 

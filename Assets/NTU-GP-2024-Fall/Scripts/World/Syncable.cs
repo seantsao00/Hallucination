@@ -41,7 +41,7 @@ public class Syncable : MonoBehaviour {
     }
 
     void OnDrawGizmosSelected() {
-        if (syncedObject == null || WorldSwitchManager.Instance?.WorldFairyEnvironment == null) return;
+        if (syncedObject == null || currentWorldReference == null || syncedWorldReference == null) return;
 
         // Draw a rim around the position in WorldFairyEnvironment's local space
         Gizmos.color = Color.cyan;

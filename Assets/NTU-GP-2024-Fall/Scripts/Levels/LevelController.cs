@@ -3,9 +3,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class LevelController : MonoBehaviour {
-    [System.Serializable]
+    [Serializable]
     public class CheckpointData {
         public LevelCheckpoint Checkpoint;
         public CharacterTypeEnum WorldToSwitch;
@@ -64,7 +65,6 @@ public class LevelController : MonoBehaviour {
         );
     }
 
-
     void FulfillCheckpoint() {
         numberOfFulfilledCheckpoints++;
         if (numberOfFulfilledCheckpoints == checkpointDataList.Length) {
@@ -89,6 +89,9 @@ public class LevelController : MonoBehaviour {
                 );
             }
             LoadCheckpointData(startData);
+
+            transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(true);
+            transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(true);
         }
     }
 
@@ -100,11 +103,17 @@ public class LevelController : MonoBehaviour {
                 );
             }
             LoadCheckpointData(restartData);
+
+            transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(true);
+            transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(true);
         }
     }
 
     public void CompleteLevel() {
         Assert.IsTrue(this == LevelNavigator.Instance.CurrentLevel);
         LevelNavigator.Instance.CompleteCurrentLevel();
+
+        transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(false);
+        transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(false);
     }
 }

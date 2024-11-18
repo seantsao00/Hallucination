@@ -28,10 +28,6 @@ public class LevelNavigator : MonoBehaviour {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    void Start() {
-        startLevel.StartLevel();
-    }
-
     public void RestartCurrentLevel() {
         // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);

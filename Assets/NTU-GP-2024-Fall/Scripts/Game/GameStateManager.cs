@@ -70,6 +70,7 @@ public class GameStateManager {
                 );
             }
             currentGamePlayState = value;
+            Debug.Log($"Current {nameof(GamePlayState)}: {currentGamePlayState}");
             if (oldState != currentGamePlayState) GamePlayStateChangedEvent?.Invoke(currentGamePlayState);
         }
     }

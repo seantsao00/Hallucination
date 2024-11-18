@@ -2,20 +2,9 @@ using UnityEngine;
 using UnityEditor;
 
 public class Syncable : MonoBehaviour {
-    [SerializeField] protected GameObject syncedObject;
-    [SerializeField] GameObject currentWorldReference, syncedWorldReference;
+    [SerializeField] public GameObject syncedObject;
+    [SerializeField] public GameObject currentWorldReference, syncedWorldReference;
     // GameObject currentWorld, syncedWorld;
-
-    void Start() {
-        Position();
-    }
-
-    void Position() {
-        // currentWorld = CurrentWorld();
-        // syncedWorld = SyncedWorld();
-        // if (currentWorldReference == null) currentWorldReference = currentWorld;
-        // if (syncedWorldReference == null) syncedWorldReference = syncedWorld;
-    }
 
     protected void OnEnable() {
         WorldSwitchManager.Instance.OnWorldSwitch.AddListener(SyncState);
@@ -45,10 +34,14 @@ public class Syncable : MonoBehaviour {
         syncedObject.transform.position = SyncedPosition();
     }
 
+    static public void CopyData(Syncable from, Syncable to) {
+        to.syncedObject = from.syncedObject;
+        to.currentWorldReference = from.currentWorldReference;
+        to.syncedWorldReference = from.syncedWorldReference;
+    }
+
     void OnDrawGizmosSelected() {
         if (syncedObject == null || WorldSwitchManager.Instance?.WorldFairyEnvironment == null) return;
-
-        Position();
 
         // Draw a rim around the position in WorldFairyEnvironment's local space
         Gizmos.color = Color.cyan;

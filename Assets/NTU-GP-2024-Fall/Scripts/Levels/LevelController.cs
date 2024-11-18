@@ -4,7 +4,8 @@ using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 public class LevelController : MonoBehaviour {
-    [System.Serializable] public class CheckpointData {
+    [System.Serializable]
+    public class CheckpointData {
         public LevelCheckpoint Checkpoint;
         public CharacterTypeEnum WorldToSwitch;
         public GameObject FairySpawnPoint, BearSpawnPoint;
@@ -13,7 +14,15 @@ public class LevelController : MonoBehaviour {
         public string DialogueName;
         public UnityEvent DialogueEndedEvent;
     }
-    [SerializeField] GameObject fairyObject, bearObject;
+    [System.Serializable]
+    public class CharacterSyncMethod {
+        public Syncable fairyWorldFairy;
+        public Syncable fairyWorldBear;
+        public Syncable bearWorldFairy;
+        public Syncable bearWorldBear;
+    }
+    [SerializeField] GameObject fairyWorldFairy, fairyWorldBear, bearWorldFairy, bearWorldBear;
+    [SerializeField] CharacterSyncMethod characterSyncMethod;
     [SerializeField] CheckpointData startData;
     [SerializeField]
     CheckpointData restartData = new CheckpointData {
@@ -33,15 +42,33 @@ public class LevelController : MonoBehaviour {
         RegisterHandler();
     }
 
+    void ApplyCharacterSyncMethod(GameObject character, Syncable method) {
+        if (character == null) {
+            if (method != null) {
+                Debug.LogWarning(
+                    "Syncable method provided but no corresponding character was specified. Skipping application."
+                );
+            }
+            return;
+        }
+        Destroy(character.GetComponent<Syncable>());
+        if (method != null) {
+            var syncable = character.AddComponent<Syncable>();
+            Syncable.CopyData(method, syncable);
+            // Debug.Log($"{syncable.syncedObject}, {syncable.currentWorldReference}, {syncable.syncedWorldReference}");
+            syncable.enabled = true;
+        }
+    }
+
     void LoadCheckpointData(CheckpointData checkpointData) {
         WorldSwitchManager.Instance.SwitchToWorld(checkpointData.WorldToSwitch);
         if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.Lock(gameObject);
         if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.Unlock(gameObject);
         if (checkpointData.FairySpawnPoint != null) {
-            fairyObject.transform.position = checkpointData.FairySpawnPoint.transform.position;
+            fairyWorldFairy.transform.position = checkpointData.FairySpawnPoint.transform.position;
         }
         if (checkpointData.BearSpawnPoint != null) {
-            bearObject.transform.position = checkpointData.BearSpawnPoint.transform.position;
+            bearWorldBear.transform.position = checkpointData.BearSpawnPoint.transform.position;
         }
         if (!string.IsNullOrEmpty(checkpointData.DialogueName)) {
             StartCoroutine(WaitForWorldSwitchingAndStartDialogue(
@@ -77,7 +104,17 @@ public class LevelController : MonoBehaviour {
         }
     }
 
+    void ApplyCharacterSyncMethods() {
+        ApplyCharacterSyncMethod(fairyWorldFairy, characterSyncMethod.fairyWorldFairy);
+        ApplyCharacterSyncMethod(bearWorldBear, characterSyncMethod.bearWorldBear);
+        ApplyCharacterSyncMethod(fairyWorldBear, characterSyncMethod.fairyWorldBear);
+        ApplyCharacterSyncMethod(bearWorldFairy, characterSyncMethod.bearWorldFairy);
+        fairyWorldFairy.GetComponent<Syncable>()?.SyncState();
+        bearWorldBear.GetComponent<Syncable>()?.SyncState();
+    }
+
     public void StartLevel() {
+        Debug.Log($"Start Level: {gameObject.name}");
         if (startData != null) {
             if (startData.Checkpoint != null) {
                 Debug.LogWarning(
@@ -89,9 +126,11 @@ public class LevelController : MonoBehaviour {
             transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(true);
             transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(true);
         }
+        ApplyCharacterSyncMethods();
     }
 
     public void RestartLevel() {
+        Debug.Log($"Restart Level: {gameObject.name}");
         if (restartData != null) {
             if (restartData.Checkpoint != null) {
                 Debug.LogWarning(
@@ -103,6 +142,7 @@ public class LevelController : MonoBehaviour {
             transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(true);
             transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(true);
         }
+        ApplyCharacterSyncMethods();
     }
 
     public void CompleteLevel() {

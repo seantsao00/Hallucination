@@ -33,11 +33,11 @@ public class TipManager : MonoBehaviour {
 
     void HandleConfirm(InputAction.CallbackContext context) {
         SwitchWorldTip.gameObject.SetActive(false);
-        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Normal;
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
     }
 
     public void ShowSwitchWorldTip() {
-        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.AllInputDisabled;
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.AllInputDisabled;
         SwitchWorldTip.gameObject.SetActive(true);
         StartCoroutine(FadeIn(SwitchWorldTip, 1f));
     }
@@ -64,7 +64,7 @@ public class TipManager : MonoBehaviour {
             canvasGroup.alpha = Mathf.Clamp01(elapsedTime / fadeDuration);
             yield return null;
         }
-        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.FullScreenTip;
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.FullScreenTip;
     }
 }
 

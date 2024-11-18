@@ -55,7 +55,7 @@ public class LevelController : MonoBehaviour {
 
     IEnumerator WaitForWorldSwitchingAndStartDialogue(string dialogueName, UnityEvent dialogueEndedEvent) {
         yield return new WaitUntil(
-            () => GameStateManager.Instance.CurrentGamePalyState != GamePlayState.SwitchingWorld
+            () => GameStateManager.Instance.CurrentGamePlayState != GamePlayState.SwitchingWorld
         );
         DialogueManager.Instance.StartDialogue(
             dialogueName,

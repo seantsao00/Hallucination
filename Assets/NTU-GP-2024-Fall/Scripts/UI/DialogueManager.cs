@@ -65,7 +65,7 @@ public class DialogueManager : MonoBehaviour {
     // Start a specific dialogue by its name
     public void StartDialogue(string dialogueName, Action callback = null) {
         callbackAfterDialogue = callback;
-        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.DialogueActive;
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.DialogueActive;
         if (dialogueData != null) {
             dialogueBox.SetActive(true);  // Show the dialogue box when dialogue starts
             // Find the correct dialogue by name
@@ -127,7 +127,7 @@ public class DialogueManager : MonoBehaviour {
 
     void EndDialogue() {
         // Debug.Log("End of dialogue");
-        GameStateManager.Instance.CurrentGamePalyState = GamePlayState.Normal;
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
         dialogueBox.SetActive(false);   // Hide the dialogue box when dialogue ends
         leftImage.SetActive(false);  // Hide both images when dialogue ends
         rightImage.SetActive(false);

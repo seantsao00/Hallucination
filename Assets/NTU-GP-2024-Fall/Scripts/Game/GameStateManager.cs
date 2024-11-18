@@ -36,14 +36,15 @@ public class GameStateManager {
             currentGameState = value;
             switch (currentGameState) {
                 case GameState.MainMenu:
-                    CurrentGamePalyState = GamePlayState.None;
+                    CurrentGamePlayState = GamePlayState.None;
                     break;
                 case GameState.Paused:
                     Time.timeScale = 0f;
                     break;
                 case GameState.Play:
                     Time.timeScale = 1f;
-                    currentGamePlayState = GamePlayState.Normal;
+                    if (CurrentGamePlayState == GamePlayState.None)
+                        CurrentGamePlayState = GamePlayState.Normal;
                     break;
                 default:
                     Debug.LogError($"Unhandled {nameof(CurrentGameState)}: {CurrentGameState}");
@@ -53,24 +54,25 @@ public class GameStateManager {
             if (oldState != currentGameState) GameStateChangedEvent?.Invoke(currentGameState);
         }
     }
+
     private GamePlayState currentGamePlayState = GamePlayState.Normal;
-    public GamePlayState CurrentGamePalyState {
+    public GamePlayState CurrentGamePlayState {
         get => currentGamePlayState;
         set {
             GamePlayState oldState = currentGamePlayState;
+            currentGamePlayState = value;
             if (
                 oldState == GamePlayState.SwitchingWorld && 
-                value != GamePlayState.Normal &&
-                value != GamePlayState.None
+                currentGamePlayState != GamePlayState.Normal &&
+                currentGamePlayState != GamePlayState.None
             ) {
                 Debug.LogError(
-                    $"You tried to switch the state to {value}" +
+                    $"You switched the state to {currentGamePlayState}" +
                     $"You must switch the state back to {nameof(GamePlayState.Normal)} or {nameof(GamePlayState.None)}" +
                     $"from {nameof(GamePlayState.SwitchingWorld)}"
                 );
             }
-            currentGamePlayState = value;
-            Debug.Log($"Current {nameof(GamePlayState)}: {currentGamePlayState}");
+            // Debug.Log($"Change {nameof(GamePlayState)} from {oldState} to {currentGamePlayState}");
             if (oldState != currentGamePlayState) GamePlayStateChangedEvent?.Invoke(currentGamePlayState);
         }
     }

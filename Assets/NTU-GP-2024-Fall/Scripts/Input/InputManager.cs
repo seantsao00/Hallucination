@@ -38,7 +38,7 @@ public class InputManager {
                 Control.Game.Enable();
                 break;
             case GameState.Play:
-                SetInputAccordingToGamePlayState(GameStateManager.Instance.CurrentGamePalyState);
+                SetInputAccordingToGamePlayState(GameStateManager.Instance.CurrentGamePlayState);
                 break;
             default:
                 break;

@@ -111,7 +111,7 @@ public class CharacterStateController : MonoBehaviour {
     ;
 
     public void UpdateInput() {
-        if (GameStateManager.Instance.CurrentGamePalyState != GamePlayState.Normal) return;
+        if (GameStateManager.Instance.CurrentGamePlayState != GamePlayState.Normal) return;
         PlayerControl Control = InputManager.Control;
 
         if (activeStates.Contains(CharacterState.LedgeClimbing)) {

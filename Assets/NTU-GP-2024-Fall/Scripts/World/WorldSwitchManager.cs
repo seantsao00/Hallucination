@@ -7,10 +7,9 @@ using System.Collections.Generic;
 public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
     [SerializeField] GameObject WorldSwitchIcon;
-    // [SerializeField] CharacterTypeEnum initialWorld;
     public GameObject[] WorldFairyEnvironment;
     public GameObject[] WorldBearEnvironment;
-    [SerializeField] CanvasGroup FadeCanvasGroup;
+    public CanvasGroup FadingMask;
     public UnityEvent OnWorldSwitch;
 
     public CharacterTypeEnum currentWorld { get; private set; }
@@ -93,7 +92,7 @@ public class WorldSwitchManager : MonoBehaviour {
         StartCoroutine(PerformSwitchToWorldWithFade(world));
     }
 
-    void SwitchWorldByInput(InputAction.CallbackContext context) {
+    private void SwitchWorldByInput(InputAction.CallbackContext context) {
         SwitchWorldWithFade();
     }
 
@@ -110,9 +109,17 @@ public class WorldSwitchManager : MonoBehaviour {
         }
     }
 
+    public void ForceSwitchToWorldWithFade(CharacterTypeEnum world) {
+        if (locks.Count != 0) {
+            Debug.LogWarning("Lock count is not 0. Automatically release all locks.");
+            locks.Clear();
+        }
+        StartCoroutine(PerformSwitchToWorldWithFade(world));
+    }
+
     IEnumerator PerformSwitchToWorldWithFade(CharacterTypeEnum world) {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.SwitchingWorld;
-        yield return StartCoroutine(FadeOut());
+        yield return StartCoroutine(Util.FadeOut(0.4f, FadingMask));
 
         OnWorldSwitch?.Invoke();
         if (world == CharacterTypeEnum.Bear) {
@@ -123,7 +130,7 @@ public class WorldSwitchManager : MonoBehaviour {
             Debug.LogError($"Unexpected {nameof(world)} value: {world}");
         }
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
-        yield return StartCoroutine(FadeIn());
+        yield return StartCoroutine(Util.FadeIn(0.4f, FadingMask));
     }
 
     void SetWorldFairy() {
@@ -136,28 +143,5 @@ public class WorldSwitchManager : MonoBehaviour {
         currentWorld = CharacterTypeEnum.Bear;
         foreach (var environment in WorldFairyEnvironment) { environment.SetActive(false); }
         foreach (var environment in WorldBearEnvironment) { environment.SetActive(true); }
-    }
-
-
-    IEnumerator FadeOut() {
-        float fadeDuration = 0.4f;
-        float fadeSpeed = 1f / fadeDuration;
-
-        for (float t = 0; t < 1; t += Time.deltaTime * fadeSpeed) {
-            FadeCanvasGroup.alpha = t;
-            yield return null;
-        }
-        FadeCanvasGroup.alpha = 1;
-    }
-
-    IEnumerator FadeIn() {
-        float fadeDuration = 0.4f;
-        float fadeSpeed = 1f / fadeDuration;
-
-        for (float t = 1; t > 0; t -= Time.deltaTime * fadeSpeed) {
-            FadeCanvasGroup.alpha = t;
-            yield return null;
-        }
-        FadeCanvasGroup.alpha = 0;
     }
 }

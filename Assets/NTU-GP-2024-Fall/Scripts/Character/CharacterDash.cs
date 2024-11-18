@@ -47,13 +47,11 @@ public class CharacterDash : MonoBehaviour {
     IEnumerator StartDash() {
         isDashCooling = true;
         characterStateController.AddState(CharacterState.Dashing);
-        characterStateController.LogCurrentStates();
         rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
         dashTrailRenderer.emitting = true;
         InputManager.Control.Character.HorizontalMove.Disable();
         yield return new WaitForSeconds(dashDuration);
 
-        characterStateController.LogCurrentStates();
         characterStateController.RemoveState(CharacterState.Dashing);
         dashTrailRenderer.emitting = false;
         InputManager.Control.Character.HorizontalMove.Enable();

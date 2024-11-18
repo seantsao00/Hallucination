@@ -29,6 +29,7 @@ public class LevelController : MonoBehaviour {
         if (restartData.WorldToSwitch == CharacterTypeEnum.None) {
             Debug.LogError("You must specify a world to restart.");
         }
+        WorldSwitchManager.Instance.SwitchToWorld(restartData.WorldToSwitch);
     }
 
     void Start() {
@@ -36,7 +37,7 @@ public class LevelController : MonoBehaviour {
     }
 
     void LoadCheckpointData(CheckpointData checkpointData) {
-        WorldSwitchManager.Instance.SwitchToWorld(checkpointData.WorldToSwitch);
+        WorldSwitchManager.Instance.SwitchToWorldWithFade(checkpointData.WorldToSwitch);
         if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.Lock(gameObject);
         if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.Unlock(gameObject);
         if (checkpointData.FairySpawnPoint != null) {

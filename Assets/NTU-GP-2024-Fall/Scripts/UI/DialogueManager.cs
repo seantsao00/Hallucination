@@ -1,12 +1,16 @@
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
-using TMPro;
-using System.IO;
 using UnityEngine.InputSystem;
-using System;
+using UnityEngine.Networking;
+using TMPro;
+
 
 public class DialogueManager : MonoBehaviour {
+    CanvasGroup canvasGroup;
     public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;  // Reference to the TextMeshPro component
 
@@ -26,13 +30,14 @@ public class DialogueManager : MonoBehaviour {
             Destroy(Instance);
             return;
         }
+        canvasGroup = GetComponent<CanvasGroup>();
         Instance = this;
         dialogueLines = new Queue<DialogueLine>();
         LoadDialoguesFromFile();  // Load all dialogues from the JSON file
-        dialogueBox.SetActive(false);  // Initially hide the dialogue box at the start
-        leftImage.SetActive(false);  // Hide both images at the start
-        rightImage.SetActive(false);
-        // StartDialogue("quest_start");
+    }
+
+    void Start() {
+        gameObject.SetActive(false);
     }
 
     void OnEnable() {
@@ -47,23 +52,33 @@ public class DialogueManager : MonoBehaviour {
     }
 
     // Load the entire JSON file containing multiple dialogues
-    void LoadDialoguesFromFile() {
+    async void LoadDialoguesFromFile() {
         string filePath = Path.Combine(Application.streamingAssetsPath, "dialogue.json");
 
-        if (File.Exists(filePath)) {
-            string dataAsJson = File.ReadAllText(filePath);
-            dialogueData = JsonUtility.FromJson<DialogueData>(dataAsJson);  // Parse the JSON file
+        UnityWebRequest request = UnityWebRequest.Get(filePath);
+        UnityWebRequestAsyncOperation operation = request.SendWebRequest();
 
-            if (dialogueData == null || dialogueData.dialogues == null) {
-                Debug.LogError("Failed to load dialogues from JSON file.");
-            }
+        while (!operation.isDone) {
+            await Task.Yield();
+        }
+
+        if (request.result == UnityWebRequest.Result.Success) {
+            Debug.Log(request.downloadHandler.text);
         } else {
-            Debug.LogError("Dialogue file not found at: " + filePath);
+            Debug.LogError("Cannot load file at " + filePath);
+        }
+
+        string dataAsJson = request.downloadHandler.text;
+        dialogueData = JsonUtility.FromJson<DialogueData>(dataAsJson);  // Parse the JSON file
+        if (dialogueData == null || dialogueData.dialogues == null) {
+            Debug.LogError("Failed to load dialogues from JSON file.");
         }
     }
 
     // Start a specific dialogue by its name
     public void StartDialogue(string dialogueName, Action callback = null) {
+        gameObject.SetActive(true);
+        canvasGroup.alpha = 1;
         callbackAfterDialogue = callback;
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.DialogueActive;
         if (dialogueData != null) {
@@ -127,10 +142,9 @@ public class DialogueManager : MonoBehaviour {
 
     void EndDialogue() {
         // Debug.Log("End of dialogue");
+        canvasGroup.alpha = 0;
+        gameObject.SetActive(false);
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
-        dialogueBox.SetActive(false);   // Hide the dialogue box when dialogue ends
-        leftImage.SetActive(false);  // Hide both images when dialogue ends
-        rightImage.SetActive(false);
         callbackAfterDialogue?.Invoke();
     }
 }

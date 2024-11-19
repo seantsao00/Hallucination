@@ -1148,6 +1148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1291417636}
+  - component: {fileID: 1291417637}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1177,6 +1178,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1291417637
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291417635}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1626419590
 GameObject:
   m_ObjectHideFlags: 0
@@ -1671,7 +1684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 480759860628318678, guid: 1fd8736e4081fc84aafcf9404a0b89f6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 756.31
       objectReference: {fileID: 0}
     - target: {fileID: 480759860628318678, guid: 1fd8736e4081fc84aafcf9404a0b89f6, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2192,6 +2205,7 @@ GameObject:
   - component: {fileID: 2078388229}
   - component: {fileID: 2078388228}
   - component: {fileID: 2078388227}
+  - component: {fileID: 2078388231}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2285,6 +2299,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &2078388231
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078388226}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2102036068
 GameObject:
   m_ObjectHideFlags: 0
@@ -2578,7 +2604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2365133027460251284, guid: 1fd8736e4081fc84aafcf9404a0b89f6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 289.06
       objectReference: {fileID: 0}
     - target: {fileID: 2365133027460251284, guid: 1fd8736e4081fc84aafcf9404a0b89f6, type: 3}
       propertyPath: m_AnchoredPosition.x

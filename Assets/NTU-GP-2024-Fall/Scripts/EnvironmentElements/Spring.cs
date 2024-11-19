@@ -10,7 +10,7 @@ public class Spring : MonoBehaviour {
             Character character = other.GetComponent<Character>();
             if (playerRb != null) {
                 Vector2 launchVelocity = playerRb.velocity;
-                character.CurrentMovement.LaunchSpring(horizontalLaunchSpeed);
+                character.LaunchSpring(horizontalLaunchSpeed);
                 launchVelocity.y = verticalLaunchSpeed;
 
                 playerRb.velocity = launchVelocity;

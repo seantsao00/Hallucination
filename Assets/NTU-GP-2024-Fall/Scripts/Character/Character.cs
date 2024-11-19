@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections;
 
 public enum CharacterTypeEnum { None, Fairy, Bear };
 
@@ -34,7 +35,6 @@ public class Character : MonoBehaviour {
 
         public float SpringSpeed;
 
-        public float lastSpringTime;
 
         public CharacterCurrentMovement(CharacterMovementAttributes attributes) {
             Init(attributes);
@@ -45,10 +45,6 @@ public class Character : MonoBehaviour {
         }
         public void SetNormal() {
             HorizontalSpeed = attributes.NormalHorizontalSpeed;
-        }
-        public void LaunchSpring(float speed) {
-            SpringSpeed = speed;
-            lastSpringTime = Time.time;
         }
     }
 
@@ -67,8 +63,6 @@ public class Character : MonoBehaviour {
     /// Faced movable object within character's interacting range
     /// </summary>
 
-    LayerMask movableMask;
-
     private Rigidbody2D rb;
     bool isGrounded;
     [HideInInspector]
@@ -86,8 +80,12 @@ public class Character : MonoBehaviour {
 
     [HideInInspector] public bool IsDead = false;
 
-    [SerializeField] TipManager tipManager;
     public bool isFairy;
+
+    float springFullSpeedDuration = 0.2f;
+    float springFullSpeed;
+    float springDuration = 0.4f;
+    float springTimeCounter;
 
     private void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;
@@ -97,7 +95,6 @@ public class Character : MonoBehaviour {
     }
 
     void Awake() {
-        movableMask = LayerMask.GetMask("Movable");
         CurrentMovement = new CharacterCurrentMovement(MovementAttributes);
         rb = GetComponent<Rigidbody2D>();
         characterStateController = GetComponent<CharacterStateController>();
@@ -110,12 +107,22 @@ public class Character : MonoBehaviour {
         WorldSwitchManager.Instance.WorldSwitched.RemoveListener(StopMotion);
     }
 
+    public void LaunchSpring(float speed) {
+        springTimeCounter = 0;
+        springFullSpeed = speed;
+        CurrentMovement.SpringSpeed = speed;
+    }
+
     void Update() {
-        if (IsGrounded && CurrentMovement.SpringSpeed != 0 && (Time.time - CurrentMovement.lastSpringTime) >= 0.01)
-            CurrentMovement.SpringSpeed = 0;
-        if ((Time.time - CurrentMovement.lastSpringTime) >= 0.4) {
-            CurrentMovement.SpringSpeed *= 0.99f;
+        if (springTimeCounter > springFullSpeedDuration) {
+            if (springTimeCounter > springDuration) CurrentMovement.SpringSpeed = 0;
+            else CurrentMovement.SpringSpeed -= 
+                Mathf.Sign(CurrentMovement.SpringSpeed)
+                * springFullSpeed
+                / (springDuration - springFullSpeedDuration)
+                * Time.deltaTime;
         }
+        springTimeCounter += Time.deltaTime;
         if (!characterStateController.HasState(CharacterState.Grabbing)) {
             float direction = InputManager.Instance.CharacterHorizontalMove;
             if (direction != 0) FacingDirection = new(direction, 0);

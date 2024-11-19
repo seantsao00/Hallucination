@@ -2,12 +2,7 @@ using UnityEngine;
 using Cinemachine;
 
 public class CameraCheckpoint : MonoBehaviour {
-    private CinemachineVirtualCamera checkpointCamera;
-    
-    void Awake() {
-        checkpointCamera = GetComponentInChildren<CinemachineVirtualCamera>();
-        checkpointCamera.gameObject.SetActive(false);
-    }
+    public CinemachineVirtualCamera checkpointCamera;
 
     void Start() {
         // Make sure the checkpoint camera is always on top

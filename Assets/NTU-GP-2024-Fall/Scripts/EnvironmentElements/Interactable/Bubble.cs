@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Bubble : Syncable {
     // We should make it glow by Light and modify related code.
@@ -21,9 +22,11 @@ public class Bubble : Syncable {
 
     override public void SyncState() {
         if (isGlowing) {
-            syncedObject.SetActive(true);
+            syncedObject.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 1f);
+            syncedObject.GetComponent<Collider2D>().enabled = true;
         } else {
-            syncedObject.SetActive(false);
+            syncedObject.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.4f);
+            syncedObject.GetComponent<Collider2D>().enabled = false;
         }
     }
 

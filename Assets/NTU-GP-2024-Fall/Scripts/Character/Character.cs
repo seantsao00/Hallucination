@@ -111,7 +111,8 @@ public class Character : MonoBehaviour {
     }
 
     void Update() {
-        if (IsGrounded && CurrentMovement.SpringSpeed != 0 && (Time.time - CurrentMovement.lastSpringTime) >= 0.2) CurrentMovement.SpringSpeed = 0;
+        if (IsGrounded && CurrentMovement.SpringSpeed != 0 && (Time.time - CurrentMovement.lastSpringTime) >= 0.01)
+            CurrentMovement.SpringSpeed = 0;
         if ((Time.time - CurrentMovement.lastSpringTime) >= 0.4) {
             CurrentMovement.SpringSpeed *= 0.99f;
         }

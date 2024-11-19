@@ -14,8 +14,6 @@ public class Spring : MonoBehaviour {
                 launchVelocity.y = verticalLaunchSpeed;
 
                 playerRb.velocity = launchVelocity;
-
-                print(playerRb.velocity);
             }
         }
 

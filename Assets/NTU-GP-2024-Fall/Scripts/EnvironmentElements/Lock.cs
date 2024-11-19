@@ -25,5 +25,6 @@ public class Lock : MonoBehaviour, Lockable {
 
     public void Unlock() {
         // print("Unlocked!");
+        gameObject.SetActive(false);
     }
 }

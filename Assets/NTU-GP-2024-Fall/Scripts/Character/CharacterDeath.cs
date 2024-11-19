@@ -27,7 +27,7 @@ public class CharacterDeath : MonoBehaviour {
         if (deathParticles != null) {
             Instantiate(deathParticles, transform.position, Quaternion.identity).Play();
         }
-
+        GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Character>().IsDead = true;
 
         Invoke(nameof(ResetScene), deathDelay);

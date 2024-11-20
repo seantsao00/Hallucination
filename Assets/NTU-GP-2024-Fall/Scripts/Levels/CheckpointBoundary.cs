@@ -14,4 +14,7 @@ public class CheckpointBoundary : MonoBehaviour {
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision) {
+        DialogueManager.Instance.StartDialogue("Bear Touch Boundary");
+    }
 }

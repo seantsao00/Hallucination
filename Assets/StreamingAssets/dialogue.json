@@ -1,6 +1,15 @@
 {
     "dialogues": [
         {
+            "name": "Bear Touch Boundary",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "I shall not leave the fairy alone..."
+                }
+            ]
+        },
+        {
             "name": "Start",
             "lines": [
                 {

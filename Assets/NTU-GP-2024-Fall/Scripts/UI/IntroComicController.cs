@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 
 public class IntroComicController : MonoBehaviour {
     [SerializeField] CanvasGroup NextTip;
     [SerializeField] string nextSceneName = "SampleScene";
+    [SerializeField] LoadingScreen loadingScreen;
     [Tooltip("The video path relative to StreamingAssets folder.")]
     [SerializeField] string videoName = "intro_converted.mp4";
     CanvasGroup canvasGroup;
@@ -33,11 +33,12 @@ public class IntroComicController : MonoBehaviour {
         NextTip.alpha = 1f;
     }
 
-    void OnDestroy() {
-        InputManager.Control.Animation.Confirm.performed -= ConfirmAction;
+    void ConfirmAction(InputAction.CallbackContext ctx) {
+        loadingScreen.ShowLoadingScreen();
+        SceneManager.LoadSceneAsync(nextSceneName);
     }
 
-    void ConfirmAction(InputAction.CallbackContext ctx) {
-        SceneManager.LoadScene(nextSceneName);
+    void OnDestroy() {
+        InputManager.Control.Animation.Confirm.performed -= ConfirmAction;
     }
 }

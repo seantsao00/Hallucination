@@ -5,15 +5,19 @@ public class InputManager {
     public static InputManager Instance {
         get {
             if (instance == null) {
-                instance = new InputManager();
-                instance.control.Character.Enable();
-                instance.control.World.Enable();
-                instance.control.Game.Enable();
-                GameStateManager.Instance.GameStateChangedEvent.AddListener(instance.SetInputAccordingToGameState);
-                GameStateManager.Instance.GamePlayStateChangedEvent.AddListener(instance.SetInputAccordingToGamePlayState);
+                Init();
             }
             return instance;
         }
+    }
+    static public void Init() {
+        if (instance != null) return;
+        instance = new InputManager();
+        instance.control.Character.Enable();
+        instance.control.World.Enable();
+        instance.control.Game.Enable();
+        GameStateManager.Instance.GameStateChangedEvent.AddListener(instance.SetInputAccordingToGameState);
+        GameStateManager.Instance.GamePlayStateChangedEvent.AddListener(instance.SetInputAccordingToGamePlayState);
     }
     private InputManager() {
         control = new PlayerControl();
@@ -40,12 +44,14 @@ public class InputManager {
             case GameState.Play:
                 SetInputAccordingToGamePlayState(GameStateManager.Instance.CurrentGamePlayState);
                 break;
+            case GameState.Animation:
+                Control.Animation.Enable();
+                break;
             case GameState.End:
                 break;
             default:
                 break;
         }
-        WorldSwitchManager.Instance.UpdateWorldSwitchIcon();
     }
 
     void SetInputAccordingToGamePlayState(GamePlayState state) {
@@ -76,6 +82,8 @@ public class InputManager {
             default:
                 break;
         }
-        WorldSwitchManager.Instance.UpdateWorldSwitchIcon();
+        if (GameStateManager.Instance.CurrentGameState == GameState.Play) {
+            WorldSwitchManager.Instance.UpdateWorldSwitchIcon();
+        }
     }
 }

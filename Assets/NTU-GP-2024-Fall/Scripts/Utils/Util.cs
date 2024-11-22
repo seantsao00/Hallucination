@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -42,5 +43,16 @@ public class Util {
             FadeMask.alpha = t;
             yield return null;
         }
+    }
+
+    static public IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup, float fadeDuration, Action callback = null) {
+        canvasGroup.alpha = 0;
+        float fadeSpeed = 1f / fadeDuration;
+        for (float t = 0; t < 1; t += Time.deltaTime * fadeSpeed) {
+            canvasGroup.alpha = t;
+            yield return null;
+        }
+        canvasGroup.alpha = 1;
+        callback?.Invoke();
     }
 }

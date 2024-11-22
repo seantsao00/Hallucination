@@ -3,13 +3,13 @@ using UnityEngine.Events;
 
 public enum GameState {
     MainMenu,
+    Animation,
     Paused,
     Play,
     End
 }
 public enum GamePlayState {
     None,
-    Cinematic,
     Normal,
     DialogueActive,
     SwitchingWorld,
@@ -24,6 +24,9 @@ public class GameStateManager {
             instance ??= new GameStateManager();
             return instance;
         }
+    }
+    static public void Init() {
+        instance ??= new GameStateManager();
     }
 
     public UnityEvent<GameState> GameStateChangedEvent = new UnityEvent<GameState>();
@@ -41,6 +44,9 @@ public class GameStateManager {
                     break;
                 case GameState.Paused:
                     Time.timeScale = 0f;
+                    break;
+                case GameState.Animation:
+                    CurrentGamePlayState = GamePlayState.None;
                     break;
                 case GameState.Play:
                     Time.timeScale = 1f;
@@ -63,7 +69,7 @@ public class GameStateManager {
             GamePlayState oldState = currentGamePlayState;
             currentGamePlayState = value;
             if (
-                oldState == GamePlayState.SwitchingWorld && 
+                oldState == GamePlayState.SwitchingWorld &&
                 currentGamePlayState != GamePlayState.Normal &&
                 currentGamePlayState != GamePlayState.None
             ) {

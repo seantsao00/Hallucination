@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class IntroComicController : MonoBehaviour {
     [SerializeField] CanvasGroup NextTip;
     [SerializeField] string nextSceneName = "SampleScene";
+    [Tooltip("The video path relative to StreamingAssets folder.")]
+    [SerializeField] string videoName = "intro.mp4";
     CanvasGroup canvasGroup;
     VideoPlayer videoPlayer;
 
@@ -14,8 +16,11 @@ public class IntroComicController : MonoBehaviour {
         videoPlayer = GetComponent<VideoPlayer>();
         canvasGroup.gameObject.SetActive(true);
         canvasGroup.alpha = 1;
+        NextTip.gameObject.SetActive(true);
         NextTip.alpha = 0;
+        videoPlayer.url = System.IO.Path.Combine(Application.streamingAssetsPath, videoName);
         videoPlayer.loopPointReached += ComicEndHandler;
+        videoPlayer.Play();
         GameStateManager.Init();
         InputManager.Init();
         GameStateManager.Instance.CurrentGameState = GameState.Animation;

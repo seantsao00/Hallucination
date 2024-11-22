@@ -923,7 +923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NextTip: {fileID: 383280031}
   nextSceneName: SampleScene
-  videoName: Intro.mp4
+  videoName: Intro_converted.mp4
 --- !u!225 &1376896361
 CanvasGroup:
   m_ObjectHideFlags: 0

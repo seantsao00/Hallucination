@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 
 public class IntroComicController : MonoBehaviour {
     [SerializeField] CanvasGroup NextTip;
     [SerializeField] string nextSceneName = "SampleScene";
     [Tooltip("The video path relative to StreamingAssets folder.")]
-    [SerializeField] string videoName = "intro.mp4";
+    [SerializeField] string videoName = "intro_converted.mp4";
     CanvasGroup canvasGroup;
     VideoPlayer videoPlayer;
 
@@ -17,7 +18,7 @@ public class IntroComicController : MonoBehaviour {
         canvasGroup.gameObject.SetActive(true);
         canvasGroup.alpha = 1;
         NextTip.gameObject.SetActive(true);
-        NextTip.alpha = 0;
+        NextTip.alpha = 0f;
         videoPlayer.url = System.IO.Path.Combine(Application.streamingAssetsPath, videoName);
         videoPlayer.loopPointReached += ComicEndHandler;
         videoPlayer.Play();
@@ -27,9 +28,9 @@ public class IntroComicController : MonoBehaviour {
     }
 
     void ComicEndHandler(VideoPlayer vp) {
-        StartCoroutine(Util.FadeInCanvasGroup(NextTip, 1f, () => {
-            InputManager.Control.Animation.Confirm.performed += ConfirmAction;
-        }));
+        InputManager.Control.Animation.Confirm.performed += ConfirmAction;
+        // StartCoroutine(Util.FadeInCanvasGroup(NextTip, 1f));
+        NextTip.alpha = 1f;
     }
 
     void OnDestroy() {

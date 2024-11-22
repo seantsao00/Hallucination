@@ -46,13 +46,13 @@ public class Util {
     }
 
     static public IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup, float fadeDuration, Action callback = null) {
-        canvasGroup.alpha = 0;
+        canvasGroup.alpha = 0f;
         float fadeSpeed = 1f / fadeDuration;
-        for (float t = 0; t < 1; t += Time.deltaTime * fadeSpeed) {
+        for (float t = 0f; t < 1f; t += Time.deltaTime * fadeSpeed) {
             canvasGroup.alpha = t;
             yield return null;
         }
-        canvasGroup.alpha = 1;
+        canvasGroup.alpha = 1f;
         callback?.Invoke();
     }
 }

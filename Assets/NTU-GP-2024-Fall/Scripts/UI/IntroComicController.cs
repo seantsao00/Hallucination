@@ -29,8 +29,7 @@ public class IntroComicController : MonoBehaviour {
 
     void ComicEndHandler(VideoPlayer vp) {
         InputManager.Control.Animation.Confirm.performed += ConfirmAction;
-        // StartCoroutine(Util.FadeInCanvasGroup(NextTip, 1f));
-        NextTip.alpha = 1f;
+        StartCoroutine(Util.FadeInCanvasGroup(NextTip, 1f));
     }
 
     void ConfirmAction(InputAction.CallbackContext ctx) {

@@ -14,10 +14,10 @@ public class Character : MonoBehaviour {
     [Serializable]
     public class CharacterMovementAttributes {
         [Header("Behavior")]
-        public float AirHangTimeThresholdSpeed = 0.5f;
+        public float AirHangTimeThresholdSpeed = 3f;
         public float StickOnWallFallingSpeed = 3f;
         public float MaxFallingSpeed = 16f;
-        [HideInInspector, NonSerialized] public float velocityEps = 1e-4f;
+        [HideInInspector, NonSerialized] public float velocityEps = 1e-3f;
     }
 
     public CharacterMovementAttributes MovementAttributes;
@@ -78,12 +78,14 @@ public class Character : MonoBehaviour {
             if (direction != 0) FacingDirection = new(direction, 0);
         }
         if (rb.velocity.y < -MovementAttributes.velocityEps) {
+            characterStateController.RemoveState(CharacterState.PreReleaseJumping);
             if (Mathf.Abs(rb.velocity.y) < MovementAttributes.AirHangTimeThresholdSpeed) {
                 characterStateController.AddState(CharacterState.AirHanging);
             } else {
                 characterStateController.RemoveState(CharacterState.AirHanging);
-                characterStateController.RemoveState(CharacterState.PreReleaseJumping);
             }
+        } else {
+            characterStateController.RemoveState(CharacterState.AirHanging);
         }
         if (rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {
             rb.velocity = new Vector2(rb.velocity.x, -MovementAttributes.MaxFallingSpeed);

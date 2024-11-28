@@ -33,7 +33,10 @@ public class CharacterHorizontalMove : MonoBehaviour {
     }
 
     void Update() {
-        if (!InputManager.Control.Character.HorizontalMove.enabled) {
+        if (
+            !InputManager.Control.Character.HorizontalMove.enabled ||
+            characterStateController.HasState(CharacterState.HorizontalSpringFlying)
+        ) {
             characterStateController.RemoveState(CharacterState.Walking);
             return;
         }

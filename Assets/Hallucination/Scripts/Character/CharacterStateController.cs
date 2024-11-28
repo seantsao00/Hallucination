@@ -122,8 +122,7 @@ public class CharacterStateController : MonoBehaviour {
             // Character.HorizontalMove
             if (
                 activeStates.Contains(CharacterState.Climbing) ||
-                activeStates.Contains(CharacterState.Dashing) ||
-                activeStates.Contains(CharacterState.HorizontalSpringFlying)
+                activeStates.Contains(CharacterState.Dashing)
             ) {
                 Control.Character.HorizontalMove.Disable();
             } else {

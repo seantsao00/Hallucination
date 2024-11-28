@@ -25,7 +25,11 @@ public class Spring : MonoBehaviour {
     IEnumerator LaunchSpring() {
         if (horizontalSpeed != 0) {
             characterStateController.AddState(CharacterState.HorizontalSpringFlying);
-            characterRb.velocity = new Vector2(horizontalSpeed, verticalSpeed);
+            if (Mathf.Sign(horizontalMove.WindBonusSpeed) == Mathf.Sign(horizontalSpeed)) {
+                characterRb.velocity = new Vector2(horizontalMove.WindBonusSpeed + horizontalSpeed, verticalSpeed);
+            } else {
+                characterRb.velocity = new Vector2(horizontalSpeed, verticalSpeed);
+            }
         } else {
             characterRb.velocity = new Vector2(characterRb.velocity.x, verticalSpeed);
         }

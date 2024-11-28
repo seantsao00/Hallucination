@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-public class Wind : MonoBehaviour {
+public class Airstream : MonoBehaviour {
     Character character;
     CompositeCollider2D compositeCollider;
     CharacterStateController characterStateController;

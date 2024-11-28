@@ -1,14 +1,18 @@
 using UnityEngine;
 
 public class CharacterHorizontalMove : MonoBehaviour {
-    Character character;
     CharacterStateController characterStateController;
     Rigidbody2D rb;
+    [SerializeField] float normalSpeed = 5f;
+    public float CurrentBasicSpeed;
+    public float SpringBonusSpeed;
+
+    public void ResetBasicSpeed() => CurrentBasicSpeed = normalSpeed;
 
     void Start() {
-        character = GetComponent<Character>();
         rb = GetComponent<Rigidbody2D>();
         characterStateController = GetComponent<CharacterStateController>();
+        CurrentBasicSpeed = normalSpeed;
     }
 
     void Update() {
@@ -17,7 +21,7 @@ public class CharacterHorizontalMove : MonoBehaviour {
             return;
         }
         float direction = InputManager.Instance.CharacterHorizontalMove;
-        rb.velocity = new Vector2(direction * character.CurrentMovement.HorizontalSpeed + character.CurrentMovement.SpringSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(direction * CurrentBasicSpeed + SpringBonusSpeed, rb.velocity.y);
         if (direction == 0) {
             characterStateController.RemoveState(CharacterState.Walking);
         } else {

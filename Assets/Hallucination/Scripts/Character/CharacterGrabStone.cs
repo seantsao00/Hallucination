@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class CharacterGrabStone : MonoBehaviour {
     [SerializeField] float grabSpeed = 3f;
     Character character;
+    CharacterHorizontalMove horizontalMove;
     Stone stone => character.StoneWithinRange;
     public bool IsLeashingStone { get; private set; }
     CharacterStateController characterStateController;
@@ -11,6 +12,7 @@ public class CharacterGrabStone : MonoBehaviour {
     void Awake() {
         character = GetComponent<Character>();
         characterStateController = GetComponent<CharacterStateController>();
+        horizontalMove = GetComponent<CharacterHorizontalMove>();
     }
 
     void OnEnable() {
@@ -31,14 +33,14 @@ public class CharacterGrabStone : MonoBehaviour {
     void LeashStone() {
         stone.SetSpeed(grabSpeed);
         stone.Leash();
-        character.CurrentMovement.HorizontalSpeed = grabSpeed;
+        horizontalMove.CurrentBasicSpeed = grabSpeed;
         IsLeashingStone = true;
         characterStateController.AddState(CharacterState.Grabbing);
     }
 
     public void UnleashStone() {
         stone.Unleash();
-        character.CurrentMovement.HorizontalSpeed = character.MovementAttributes.NormalHorizontalSpeed;
+        horizontalMove.ResetBasicSpeed();
         IsLeashingStone = false;
         characterStateController.RemoveState(CharacterState.Grabbing);
     }

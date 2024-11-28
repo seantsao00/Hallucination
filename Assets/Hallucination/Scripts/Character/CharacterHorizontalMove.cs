@@ -6,6 +6,8 @@ public class CharacterHorizontalMove : MonoBehaviour {
     [SerializeField] float normalSpeed = 5f;
     public float CurrentBasicSpeed;
     public float SpringBonusSpeed;
+    public float WindBonusSpeed;
+    float bonusSpeed => SpringBonusSpeed + WindBonusSpeed;
 
     public void ResetBasicSpeed() => CurrentBasicSpeed = normalSpeed;
 
@@ -21,7 +23,7 @@ public class CharacterHorizontalMove : MonoBehaviour {
             return;
         }
         float direction = InputManager.Instance.CharacterHorizontalMove;
-        rb.velocity = new Vector2(direction * CurrentBasicSpeed + SpringBonusSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(direction * CurrentBasicSpeed + bonusSpeed, rb.velocity.y);
         if (direction == 0) {
             characterStateController.RemoveState(CharacterState.Walking);
         } else {

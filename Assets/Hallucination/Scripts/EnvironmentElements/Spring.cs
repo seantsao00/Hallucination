@@ -7,6 +7,7 @@ public class Spring : MonoBehaviour {
     [SerializeField] float springFullSpeedDuration = 0.2f;
     [SerializeField] float springFadeDuration = 0.4f;
     Rigidbody2D rb;
+    Coroutine springCoroutine;
     CharacterHorizontalMove horizontalMove;
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -14,7 +15,8 @@ public class Spring : MonoBehaviour {
             rb = other.GetComponent<Rigidbody2D>();
             horizontalMove = other.GetComponent<CharacterHorizontalMove>();
             other.GetComponent<CharacterDash>()?.ResetDash();
-            StartCoroutine(LaunchSpring());
+            springCoroutine = StartCoroutine(LaunchSpring());
+            horizontalMove.CurrentSpring = this;
         }
     }
 
@@ -26,6 +28,15 @@ public class Spring : MonoBehaviour {
             horizontalMove.SpringBonusSpeed = Mathf.Lerp(horizontalLaunchSpeed, 0, t / springFadeDuration);
             yield return null;
         }
+        springCoroutine = null;
         horizontalMove.SpringBonusSpeed = 0;
+    }
+
+    public void StopSpringHorizontalBonus() {
+        if (springCoroutine != null) {
+            StopCoroutine(springCoroutine);
+            springCoroutine = null;
+            horizontalMove.SpringBonusSpeed = 0;
+        }
     }
 }

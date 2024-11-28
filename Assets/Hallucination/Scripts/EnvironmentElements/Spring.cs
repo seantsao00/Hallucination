@@ -13,6 +13,7 @@ public class Spring : MonoBehaviour {
         if (other.CompareTag("Player")) {
             rb = other.GetComponent<Rigidbody2D>();
             horizontalMove = other.GetComponent<CharacterHorizontalMove>();
+            other.GetComponent<CharacterDash>()?.ResetDash();
             StartCoroutine(LaunchSpring());
         }
     }

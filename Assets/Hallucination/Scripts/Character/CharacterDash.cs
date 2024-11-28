@@ -1,15 +1,14 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
 public class CharacterDash : MonoBehaviour {
-    [Header("Dash")]
     [SerializeField] float dashLength = 4f;
     [SerializeField] float dashDuration = 0.2f;
-    [SerializeField] float dashCooldown = 1f;
+    [SerializeField] float dashCooldown = 0.3f;
     [SerializeField] AudioClip dashSound;  // Drag and drop your dash sound effect here in the Inspector
     float dashSpeed => dashLength / dashDuration;
+    bool canDash;
 
     Character character;
     Rigidbody2D rb;
@@ -17,14 +16,13 @@ public class CharacterDash : MonoBehaviour {
     bool isDashCooling = false;
     TrailRenderer dashTrailRenderer;
 
-    AudioSource audioSource;  // Reference to AudioSource component
+    AudioSource audioSource;
     CharacterStateController characterStateController;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();  // Get the AudioSource component
+        audioSource = GetComponent<AudioSource>();
         character = GetComponent<Character>();
-        Assert.IsTrue(dashDuration <= dashCooldown);
         dashTrailRenderer = GetComponent<TrailRenderer>();
         characterStateController = GetComponent<CharacterStateController>();
     }
@@ -36,26 +34,39 @@ public class CharacterDash : MonoBehaviour {
         InputManager.Control.Character.Dash.performed -= Dash;
     }
 
-    void Dash(InputAction.CallbackContext context) {
-        if (isDashCooling) return;
-        if (dashSound != null) {
-            audioSource.PlayOneShot(dashSound);  // Play the dash sound effect
-        }
-        StartCoroutine(StartDash());
+    void LateUpdate() {
+        if (character.IsGrounded) canDash = true;
     }
 
-    IEnumerator StartDash() {
+    /// <summary>
+    /// Stop the current dash, reset the dash cooldown and allow the player to dash again.
+    /// </summary>
+    public void ResetDash() {
+        StopAllCoroutines();
+        characterStateController.RemoveState(CharacterState.Dashing);
+        dashTrailRenderer.emitting = false;
+        canDash = true;
+        isDashCooling = false;
+    }
+
+    void Dash(InputAction.CallbackContext context) {
+        if (isDashCooling || !canDash) return;
+        if (dashSound != null) {
+            audioSource.PlayOneShot(dashSound);
+        }
+        StartCoroutine(PerformDash());
+    }
+
+    IEnumerator PerformDash() {
         isDashCooling = true;
         characterStateController.AddState(CharacterState.Dashing);
         rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
         dashTrailRenderer.emitting = true;
-        InputManager.Control.Character.HorizontalMove.Disable();
         yield return new WaitForSeconds(dashDuration);
 
         characterStateController.RemoveState(CharacterState.Dashing);
         dashTrailRenderer.emitting = false;
-        InputManager.Control.Character.HorizontalMove.Enable();
-        yield return new WaitForSeconds(dashCooldown - dashDuration);
+        yield return new WaitForSeconds(dashCooldown);
 
         isDashCooling = false;
     }

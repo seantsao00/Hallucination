@@ -2,41 +2,45 @@ using System.Collections;
 using UnityEngine;
 
 public class Spring : MonoBehaviour {
-    [SerializeField] float verticalLaunchSpeed;
-    [SerializeField] float horizontalLaunchSpeed;
-    [SerializeField] float springFullSpeedDuration = 0.2f;
-    [SerializeField] float springFadeDuration = 0.4f;
-    Rigidbody2D rb;
+    [SerializeField] float verticalSpeed;
+    [SerializeField] float horizontalSpeed;
+    [SerializeField] float springDuration = 0.5f;
+    Rigidbody2D characterRb;
+    CharacterStateController characterStateController;
     Coroutine springCoroutine;
     CharacterHorizontalMove horizontalMove;
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            rb = other.GetComponent<Rigidbody2D>();
+            characterRb = other.GetComponent<Rigidbody2D>();
             horizontalMove = other.GetComponent<CharacterHorizontalMove>();
+            characterStateController = other.GetComponent<CharacterStateController>();
             other.GetComponent<CharacterDash>()?.ResetDash();
+
             springCoroutine = StartCoroutine(LaunchSpring());
             horizontalMove.CurrentSpring = this;
         }
     }
 
     IEnumerator LaunchSpring() {
-        rb.velocity = new Vector2(rb.velocity.x, verticalLaunchSpeed);
-        horizontalMove.SpringBonusSpeed = horizontalLaunchSpeed;
-        yield return new WaitForSeconds(springFullSpeedDuration);
-        for (float t = 0f; t < springFadeDuration; t += Time.deltaTime) {
-            horizontalMove.SpringBonusSpeed = Mathf.Lerp(horizontalLaunchSpeed, 0, t / springFadeDuration);
-            yield return null;
+        if (horizontalSpeed != 0) {
+            characterStateController.AddState(CharacterState.HorizontalSpringFlying);
+            characterRb.velocity = new Vector2(horizontalSpeed, verticalSpeed);
+        } else {
+            characterRb.velocity = new Vector2(characterRb.velocity.x, verticalSpeed);
         }
+        yield return new WaitForSeconds(springDuration);
         springCoroutine = null;
-        horizontalMove.SpringBonusSpeed = 0;
+        characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
+        horizontalMove.CurrentSpring = null;
     }
 
-    public void StopSpringHorizontalBonus() {
+    public void StopSpringHorizontalSpeed() {
         if (springCoroutine != null) {
             StopCoroutine(springCoroutine);
             springCoroutine = null;
-            horizontalMove.SpringBonusSpeed = 0;
+            characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
+            horizontalMove.CurrentSpring = null;
         }
     }
 }

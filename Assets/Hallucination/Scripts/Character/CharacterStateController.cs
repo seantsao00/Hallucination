@@ -7,6 +7,7 @@ public enum CharacterState {
     PreReleaseJumping,
     Climbing,
     Dashing,
+    HorizontalSpringFlying,
     Grabbing,
     BeingBlown,
     LedgeClimbing,
@@ -104,6 +105,7 @@ public class CharacterStateController : MonoBehaviour {
     public bool CharacterBusy =>
         activeStates.Contains(CharacterState.Grabbing) ||
         activeStates.Contains(CharacterState.Dashing) ||
+        activeStates.Contains(CharacterState.HorizontalSpringFlying) ||
         activeStates.Contains(CharacterState.Climbing) ||
         activeStates.Contains(CharacterState.BeingBlown) ||
         activeStates.Contains(CharacterState.NotStandingOnGround) ||
@@ -120,7 +122,8 @@ public class CharacterStateController : MonoBehaviour {
             // Character.HorizontalMove
             if (
                 activeStates.Contains(CharacterState.Climbing) ||
-                activeStates.Contains(CharacterState.Dashing)
+                activeStates.Contains(CharacterState.Dashing) ||
+                activeStates.Contains(CharacterState.HorizontalSpringFlying)
             ) {
                 Control.Character.HorizontalMove.Disable();
             } else {

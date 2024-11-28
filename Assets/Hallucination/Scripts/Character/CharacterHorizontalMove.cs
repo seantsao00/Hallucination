@@ -6,10 +6,8 @@ public class CharacterHorizontalMove : MonoBehaviour {
     Rigidbody2D rb;
     [SerializeField] float normalSpeed = 5f;
     public float CurrentBasicSpeed;
-    public float SpringBonusSpeed;
     public Spring CurrentSpring;
     public float WindBonusSpeed;
-    float bonusSpeed => SpringBonusSpeed + WindBonusSpeed;
     [SerializeField] LayerMask groundLayer;
 
     public void ResetBasicSpeed() => CurrentBasicSpeed = normalSpeed;
@@ -26,7 +24,7 @@ public class CharacterHorizontalMove : MonoBehaviour {
                 float angle = Vector2.Angle(contact.normal, Vector2.up);
                 if (CurrentSpring != null && Mathf.Approximately(angle, 90)) {
                     // Debug.Log("side hit");
-                    CurrentSpring.StopSpringHorizontalBonus();
+                    CurrentSpring.StopSpringHorizontalSpeed();
                     CurrentSpring = null;
                     break;
                 }
@@ -40,7 +38,7 @@ public class CharacterHorizontalMove : MonoBehaviour {
             return;
         }
         float direction = InputManager.Instance.CharacterHorizontalMove;
-        rb.velocity = new Vector2(direction * CurrentBasicSpeed + bonusSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(direction * CurrentBasicSpeed + WindBonusSpeed, rb.velocity.y);
         if (direction == 0) {
             characterStateController.RemoveState(CharacterState.Walking);
         } else {

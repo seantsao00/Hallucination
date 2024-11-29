@@ -1,5 +1,86 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4330415273554495469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3534118693485416542}
+  - component: {fileID: 6949582458855541084}
+  - component: {fileID: 7861361305213769369}
+  m_Layer: 0
+  m_Name: NeighborDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3534118693485416542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4330415273554495469}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.833952, y: 10.533493, z: 0.8064627}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7946464928247514910}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &6949582458855541084
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4330415273554495469}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 4
+--- !u!114 &7861361305213769369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4330415273554495469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdf4350e9c407d4abf70d18fba04a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: Stone
 --- !u!1 &6471211740841845485
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +405,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3064367424361827195, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       insertIndex: 2
       addedObject: {fileID: 4210791816271055941}
+    - targetCorrespondingSourceObject: {fileID: 3064367424361827195, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3534118693485416542}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4106964555294187257, guid: 8b60c16529ebc7743b65b34f8e525026, type: 3}
       insertIndex: 5
@@ -371,7 +455,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ledgeClimbOffset: {x: 0.8, y: 1}
-  testHaltInterval: 0.4
 --- !u!82 &-1354603695303421774
 AudioSource:
   m_ObjectHideFlags: 0

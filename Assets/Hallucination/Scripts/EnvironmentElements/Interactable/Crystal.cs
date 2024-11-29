@@ -5,15 +5,16 @@ using UnityEngine.InputSystem;
 
 public class Crystal : InteractableObjectBase {
     bool isPlayerInRange;
-    GameObject character;
+    public CharacterNeighborDetector detector;
     override public void Interact(InputAction.CallbackContext context) {
-        if (character != null) character.GetComponent<RadiusDuplicator>().DuplicateObjectsInRadius();
+        if (detector != null) {
+            duplicatedNeighborObjects();
+        }
     }
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             TipManager.Instance.ShowInteractableObjectTip(gameObject);
             isPlayerInRange = true;
-            character = other.gameObject;
         }
     }
 
@@ -21,7 +22,20 @@ public class Crystal : InteractableObjectBase {
         if (other.CompareTag("Player")) {
             TipManager.Instance.CloseInteractableObjectTip(gameObject);
             isPlayerInRange = false;
-            character = null;
+        }
+    }
+    
+    void duplicatedNeighborObjects() {
+        GameObject[] neighbors = detector.NeighborObjects.ToArray();
+        foreach (var neighbor in neighbors) {
+            Vector2 relativePosition = detector.GetRelativePosition(neighbor);
+            Vector2 newPosition = (Vector2)gameObject.transform.position + relativePosition;
+            Transform parent = gameObject.transform.parent;
+            GameObject duplicatedObject = Instantiate(neighbor, newPosition, neighbor.transform.rotation, parent);
+
+            duplicatedObject.name = neighbor.name + "_Copy";
+
+            Debug.Log($"Duplicated {neighbor.name} to new position {newPosition}");
         }
     }
 }

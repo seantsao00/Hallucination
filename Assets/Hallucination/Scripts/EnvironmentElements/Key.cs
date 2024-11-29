@@ -1,20 +1,22 @@
 using UnityEngine;
 
-public interface Lockable {
-    bool checkIfLocked(Key[] keys);
-    void Unlock();
-}
-
 public class Key : MonoBehaviour {
-    [HideInInspector] public bool IsLocked;
+    bool isCollected;
 
-    void Start() {
-        IsLocked = true;
+    public delegate void UnlockHandler(Key key);
+    public event UnlockHandler Unlock;
+
+    void OnTriggerEnter2D(Collider2D collision) {
+        if (isCollected) return;
+        if (collision.CompareTag("Player")) {
+            Collect();
+        }
     }
 
-    void OnTriggerEnter2D() {
+    void Collect() {
+        isCollected = true;
+        Unlock?.Invoke(this);
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color(0f, 255f, 0f, 1f);
-        IsLocked = false;
     }
 }

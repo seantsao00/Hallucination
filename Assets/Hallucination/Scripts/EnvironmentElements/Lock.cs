@@ -1,30 +1,49 @@
+using System.Collections;
 using UnityEngine;
-public class Lock : MonoBehaviour, Lockable {
-    public Key[] keys;
-    bool isLocked;
+using UnityEngine.UIElements;
 
-    void Start() {
-        isLocked = false;
-    }
+public class Lock : MonoBehaviour {
+    [SerializeField] Key[] keys;
+    [SerializeField] Transform unlockedPosition;
+    int numberOfKeys, numberOfCollectedKeys;
+    [SerializeField] float slowDownLength = 1f;
+    [SerializeField] float minSpeedRatio = 0.33f;
+    [SerializeField] float speed = 5f;
+    float eps = 1e-4f;
 
-    void Update() {
-        if (!isLocked && !checkIfLocked(keys)) {
-            isLocked = true;
-            Unlock();
+    void Awake() {
+        numberOfKeys = keys.Length;
+        numberOfCollectedKeys = 0;
+        foreach (Key key in keys) {
+            key.Unlock += UnlockHandler;
         }
     }
 
-    public bool checkIfLocked(Key[] keys) {
-        foreach (var key in keys) {
-            if (key.IsLocked) {
-                return true;
+    void UnlockHandler(Key key) {
+        numberOfCollectedKeys++;
+        if (numberOfCollectedKeys == numberOfKeys) {
+            StartCoroutine(UnlockCoroutine());
+        }
+    }
+
+    IEnumerator UnlockCoroutine() {
+        WorldSwitchManager.Instance.Lock(gameObject);
+        Vector3 target = unlockedPosition.position;
+        Vector3 offset = target - transform.position;
+        while (offset.magnitude > eps) {
+            target = unlockedPosition.position;
+            offset = target - transform.position;
+            WorldSwitchManager.Instance.Lock(gameObject);
+            Vector3 Movement;
+            if (offset.magnitude > slowDownLength) {
+                Movement = Vector3.ClampMagnitude(offset, speed * Time.deltaTime);
+            } else {
+                float ratio = Mathf.Max(offset.magnitude / slowDownLength, minSpeedRatio);
+                Movement = Vector3.ClampMagnitude(offset, speed * Time.deltaTime * ratio);
             }
+            transform.position += Movement;
+            yield return null;
         }
-        return false;
-    }
-
-    public void Unlock() {
-        // print("Unlocked!");
-        gameObject.SetActive(false);
+        WorldSwitchManager.Instance.Unlock(gameObject);
     }
 }

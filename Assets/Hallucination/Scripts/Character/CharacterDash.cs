@@ -59,6 +59,7 @@ public class CharacterDash : MonoBehaviour {
 
     IEnumerator PerformDash() {
         isDashCooling = true;
+        canDash = false;
         characterStateController.AddState(CharacterState.Dashing);
         rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
         dashTrailRenderer.emitting = true;

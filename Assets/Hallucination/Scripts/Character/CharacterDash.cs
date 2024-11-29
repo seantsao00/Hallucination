@@ -35,7 +35,9 @@ public class CharacterDash : MonoBehaviour {
     }
 
     void LateUpdate() {
-        if (character.IsGrounded) canDash = true;
+        if (!characterStateController.HasState(CharacterState.Dashing) && character.IsGrounded) {
+            canDash = true;
+        }
     }
 
     /// <summary>

@@ -146,8 +146,8 @@ public class LevelController : MonoBehaviour {
 
             StartCoroutine(Util.FadeIn(1f, WorldSwitchManager.Instance.FadingMask));
 
-            transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(true);
-            transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(true);
+            transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
+            transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
         }
         ApplyCharacterSyncMethods();
     }
@@ -164,8 +164,8 @@ public class LevelController : MonoBehaviour {
 
             StartCoroutine(Util.FadeIn(1f, WorldSwitchManager.Instance.FadingMask));
 
-            transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(true);
-            transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(true);
+            transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
+            transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
         }
         ApplyCharacterSyncMethods();
     }

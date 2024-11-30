@@ -36,7 +36,8 @@ public class CharacterDash : MonoBehaviour {
 
     void LateUpdate() {
         if (!characterStateController.HasState(CharacterState.Dashing) && 
-            (character.IsGrounded || characterStateController.HasState(CharacterState.BeingBlown))) {
+            (characterStateController.HasState(CharacterState.StandingOnGround) || 
+             characterStateController.HasState(CharacterState.BeingBlown))) {
             canDash = true;
         }
     }

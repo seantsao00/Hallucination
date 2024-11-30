@@ -35,16 +35,6 @@ public class Character : MonoBehaviour {
     /// </summary>
 
     private Rigidbody2D rb;
-    bool isGrounded;
-    [HideInInspector]
-    public bool IsGrounded {
-        get => isGrounded;
-        set {
-            isGrounded = value;
-            if (isGrounded) characterStateController.RemoveState(CharacterState.NotStandingOnGround);
-            else characterStateController.AddState(CharacterState.NotStandingOnGround);
-        }
-    }
     [HideInInspector] public bool IsStandOnClimbable;
     [HideInInspector] public bool IsBodyOnClimbable;
     [HideInInspector] public bool IsLedgeDetected;

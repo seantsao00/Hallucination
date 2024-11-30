@@ -23,6 +23,8 @@ public class Spring : MonoBehaviour {
     }
 
     IEnumerator LaunchSpring() {
+        characterStateController.RemoveState(CharacterState.PreReleaseJumping);
+        characterStateController.AddState(CharacterState.SpringFlying);
         if (horizontalSpeed != 0) {
             characterStateController.AddState(CharacterState.HorizontalSpringFlying);
             if (Mathf.Sign(horizontalMove.WindBonusSpeed) == Mathf.Sign(horizontalSpeed)) {
@@ -35,6 +37,7 @@ public class Spring : MonoBehaviour {
         }
         yield return new WaitForSeconds(springDuration);
         springCoroutine = null;
+        characterStateController.RemoveState(CharacterState.SpringFlying);
         characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
         horizontalMove.CurrentSpring = null;
     }

@@ -45,14 +45,15 @@ public class CharacterJump : MonoBehaviour {
         if (context.performed) {
             jumpBufferCounter = jumpBufferTime;
         }
-        if (context.canceled && rb.velocity.y > 0) {
+        if (characterStateController.HasState(CharacterState.PreReleaseJumping) && 
+            context.canceled && rb.velocity.y > 0) {
             characterStateController.RemoveState(CharacterState.PreReleaseJumping);
             rb.velocity = new Vector2(rb.velocity.x, releaseJumpSpeedMultiplier * rb.velocity.y);
         }
     }
 
     void Update() {
-        if (character.IsGrounded) {
+        if (characterStateController.HasState(CharacterState.StandingOnGround)) {
             coyoteTimeCounter = coyoteTime;
         } else {
             coyoteTimeCounter -= Time.deltaTime;

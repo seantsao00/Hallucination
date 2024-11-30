@@ -16,10 +16,12 @@ public class DialogueManager : MonoBehaviour {
 
     private Queue<DialogueLine> dialogueLines;  // Queue to hold the dialogue lines
     private DialogueData dialogueData;  // Store all the dialogues from JSON
-
+    
     public GameObject leftImage;  // Reference to the left image GameObject (player's image)
     public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
     public static DialogueManager Instance { get; private set; }
+    bool isTyping = false;
+    string currentSentence;
 
     Action callbackAfterDialogue;
 
@@ -30,6 +32,7 @@ public class DialogueManager : MonoBehaviour {
             Destroy(Instance);
             return;
         }
+        isTyping = false;
         canvasGroup = GetComponent<CanvasGroup>();
         Instance = this;
         dialogueLines = new Queue<DialogueLine>();
@@ -120,15 +123,28 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
+        // If dialogue is still typing, show the full sentence immediately
+        if (isTyping) {
+            StopAllCoroutines();
+            dialogueText.text = currentSentence;
+            TMP_TextInfo textInfo = dialogueText.textInfo;
+            SetDialogueAlpha(255, textInfo);
+            isTyping = false;
+            return;
+        }
+
+        // If no more dialogue lines, end dialogue
         if (dialogueLines.Count == 0) {
             EndDialogue();
             return;
         }
 
+        // Start typing the next dialogue
         DialogueLine dialogueLine = dialogueLines.Dequeue();
-        StopAllCoroutines();  // Stop any previous typing coroutine
-        UpdateSpeakerImage(dialogueLine.speaker); // Update image visibility based on speaker
-        StartCoroutine(TypeSentence(dialogueLine));  // Display the dialogue line with a typing effect
+        StopAllCoroutines();
+        UpdateSpeakerImage(dialogueLine.speaker);
+        currentSentence = dialogueLine.sentence;
+        StartCoroutine(TypeSentence(dialogueLine));
     }
     void UpdateSpeakerImage(string speaker) {
         if (speaker == "Fairy") {
@@ -140,12 +156,49 @@ public class DialogueManager : MonoBehaviour {
         }
     }
     IEnumerator TypeSentence(DialogueLine dialogueLine) {
-        // dialogueText.text = dialogueLine.speaker + ": ";  // Show speaker's name
-        dialogueText.text = "";
-        foreach (char letter in dialogueLine.sentence.ToCharArray()) {
-            dialogueText.text += letter;  // Type each letter one by one
-            yield return null;
+        isTyping = true;
+        dialogueText.text = dialogueLine.sentence;
+        TMP_TextInfo textInfo = dialogueText.textInfo;
+        
+        SetDialogueAlpha(0, textInfo);
+        // Gradually reveal characters
+        for (int i = 0; i < textInfo.characterCount; i++) {
+            TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+            if (!charInfo.isVisible) continue;
+
+            int vertexIndex = charInfo.vertexIndex;
+            Color32[] vertexColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
+            float alpha = 0;
+            while (alpha < 1) {
+                alpha += Time.deltaTime * 20f;
+                alpha = Math.Min(alpha, 1);
+                byte newAlpha = (byte)(alpha * 255);
+
+                for (int j = 0; j < 4; j++) {
+                    vertexColors[vertexIndex + j].a = newAlpha;
+                }
+
+                dialogueText.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+                yield return null;
+            }
         }
+        isTyping = false;
+    }
+
+    void SetDialogueAlpha(byte alpha, TMP_TextInfo textInfo) {
+        dialogueText.ForceMeshUpdate();
+        for (int i = 0; i < textInfo.characterCount; i++) {
+            TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+            if (!charInfo.isVisible) continue;
+
+            int vertexIndex = charInfo.vertexIndex;
+            Color32[] vertexColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
+
+            for (int j = 0; j < 4; j++) {
+                vertexColors[vertexIndex + j].a = (byte)alpha;
+            }
+        }
+        dialogueText.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
     }
 
     void EndDialogue() {

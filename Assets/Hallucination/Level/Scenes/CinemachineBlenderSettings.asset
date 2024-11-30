@@ -13,8 +13,30 @@ MonoBehaviour:
   m_Name: CinemachineBlenderSettings
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: LevelMainCamera
-    m_To: LevelMainCamera
+  - m_From: BearLevelMainCamera
+    m_To: FairyLevelMainCamera
+    m_Blend:
+      m_Style: 0
+      m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: FairyLevelMainCamera
+    m_To: BearLevelMainCamera
+    m_Blend:
+      m_Style: 0
+      m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: BearBirdsEyeCamera
+    m_To: FairyLevelMainCamera
     m_Blend:
       m_Style: 0
       m_Time: 2

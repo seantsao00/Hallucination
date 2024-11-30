@@ -54,6 +54,14 @@ public class DialogueManager : MonoBehaviour {
     // Load the entire JSON file containing multiple dialogues
     async void LoadDialoguesFromFile() {
         string filePath = Path.Combine(Application.streamingAssetsPath, "dialogue.json");
+        switch (Util.CurrentLanguage()) {
+            case Language.English:
+                filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/English/dialogue.json");
+                break;
+            case Language.Chinese:
+                filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/Chinese/dialogue.json");
+                break;
+        }
 
         UnityWebRequest request = UnityWebRequest.Get(filePath);
         UnityWebRequestAsyncOperation operation = request.SendWebRequest();

@@ -100,6 +100,16 @@ public class CharacterStateController : MonoBehaviour {
         } else {
             animator.SetBool("LedgeClimb", false);
         }
+        if (HasState(CharacterState.LedgeClimbing)) {
+            animator.SetBool("LedgeClimb", true);
+        } else {
+            animator.SetBool("LedgeClimb", false);
+        }
+        if (HasState(CharacterState.Grabbing)) {
+            animator.SetBool("GrabStone", true);
+        } else {
+            animator.SetBool("GrabStone", false);
+        }
     }
 
     public bool CharacterBusy =>

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class IntroComicController : MonoBehaviour {
     [SerializeField] CanvasGroup NextTip;
-    [SerializeField] string nextSceneName = "SampleScene";
+    string levelSceneName = "Levels";
     [SerializeField] LoadingScreen loadingScreen;
     [Tooltip("The video path relative to StreamingAssets folder.")]
     [SerializeField] string videoName = "intro_converted.mp4";
@@ -34,7 +34,7 @@ public class IntroComicController : MonoBehaviour {
 
     void ConfirmAction(InputAction.CallbackContext ctx) {
         loadingScreen.ShowLoadingScreen();
-        SceneManager.LoadSceneAsync(nextSceneName);
+        SceneManager.LoadSceneAsync(levelSceneName);
     }
 
     void OnDestroy() {

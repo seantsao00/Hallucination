@@ -1,0 +1,43 @@
+{
+    "dialogues": [
+        {
+            "name": "Bear Touch Boundary",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "I shall not leave the fairy alone..."
+                }
+            ]
+        },
+        {
+            "name": "Start",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "Why are you so afraid?"
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "Have you forgotten me?"
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "..."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I really want to understand, but I just can't grasp how you feel..."
+                }
+            ]
+        },
+        {
+            "name": "Fairy Gone",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "Seems like the fairy is gone. I should hurry up so I won't lost it!"
+                }
+            ]
+        }
+    ]
+}

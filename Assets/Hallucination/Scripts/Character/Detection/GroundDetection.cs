@@ -3,14 +3,16 @@ using UnityEngine;
 public class GroundDetection : MonoBehaviour {
     [SerializeField] float radius = 0.2f;
     [SerializeField] LayerMask groundLayerMask;
-    Character character;
+    CharacterStateController characterStateController;
 
     void Awake() {
-        character = transform.parent.GetComponent<Character>();
+        characterStateController = transform.parent.GetComponent<CharacterStateController>();
     }
 
     void Update() {
-        character.IsGrounded = Physics2D.OverlapCircle(transform.position, radius, groundLayerMask);
+        bool isGrounded = Physics2D.OverlapCircle(transform.position, radius, groundLayerMask);
+        if (isGrounded) characterStateController.AddState(CharacterState.StandingOnGround);
+        else characterStateController.RemoveState(CharacterState.StandingOnGround);
     }
 
     void OnDrawGizmosSelected() {

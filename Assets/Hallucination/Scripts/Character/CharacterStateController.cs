@@ -7,18 +7,20 @@ public enum CharacterState {
     PreReleaseJumping,
     Climbing,
     Dashing,
+    SpringFlying,
     HorizontalSpringFlying,
     Grabbing,
     BeingBlown,
     LedgeClimbing,
-    NotStandingOnGround,
+    StandingOnGround,
     AirHanging
 }
 
 public class CharacterStateController : MonoBehaviour {
     [Header("Gravity")]
-    public float BeingBlownGravityMultiplier = 0.4f;
-    public float AirHangingGravityMultiplier = 0.4f;
+    [SerializeField] float beingBlownGravityMultiplier = 0.4f;
+    [SerializeField] float airHangingGravityMultiplier = 0.4f;
+    [SerializeField] float springFlyingGravityMultiplier = 1f;
 
     HashSet<CharacterState> activeStates = new HashSet<CharacterState>();
 
@@ -57,6 +59,7 @@ public class CharacterStateController : MonoBehaviour {
     public HashSet<CharacterState> ActiveStates => new HashSet<CharacterState>(activeStates);
 
     private void HandleStateChange(CharacterState state, bool added) {
+        RemoveMutuallyExclusiveStates(state, added);
         UpdateInput();
         UpdateGravity();
         UpdateAnimator();
@@ -68,15 +71,32 @@ public class CharacterStateController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Remove mutually exclusive states.
+    /// This function won't trigger OnStateChanged event.
+    /// </summary>
+    void RemoveMutuallyExclusiveStates(CharacterState state, bool added) {
+        if (added) {
+            if (state == CharacterState.SpringFlying) {
+                activeStates.Remove(CharacterState.PreReleaseJumping);
+            }
+            if (state == CharacterState.PreReleaseJumping) {
+                activeStates.Remove(CharacterState.SpringFlying);
+            }
+        }
+    }
+
     public void UpdateGravity() {
         if (HasState(CharacterState.Climbing)) {
             rb.gravityScale = 0;
         } else if (HasState(CharacterState.Dashing)) {
             rb.gravityScale = 0;
         } else if (HasState(CharacterState.BeingBlown)) {
-            rb.gravityScale = NormalGravityScale * BeingBlownGravityMultiplier;
+            rb.gravityScale = NormalGravityScale * beingBlownGravityMultiplier;
         } else if (HasState(CharacterState.AirHanging)) {
-            rb.gravityScale = NormalGravityScale * AirHangingGravityMultiplier;
+            rb.gravityScale = NormalGravityScale * airHangingGravityMultiplier;
+        } else if (HasState(CharacterState.SpringFlying)) {
+            rb.gravityScale = NormalGravityScale * springFlyingGravityMultiplier;
         } else if (HasState(CharacterState.PreReleaseJumping)) {
             rb.gravityScale = NormalGravityScale * GetComponent<CharacterJump>().PreReleaseGravityMultiplier;
         } else {
@@ -118,7 +138,7 @@ public class CharacterStateController : MonoBehaviour {
         activeStates.Contains(CharacterState.HorizontalSpringFlying) ||
         activeStates.Contains(CharacterState.Climbing) ||
         activeStates.Contains(CharacterState.BeingBlown) ||
-        activeStates.Contains(CharacterState.NotStandingOnGround) ||
+        !activeStates.Contains(CharacterState.StandingOnGround) ||
         activeStates.Contains(CharacterState.LedgeClimbing)
     ;
 
@@ -172,7 +192,7 @@ public class CharacterStateController : MonoBehaviour {
                 activeStates.Contains(CharacterState.Dashing) ||
                 activeStates.Contains(CharacterState.Climbing) ||
                 activeStates.Contains(CharacterState.BeingBlown) ||
-                activeStates.Contains(CharacterState.NotStandingOnGround)
+                !activeStates.Contains(CharacterState.StandingOnGround)
             ) {
                 Control.Character.Grab.Disable();
             } else {

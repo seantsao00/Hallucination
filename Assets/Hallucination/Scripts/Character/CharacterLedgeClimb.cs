@@ -20,7 +20,7 @@ public class CharacterLedgeClimb : MonoBehaviour {
         if (!InputManager.Control.Character.HorizontalMove.enabled) return;
         if (isClimbingLedge) return;
         if (Mathf.Abs(rb.velocity.y) > eps) return;
-        if (!character.IsGrounded) return;
+        if (!characterStateController.HasState(CharacterState.StandingOnGround)) return;
         if (character.IsLedgeDetected == false) return;
         float direction = InputManager.Instance.CharacterHorizontalMove;
         if (direction != 0) LedgeClimb();

@@ -2,12 +2,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CharacterGrabStone : MonoBehaviour {
-    [SerializeField] float grabSpeed = 3f;
     Character character;
     CharacterHorizontalMove horizontalMove;
     Stone stone => character.StoneWithinRange;
     public bool IsLeashingStone { get; private set; }
     CharacterStateController characterStateController;
+    float grabSpeed;
 
     void Awake() {
         character = GetComponent<Character>();
@@ -31,11 +31,11 @@ public class CharacterGrabStone : MonoBehaviour {
     }
 
     void LeashStone() {
-        stone.SetSpeed(grabSpeed);
         stone.Leash();
-        horizontalMove.CurrentBasicSpeed = grabSpeed;
         IsLeashingStone = true;
         characterStateController.AddState(CharacterState.Grabbing);
+        grabSpeed = horizontalMove.CurrentBasicSpeed;
+        stone.SetSpeed(grabSpeed);
     }
 
     public void UnleashStone() {

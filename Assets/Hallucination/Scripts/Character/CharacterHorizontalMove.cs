@@ -1,21 +1,23 @@
+using System;
 using UnityEngine;
-using System.Collections;
 
 public class CharacterHorizontalMove : MonoBehaviour {
     CharacterStateController characterStateController;
     Rigidbody2D rb;
     [SerializeField] float normalSpeed = 5f;
-    public float CurrentBasicSpeed;
-    public Spring CurrentSpring;
-    public float WindBonusSpeed;
+    [SerializeField] float grabSpeed = 3f;
+    public float CurrentBasicSpeed { get; private set; }
+    [HideInInspector] public Spring CurrentSpring;
+    [HideInInspector] public float WindBonusSpeed;
     [SerializeField] LayerMask groundLayer;
 
     public void ResetBasicSpeed() => CurrentBasicSpeed = normalSpeed;
 
-    void Start() {
+    void Awake() {
         rb = GetComponent<Rigidbody2D>();
         characterStateController = GetComponent<CharacterStateController>();
         CurrentBasicSpeed = normalSpeed;
+        characterStateController.OnStateChanged += HandleStateChange;
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -32,7 +34,15 @@ public class CharacterHorizontalMove : MonoBehaviour {
         }
     }
 
-    void Update() {
+    void HandleStateChange(CharacterState state, bool added) {
+        if (characterStateController.HasState(CharacterState.Grabbing)) {
+            CurrentBasicSpeed = grabSpeed;
+            return;
+        }
+        CurrentBasicSpeed = normalSpeed;
+    }
+
+    void FixedUpdate() {
         if (
             !InputManager.Control.Character.HorizontalMove.enabled ||
             characterStateController.HasState(CharacterState.HorizontalSpringFlying)
@@ -47,5 +57,9 @@ public class CharacterHorizontalMove : MonoBehaviour {
         } else {
             characterStateController.AddState(CharacterState.Walking);
         }
+    }
+
+    void OnDestroy() {
+        characterStateController.OnStateChanged -= HandleStateChange;
     }
 }

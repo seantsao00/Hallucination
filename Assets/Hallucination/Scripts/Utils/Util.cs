@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Localization.Settings;
 
 public class Util {
     static public GameObject GetFairyObjects() {
@@ -54,5 +55,17 @@ public class Util {
         }
         canvasGroup.alpha = 1f;
         callback?.Invoke();
+    }
+
+    static public Language CurrentLanguage() {
+        int localeIndex = LocalizationSettings.AvailableLocales.Locales.IndexOf(LocalizationSettings.SelectedLocale);
+        switch (localeIndex) {
+            case (int)Language.English:
+                return Language.English;
+            case (int)Language.Chinese:
+                return Language.Chinese;
+            default:
+                return Language.English;
+        }
     }
 }

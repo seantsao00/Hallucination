@@ -22,6 +22,9 @@ public class LevelNavigator : MonoBehaviour {
             Instance = this;
             currentLevelIndex = Array.IndexOf(levels, startLevel);
             levelNames = levels.Select(level => level.gameObject.name).ToArray();
+            if (levelNames.Length != levelNames.Distinct().Count()) {
+                Debug.LogError("Level names must be unique.");
+            }
         }
     }
 

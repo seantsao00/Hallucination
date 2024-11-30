@@ -315,22 +315,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementAttributes:
-    NormalHorizontalSpeed: 5
-    JumpPower: 12
-    ClimbingSpeed: 5
-    GrabbingHorizontalSpeed: 3
-    AirHangTimeGravityMultiplier: 0.4
     AirHangTimeThresholdSpeed: 0.5
     StickOnWallFallingSpeed: 3
     MaxFallingSpeed: 16
   StoneWithinRange: {fileID: 0}
-  IsGrounded: 1
   IsStandOnClimbable: 0
   IsBodyOnClimbable: 0
   IsLedgeDetected: 0
   IsDead: 0
-  NormalGravityScale: 0
-  tipManager: {fileID: 0}
+  isFairy: 0
 --- !u!114 &6627739361679771361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +336,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c548ecb7bdb10f4486c91f8f36a0c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalSpeed: 5
+  CurrentBasicSpeed: 0
+  SpringBonusSpeed: 0
+  WindBonusSpeed: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &8280142412839437961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6855cbb1f372e4ebb3e79cab1c8209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabSpeed: 3
 --- !u!114 &210263903891469126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,3 +368,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a792e9d5919f41c4f99df4d825e0f8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BeingBlownGravityMultiplier: 0.4
+  AirHangingGravityMultiplier: 0.4

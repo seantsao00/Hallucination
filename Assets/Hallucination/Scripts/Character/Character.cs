@@ -13,43 +13,14 @@ public enum CharacterTypeEnum { None, Fairy, Bear };
 public class Character : MonoBehaviour {
     [Serializable]
     public class CharacterMovementAttributes {
-        [Header("HorizontalMovement")]
-        public float NormalHorizontalSpeed = 5f;
-
         [Header("Behavior")]
-        public float AirHangTimeThresholdSpeed = 0.5f;
+        public float AirHangTimeThresholdSpeed = 3f;
         public float StickOnWallFallingSpeed = 3f;
         public float MaxFallingSpeed = 16f;
-        [HideInInspector, NonSerialized] public float velocityEps = 1e-4f;
-    }
-
-    public class CharacterCurrentMovement {
-        private CharacterMovementAttributes attributes;
-
-        /// <summary>
-        /// The current horizontal movement speed applied to the character.
-        /// Adjusts based on character state (e.g., reduced speed when pulling an object).
-        /// </summary>
-        /// 
-        public float HorizontalSpeed;
-
-        public float SpringSpeed;
-
-
-        public CharacterCurrentMovement(CharacterMovementAttributes attributes) {
-            Init(attributes);
-        }
-        public void Init(CharacterMovementAttributes attributes) {
-            this.attributes = attributes;
-            SetNormal();
-        }
-        public void SetNormal() {
-            HorizontalSpeed = attributes.NormalHorizontalSpeed;
-        }
+        [HideInInspector, NonSerialized] public float velocityEps = 1e-3f;
     }
 
     public CharacterMovementAttributes MovementAttributes;
-    public CharacterCurrentMovement CurrentMovement;
 
     CharacterStateController characterStateController;
 
@@ -82,11 +53,6 @@ public class Character : MonoBehaviour {
 
     public bool isFairy;
 
-    float springFullSpeedDuration = 0.2f;
-    float springFullSpeed;
-    float springDuration = 0.4f;
-    float springTimeCounter;
-
     private void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;
         if (direction.x < 0) transform.rotation = Quaternion.Euler(angle.x, 180, angle.z);
@@ -95,7 +61,6 @@ public class Character : MonoBehaviour {
     }
 
     void Awake() {
-        CurrentMovement = new CharacterCurrentMovement(MovementAttributes);
         rb = GetComponent<Rigidbody2D>();
         characterStateController = GetComponent<CharacterStateController>();
         WorldSwitchManager.Instance.WorldSwitching.AddListener(StopMotion);
@@ -107,33 +72,20 @@ public class Character : MonoBehaviour {
         WorldSwitchManager.Instance.WorldSwitched.RemoveListener(StopMotion);
     }
 
-    public void LaunchSpring(float speed) {
-        springTimeCounter = 0;
-        springFullSpeed = speed;
-        CurrentMovement.SpringSpeed = speed;
-    }
-
     void Update() {
-        if (springTimeCounter > springFullSpeedDuration) {
-            if (springTimeCounter > springDuration) CurrentMovement.SpringSpeed = 0;
-            else CurrentMovement.SpringSpeed -= 
-                Mathf.Sign(CurrentMovement.SpringSpeed)
-                * springFullSpeed
-                / (springDuration - springFullSpeedDuration)
-                * Time.deltaTime;
-        }
-        springTimeCounter += Time.deltaTime;
         if (!characterStateController.HasState(CharacterState.Grabbing)) {
             float direction = InputManager.Instance.CharacterHorizontalMove;
             if (direction != 0) FacingDirection = new(direction, 0);
         }
         if (rb.velocity.y < -MovementAttributes.velocityEps) {
+            characterStateController.RemoveState(CharacterState.PreReleaseJumping);
             if (Mathf.Abs(rb.velocity.y) < MovementAttributes.AirHangTimeThresholdSpeed) {
                 characterStateController.AddState(CharacterState.AirHanging);
             } else {
                 characterStateController.RemoveState(CharacterState.AirHanging);
-                characterStateController.RemoveState(CharacterState.PreReleaseJumping);
             }
+        } else {
+            characterStateController.RemoveState(CharacterState.AirHanging);
         }
         if (rb.velocity.y <= -MovementAttributes.MaxFallingSpeed) {
             rb.velocity = new Vector2(rb.velocity.x, -MovementAttributes.MaxFallingSpeed);

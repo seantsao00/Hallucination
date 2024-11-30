@@ -143,5 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12bd50f78b09c64fa18c9a5a3fced6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalLaunchSpeed: 30
+  verticalLaunchSpeed: 20
   horizontalLaunchSpeed: -20
+  springFullSpeedDuration: 0.2
+  springFadeDuration: 0.4

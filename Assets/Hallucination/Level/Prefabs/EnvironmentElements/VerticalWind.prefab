@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1380519302988120850}
   - component: {fileID: 4835353528905458605}
   m_Layer: 0
-  m_Name: WindMiddle
+  m_Name: MainPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5590,7 +5590,7 @@ GameObject:
   - component: {fileID: 1448380073868012484}
   - component: {fileID: 218542677170858863}
   m_Layer: 0
-  m_Name: WindTopDamp
+  m_Name: TopDamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5966,7 +5966,7 @@ GameObject:
   - component: {fileID: 3958377692589534557}
   - component: {fileID: 1164908306602422965}
   m_Layer: 0
-  m_Name: WindBottomDamp
+  m_Name: BottomDamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

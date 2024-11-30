@@ -29,6 +29,7 @@ public class ButtonTrigger : MonoBehaviour {
             if (objectsOnButtonCount == 0) {
                 foreach (var controlled in controlledList) {
                     controlled.Activate();
+                    GetComponent<Animator>().SetBool("Trigger", true);
                 }
             }
             objectsOnButtonCount++;
@@ -41,6 +42,7 @@ public class ButtonTrigger : MonoBehaviour {
             if (objectsOnButtonCount == 0) {
                 foreach (var controlled in controlledList) {
                     controlled.Deactivate();
+                    GetComponent<Animator>().SetBool("Trigger", false);
                 }
             }
             Assert.IsFalse(objectsOnButtonCount < 0);

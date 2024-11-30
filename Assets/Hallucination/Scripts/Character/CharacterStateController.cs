@@ -20,7 +20,7 @@ public class CharacterStateController : MonoBehaviour {
     [Header("Gravity")]
     [SerializeField] float beingBlownGravityMultiplier = 0.4f;
     [SerializeField] float airHangingGravityMultiplier = 0.4f;
-    [SerializeField] float springFlyingGravityMultiplier = 0.7f;
+    [SerializeField] float springFlyingGravityMultiplier = 1f;
 
     HashSet<CharacterState> activeStates = new HashSet<CharacterState>();
 

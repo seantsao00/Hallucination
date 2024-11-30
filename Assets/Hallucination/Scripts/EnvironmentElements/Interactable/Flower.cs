@@ -4,21 +4,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Timeline;
 
-public class Flower : InteractableObjectBase {
-    static bool isAnyFlowerActivated = false;
+public class Flower : MonoBehaviour {
     bool isPlayerInRange;
     public CharacterNeighborDetector detector;
     List<GameObject> duplicatedObjects;
     public float activateDuration = 3f;
-    override public void Interact(InputAction.CallbackContext context) {
-        if (detector != null && !isAnyFlowerActivated && isPlayerInRange) {
-            print("activated");
-            StartCoroutine(HandleActivation());
-        }
-    }
+    bool isFlowerActivated = false;
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Player")) {
+        if (other.CompareTag("Player") && !isFlowerActivated) {
+            
+            print("entered");
             isPlayerInRange = true;
+            StartCoroutine(HandleActivation());
         }
     }
 
@@ -29,13 +26,13 @@ public class Flower : InteractableObjectBase {
     }
 
     IEnumerator HandleActivation() {
-        isAnyFlowerActivated = true;
+        isFlowerActivated = true;
         duplicatedObjects = new();
         WorldSwitchManager.Instance.Lock(gameObject);
         DuplicateNeighborObjects();
         yield return new WaitForSecondsRealtime(activateDuration);
         DestroyNeighborObjects();
-        isAnyFlowerActivated = false;
+        isFlowerActivated = false;
         duplicatedObjects = null;
         WorldSwitchManager.Instance.Unlock(gameObject);
     }
@@ -55,13 +52,11 @@ public class Flower : InteractableObjectBase {
         }
     }
     void DestroyNeighborObjects() {
+        print(duplicatedObjects);
         foreach (var duplicatedObject in duplicatedObjects) {
             Destroy(duplicatedObject);
         }
     }
 
-    void Update() {
-        if (!isAnyFlowerActivated && isPlayerInRange) TipManager.Instance.ShowInteractableObjectTip(gameObject);
-        else TipManager.Instance.CloseInteractableObjectTip(gameObject);
-    }
+    
 }

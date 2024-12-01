@@ -7,6 +7,7 @@ TagManager:
   - DeathZone
   - Stone
   - Substitute
+  - FairyWorldProjectionObject
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Climbable
   - AheadGround
   - BehindGround
-  - 
+  - FairyProjection
   - 
   - 
   - 

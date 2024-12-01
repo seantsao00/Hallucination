@@ -6,9 +6,10 @@ using UnityEngine.Timeline;
 
 public class Flower : MonoBehaviour {
     bool isPlayerInRange;
-    public CharacterNeighborDetector detector;
+    public CharacterProjectionDetector detector;
     List<GameObject> duplicatedObjects;
     public float activateDuration = 3f;
+    public LayerMask excludeLayerMask;
     bool isFlowerActivated = false;
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player") && !isFlowerActivated) {
@@ -29,29 +30,33 @@ public class Flower : MonoBehaviour {
         isFlowerActivated = true;
         duplicatedObjects = new();
         WorldSwitchManager.Instance.Lock(gameObject);
-        DuplicateNeighborObjects();
+        DuplicateProjectionObjects();
         yield return new WaitForSecondsRealtime(activateDuration);
-        DestroyNeighborObjects();
+        DestroyProjectionObjects();
         isFlowerActivated = false;
         duplicatedObjects = null;
         WorldSwitchManager.Instance.Unlock(gameObject);
     }
     
-    void DuplicateNeighborObjects() {
-        GameObject[] neighbors = detector.NeighborObjects.ToArray();
-        foreach (var neighbor in neighbors) {
-            Vector2 relativePosition = detector.GetRelativePosition(neighbor);
+    void DuplicateProjectionObjects() {
+        GameObject[] projections = detector.ProjectionObjects.ToArray();
+        foreach (var projection in projections) {
+            Vector2 relativePosition = detector.GetRelativePosition(projection);
             Vector2 newPosition = (Vector2)gameObject.transform.position + relativePosition;
             Transform parent = gameObject.transform.parent;
-            GameObject duplicatedObject = Instantiate(neighbor, newPosition, neighbor.transform.rotation, parent);
+            GameObject duplicatedObject = Instantiate(projection, newPosition, projection.transform.rotation, parent);
             duplicatedObjects.Add(duplicatedObject);
+            RecoverCollisionLayer(duplicatedObject);
+            duplicatedObject.name = projection.name + "_Copy";
 
-            duplicatedObject.name = neighbor.name + "_Copy";
-
-            Debug.Log($"Duplicated {neighbor.name} to new position {newPosition}");
+            Debug.Log($"Duplicated {projection.name} to new position {newPosition}");
         }
     }
-    void DestroyNeighborObjects() {
+    void RecoverCollisionLayer(GameObject obj) {
+        Collider2D collider = obj.GetComponent<Collider2D>();
+        collider.excludeLayers = excludeLayerMask;
+    }
+    void DestroyProjectionObjects() {
         print(duplicatedObjects);
         foreach (var duplicatedObject in duplicatedObjects) {
             Destroy(duplicatedObject);

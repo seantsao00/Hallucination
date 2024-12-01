@@ -37,6 +37,8 @@ public class Character : MonoBehaviour {
     private Rigidbody2D rb;
     [HideInInspector] public bool IsStandOnClimbable;
     [HideInInspector] public bool IsBodyOnClimbable;
+    [HideInInspector] public bool IsFootOnGround;
+    [HideInInspector] public bool IsBellyInGround;
     [HideInInspector] public bool IsLedgeDetected;
 
     [HideInInspector] public bool IsDead = false;

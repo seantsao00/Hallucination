@@ -6,7 +6,7 @@ public class CharacterLedgeClimb : MonoBehaviour {
     Vector2 destination;
     Character character;
     Rigidbody2D rb;
-    float eps = 1e-4f;
+    float eps = 1e-3f;
     bool isClimbingLedge;
     CharacterStateController characterStateController;
 
@@ -21,6 +21,7 @@ public class CharacterLedgeClimb : MonoBehaviour {
         if (isClimbingLedge) return;
         if (Mathf.Abs(rb.velocity.y) > eps) return;
         if (!characterStateController.HasState(CharacterState.StandingOnGround)) return;
+        if (characterStateController.HasState(CharacterState.Climbing)) return;
         if (character.IsLedgeDetected == false) return;
         float direction = InputManager.Instance.CharacterHorizontalMove;
         if (direction != 0) LedgeClimb();

@@ -58,7 +58,8 @@ public class Util {
     }
 
     static public Language CurrentLanguage() {
-        int localeIndex = LocalizationSettings.AvailableLocales.Locales.IndexOf(LocalizationSettings.SelectedLocale);
+        int localeIndex = PlayerPrefs.GetInt("Locale",
+            LocalizationSettings.AvailableLocales.Locales.IndexOf(LocalizationSettings.SelectedLocale));
         switch (localeIndex) {
             case (int)Language.English:
                 return Language.English;

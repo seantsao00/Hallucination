@@ -41,6 +41,8 @@ public class LocaleSelector : MonoBehaviour {
         isChangingLocale = true;
         yield return LocalizationSettings.InitializationOperation;
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localeIndex];
+        PlayerPrefs.SetString("Locale", LocalizationSettings.SelectedLocale.Identifier.Code);
+        PlayerPrefs.Save();
         isChangingLocale = false;
     }
 }

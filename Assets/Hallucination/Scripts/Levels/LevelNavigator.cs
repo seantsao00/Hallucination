@@ -3,28 +3,51 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(LevelNavigator))]
+public class LevelNavigatorInspector : Editor {
+    int startLevelIndex;
+    public override void OnInspectorGUI() {
+        startLevelIndex = PlayerPrefs.GetInt("StartLevelIndex", 0);
+        LevelNavigator levelNavigator = (LevelNavigator)target;
+        int newStartLevelIndex = EditorGUILayout.IntField("Start Level Index", startLevelIndex);
+        if (newStartLevelIndex != startLevelIndex) {
+            startLevelIndex = newStartLevelIndex;
+            LevelNavigator.SetStartLevelIndex(startLevelIndex);
+        }
+        base.OnInspectorGUI();
+    }
+}
+#endif
 
 public class LevelNavigator : MonoBehaviour {
     public static LevelNavigator Instance { get; private set; }
-    [SerializeField] LevelController startLevel;
     [SerializeField] LevelController[] levels;
-    string[] levelNames;
     int currentLevelIndex;
     bool firstLoad = true;
 
     public LevelController CurrentLevel => levels[currentLevelIndex];
 
+    public static void SetStartLevelIndex(int levelIndex) {
+        PlayerPrefs.SetInt("StartLevelIndex", levelIndex);
+    }
+
     void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(gameObject);
-        } else {
-            DontDestroyOnLoad(gameObject);
-            Instance = this;
-            currentLevelIndex = Array.IndexOf(levels, startLevel);
-            levelNames = levels.Select(level => level.gameObject.name).ToArray();
-            if (levelNames.Length != levelNames.Distinct().Count()) {
-                Debug.LogError("Level names must be unique.");
-            }
+            Debug.LogWarning($"{nameof(LevelNavigator)}: " +
+            $"Duplicate instance detected and removed. Only one instance of {nameof(LevelNavigator)} is allowed.");
+            Destroy(Instance);
+            return;
+        }
+        Instance = this;
+        currentLevelIndex = PlayerPrefs.GetInt("StartLevelIndex", 0);
+        if (currentLevelIndex >= levels.Length) {
+            Debug.LogWarning("currentLevelIndex is out of range. Set to last level.");
+            currentLevelIndex = levels.Length - 1;
+            PlayerPrefs.SetInt("StartLevelIndex", currentLevelIndex);
         }
     }
 
@@ -43,6 +66,7 @@ public class LevelNavigator : MonoBehaviour {
 
     public void CompleteCurrentLevel() {
         currentLevelIndex += 1;
+        PlayerPrefs.SetInt("StartLevelIndex", currentLevelIndex);
         if (currentLevelIndex == levels.Length) {
             Debug.LogWarning("The last level completed");
         } else {
@@ -52,15 +76,6 @@ public class LevelNavigator : MonoBehaviour {
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "MainMenu") return;
-        var newLevels = FindObjectsOfType<LevelController>();
-        Array.Sort(newLevels, (a, b) => {
-            int indexA = Array.FindIndex(levelNames, name => name == a.gameObject.name);
-            int indexB = Array.FindIndex(levelNames, name => name == b.gameObject.name);
-            return indexA.CompareTo(indexB);
-        });
-
-        levels = newLevels;
         if (firstLoad) {
             firstLoad = false;
             if (CurrentLevel.CanBeStartLevel) {

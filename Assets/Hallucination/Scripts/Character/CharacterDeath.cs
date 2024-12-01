@@ -24,6 +24,8 @@ public class CharacterDeath : MonoBehaviour {
         //     audioSource.PlayOneShot(deathSound);
         // }
 
+        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
         if (deathParticles != null) {
             Instantiate(deathParticles, transform.position, Quaternion.identity).Play();
         }

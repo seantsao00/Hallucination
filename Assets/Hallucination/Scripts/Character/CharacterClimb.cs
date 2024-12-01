@@ -21,8 +21,6 @@ public class CharacterClimb : MonoBehaviour {
             if (direction < 0 && character.IsStandOnClimbable) StartClimb();
         }
         if (characterStateController.HasState(CharacterState.Climbing)) {
-            // characterStateController.LogCurrentStates();
-            Debug.Log(characterStateController.HasState(CharacterState.StandingOnGround));
             if (characterStateController.HasState(CharacterState.StandingOnGround)) {
                 if (direction > 0 && !character.IsBodyOnClimbable) BackToNormal();
                 if (direction < 0 && !character.IsStandOnClimbable) BackToNormal();

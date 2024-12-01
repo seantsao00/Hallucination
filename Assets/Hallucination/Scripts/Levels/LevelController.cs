@@ -79,7 +79,7 @@ public class LevelController : MonoBehaviour {
 
     void LoadCheckpointData(CheckpointData checkpointData) {
         if (checkpointData.WorldToSwitch != CharacterTypeEnum.None)
-            WorldSwitchManager.Instance.ForceSwitchToWorldWithFade(checkpointData.WorldToSwitch);
+            WorldSwitchManager.Instance.SwitchToWorld(checkpointData.WorldToSwitch);
         if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.Lock(gameObject);
         if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.Unlock(gameObject);
         if (checkpointData.FairySpawnPoint != null) {

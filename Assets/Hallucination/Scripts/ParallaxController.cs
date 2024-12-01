@@ -43,14 +43,10 @@ public class ParallaxController : MonoBehaviour {
     }
 
     private void LateUpdate() {
-        // if (!gameObject.activeInHierarchy) return;
-        // Calculate X and Y distances
         if (camPrevPos != null && camPrevPos != Vector3.zero) {
-            Debug.Log($"camPrevPos: ({camPrevPos.x}, {camPrevPos.y})");
             distanceX = cam.position.x - camPrevPos.x;
             distanceY = cam.position.y - camPrevPos.y;
         } else {
-            Debug.Log("camPrevPos is null");
             distanceX = 0;
             distanceY = 0;
         }
@@ -61,9 +57,7 @@ public class ParallaxController : MonoBehaviour {
             camPrevPos = cam.position;
         }
 
-        // Update the position of the parallax container (optional, keeps the layers aligned with the camera)
         transform.position = new Vector3(cam.position.x, transform.position.y + distanceY * 0.85f, transform.position.z);
-        // Debug.Log($"Cam: ({cam.position.x}, {cam.position.y}), Parallax: ({transform.position.x}, {transform.position.y})");
 
         for (int i = 0; i < backgrounds.Length; i++) {
             float speed = backSpeed[i] * parallaxSpeed;

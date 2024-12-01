@@ -25,7 +25,6 @@ public class CharacterHorizontalMove : MonoBehaviour {
             foreach (ContactPoint2D contact in collision.contacts) {
                 float angle = Vector2.Angle(contact.normal, Vector2.up);
                 if (CurrentSpring != null && Mathf.Approximately(angle, 90)) {
-                    // Debug.Log("side hit");
                     CurrentSpring.StopSpringHorizontalSpeed();
                     CurrentSpring = null;
                     break;

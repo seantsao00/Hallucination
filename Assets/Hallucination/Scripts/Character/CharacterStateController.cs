@@ -63,7 +63,6 @@ public class CharacterStateController : MonoBehaviour {
         UpdateInput();
         UpdateGravity();
         UpdateAnimator();
-        // Debug.Log($"{CharacterBusy}, states: {string.Join(", ", ActiveStates.ToArray())}");
         if (CharacterBusy) {
             WorldSwitchManager.Instance.Lock(gameObject);
         } else {
@@ -202,10 +201,10 @@ public class CharacterStateController : MonoBehaviour {
     }
 
     public void LogCurrentStates() {
-        Debug.Log(
-            $"Current {typeof(CharacterState)}:" +
-            string.Join(", ", ActiveStates)
-        );
+        // Debug.Log(
+        //     $"Current {typeof(CharacterState)}:" +
+        //     string.Join(", ", ActiveStates)
+        // )
     }
 }
 

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using System.Collections;
 
 public enum CharacterTypeEnum { None, Fairy, Bear };
 
@@ -40,8 +39,6 @@ public class Character : MonoBehaviour {
     [HideInInspector] public bool IsFootOnGround;
     [HideInInspector] public bool IsBellyInGround;
     [HideInInspector] public bool IsLedgeDetected;
-
-    [HideInInspector] public bool IsDead = false;
 
     public bool isFairy;
 

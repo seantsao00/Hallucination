@@ -13,7 +13,8 @@ public enum CharacterState {
     BeingBlown,
     LedgeClimbing,
     StandingOnGround,
-    AirHanging
+    AirHanging,
+    Dead,
 }
 
 public class CharacterStateController : MonoBehaviour {

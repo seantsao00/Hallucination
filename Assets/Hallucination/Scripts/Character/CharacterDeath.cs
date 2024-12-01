@@ -1,47 +1,34 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharacterDeath : MonoBehaviour {
-    // public AudioClip deathSound;
     public ParticleSystem deathParticles;
-    public float deathDelay = 2.0f;
-    bool isDead = false;
-    AudioSource audioSource;
-
-    void Start() {
-        // audioSource = GetComponent<AudioSource>();
-    }
 
     // Call this method when the character takes damage
     public void TakeDamage() {
-        if (!isDead) Die();
+        if (GetComponent<CharacterStateController>().HasState(CharacterState.Dead)) return;
+
+        Die();
     }
 
     void Die() {
-        isDead = true;
-
-        // Optional: Play death sound
-        // if (deathSound != null) {
-        //     audioSource.PlayOneShot(deathSound);
-        // }
-
-        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-
-        if (deathParticles != null) {
-            Instantiate(deathParticles, transform.position, Quaternion.identity).Play();
-        }
+        GetComponent<CharacterStateController>().AddState(CharacterState.Dead);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<Character>().IsDead = true;
 
-        Invoke(nameof(ResetScene), deathDelay);
+        Instantiate(deathParticles, transform.position, Quaternion.identity).Play();
+
+        StartCoroutine(DelayedRestartLevel());
     }
 
-    void ResetScene() {
+    IEnumerator DelayedRestartLevel() {
+        yield return new WaitForSeconds(0.5f);
         LevelNavigator.Instance.RestartCurrentLevel();
     }
 
     // Detect when the character falls into the DeathZone
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("DeathZone")) {
+        if (other.CompareTag("DeathZone")) {
             TakeDamage();
         }
     }

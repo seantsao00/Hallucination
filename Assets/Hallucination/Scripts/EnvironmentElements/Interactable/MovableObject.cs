@@ -90,7 +90,7 @@ public class MovableObject : MonoBehaviour, IButtonControlled, ISwitchControlled
     }
 
     bool CanBeCarried(Collider2D collider) {
-        return collider.CompareTag("Player") || collider.CompareTag("Stone");
+        return collider.CompareTag("Player") || collider.CompareTag("Stone") || collider.CompareTag("Substitute");
     }
 
     void OnTriggerEnter2D(Collider2D collider) {

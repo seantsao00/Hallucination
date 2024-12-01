@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DeathZone
   - Stone
+  - Substitute
   layers:
   - Default
   - TransparentFX

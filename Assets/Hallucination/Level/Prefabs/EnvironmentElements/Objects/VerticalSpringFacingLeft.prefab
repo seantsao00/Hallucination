@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7836102187008629338}
   m_Layer: 0
   m_Name: VerticalSpringFacingLeft
-  m_TagString: Untagged
+  m_TagString: FairyWorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,7 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12bd50f78b09c64fa18c9a5a3fced6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalLaunchSpeed: 20
-  horizontalLaunchSpeed: -20
-  springFullSpeedDuration: 0.2
-  springFadeDuration: 0.4
+  verticalSpeed: 0
+  horizontalSpeed: 0
+  springDuration: 0.5

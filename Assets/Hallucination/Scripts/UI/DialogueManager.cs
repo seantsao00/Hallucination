@@ -21,6 +21,7 @@ public class DialogueManager : MonoBehaviour {
     public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
     public static DialogueManager Instance { get; private set; }
     bool isTyping = false;
+    bool isLoaded = false;
     string currentSentence;
 
     Action callbackAfterDialogue;
@@ -84,14 +85,18 @@ public class DialogueManager : MonoBehaviour {
         if (dialogueData == null || dialogueData.dialogues == null) {
             Debug.LogError("Failed to load dialogues from JSON file.");
         }
+        isLoaded = true;
     }
 
     // Start a specific dialogue by its name
-    public void StartDialogue(string dialogueName, bool pauseGame, Action callback = null) {
+    public async void StartDialogue(string dialogueName, bool pauseGame, Action callback = null) {
+        while (!isLoaded) await Task.Yield();
+
         gameObject.SetActive(true);
         canvasGroup.alpha = 1;
         callbackAfterDialogue = callback;
         if (pauseGame) GameStateManager.Instance.CurrentGamePlayState = GamePlayState.DialogueActive;
+        
         if (dialogueData != null) {
             dialogueBox.SetActive(true);  // Show the dialogue box when dialogue starts
             // Find the correct dialogue by name
@@ -123,6 +128,8 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
+        
+        Debug.Log(dialogueLines.Count);
         // If dialogue is still typing and the game is paused, show the full sentence immediately
         if (isTyping && GameStateManager.Instance.CurrentGamePlayState == GamePlayState.DialogueActive) {
             StopAllCoroutines();
@@ -132,7 +139,6 @@ public class DialogueManager : MonoBehaviour {
             isTyping = false;
             return;
         }
-
         // If no more dialogue lines, end dialogue
         if (dialogueLines.Count == 0) {
             EndDialogue();

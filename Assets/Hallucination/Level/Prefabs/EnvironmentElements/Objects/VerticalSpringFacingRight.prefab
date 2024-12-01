@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7836102187008629338}
   m_Layer: 0
   m_Name: VerticalSpringFacingRight
-  m_TagString: Untagged
+  m_TagString: FairyWorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

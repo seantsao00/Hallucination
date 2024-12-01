@@ -98,6 +98,7 @@ public class LevelController : MonoBehaviour {
     }
 
     IEnumerator WaitForWorldSwitchingAndStartDialogue(string dialogueName, UnityEvent dialogueEndedEvent, bool pauseGame) {
+        Debug.Log("Start dialogue: " + dialogueName + " Pause: " + pauseGame);
         yield return new WaitUntil(
             () => GameStateManager.Instance.CurrentGamePlayState != GamePlayState.SwitchingWorld
         );

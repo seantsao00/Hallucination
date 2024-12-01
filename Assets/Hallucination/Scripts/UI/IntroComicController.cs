@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class IntroComicController : MonoBehaviour {
     [SerializeField] CanvasGroup NextTip;
@@ -11,6 +12,7 @@ public class IntroComicController : MonoBehaviour {
     [SerializeField] string videoName = "intro_converted.mp4";
     CanvasGroup canvasGroup;
     VideoPlayer videoPlayer;
+    AsyncOperation loadingOperation;
 
     void Awake() {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -25,6 +27,13 @@ public class IntroComicController : MonoBehaviour {
         GameStateManager.Init();
         InputManager.Init();
         GameStateManager.Instance.CurrentGameState = GameState.Animation;
+        StartCoroutine(StartLoadLevels());
+    }
+
+    IEnumerator StartLoadLevels() {
+        loadingOperation = SceneManager.LoadSceneAsync(levelSceneName);
+        loadingOperation.allowSceneActivation = false;
+        yield return null;
     }
 
     void ComicEndHandler(VideoPlayer vp) {
@@ -34,7 +43,7 @@ public class IntroComicController : MonoBehaviour {
 
     void ConfirmAction(InputAction.CallbackContext ctx) {
         loadingScreen.ShowLoadingScreen();
-        SceneManager.LoadSceneAsync(levelSceneName);
+        loadingOperation.allowSceneActivation = true;
     }
 
     void OnDestroy() {

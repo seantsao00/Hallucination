@@ -60,8 +60,10 @@ public class LevelNavigator : MonoBehaviour {
     }
 
     IEnumerator PerformSceneRestart() {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        asyncLoad.allowSceneActivation = false;
         yield return Util.FadeOut(1f, WorldSwitchManager.Instance.FadingMask);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        asyncLoad.allowSceneActivation = true;
     }
 
     public void CompleteCurrentLevel() {

@@ -1057,7 +1057,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NextTip: {fileID: 383280031}
-  nextSceneName: SampleScene
   loadingScreen: {fileID: 1468691923}
   videoName: Intro_converted.mp4
 --- !u!225 &1376896361

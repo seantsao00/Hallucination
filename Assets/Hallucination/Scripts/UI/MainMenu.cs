@@ -1,19 +1,19 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // For SceneManager
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
-    public SceneFader sceneFader;  // Reference to the SceneFader script
+    public SceneFader sceneFader;
+    AsyncOperation loadingOperation;
+    void Start() {
+        loadingOperation = SceneManager.LoadSceneAsync("Intro");
+        loadingOperation.allowSceneActivation = false;
+    }
 
     public void PlayGame() {
-        // Use the SceneFader to fade and load the game scene
-        // sceneFader.FadeOutAndSwitchScene("SampleScene");
-        SceneManager.LoadSceneAsync("Intro");
+        loadingOperation.allowSceneActivation = true;
     }
 
     public void QuitGame() {
-        // Exits the application
         Application.Quit();
     }
 }
-
-

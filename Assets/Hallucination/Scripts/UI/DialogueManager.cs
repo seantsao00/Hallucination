@@ -87,11 +87,11 @@ public class DialogueManager : MonoBehaviour {
     }
 
     // Start a specific dialogue by its name
-    public void StartDialogue(string dialogueName, Action callback = null) {
+    public void StartDialogue(string dialogueName, bool pauseGame, Action callback = null) {
         gameObject.SetActive(true);
         canvasGroup.alpha = 1;
         callbackAfterDialogue = callback;
-        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.DialogueActive;
+        if (pauseGame) GameStateManager.Instance.CurrentGamePlayState = GamePlayState.DialogueActive;
         if (dialogueData != null) {
             dialogueBox.SetActive(true);  // Show the dialogue box when dialogue starts
             // Find the correct dialogue by name
@@ -123,8 +123,8 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
-        // If dialogue is still typing, show the full sentence immediately
-        if (isTyping) {
+        // If dialogue is still typing and the game is paused, show the full sentence immediately
+        if (isTyping && GameStateManager.Instance.CurrentGamePlayState == GamePlayState.DialogueActive) {
             StopAllCoroutines();
             dialogueText.text = currentSentence;
             TMP_TextInfo textInfo = dialogueText.textInfo;

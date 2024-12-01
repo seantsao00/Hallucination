@@ -21,10 +21,10 @@ public class CharacterClimb : MonoBehaviour {
             if (direction < 0 && character.IsStandOnClimbable) StartClimb();
         }
         if (characterStateController.HasState(CharacterState.Climbing)) {
-            if (characterStateController.HasState(CharacterState.StandingOnGround)) {
+            if (character.IsFootOnGround && ! character.IsBellyInGround) {
                 if (direction > 0 && !character.IsBodyOnClimbable) BackToNormal();
                 if (direction < 0 && !character.IsStandOnClimbable) BackToNormal();
-                if (direction == 0 && characterStateController.HasState(CharacterState.StandingOnGround)) BackToNormal();
+                if (direction == 0) BackToNormal();
             }
             if (!character.IsBodyOnClimbable && !character.IsStandOnClimbable) BackToNormal();
         }

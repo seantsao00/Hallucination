@@ -201,10 +201,10 @@ public class CharacterStateController : MonoBehaviour {
     }
 
     public void LogCurrentStates() {
-        // Debug.Log(
-        //     $"Current {typeof(CharacterState)}:" +
-        //     string.Join(", ", ActiveStates)
-        // )
+        Debug.Log(
+            $"Current {typeof(CharacterState)}:" +
+            string.Join(", ", ActiveStates)
+        );
     }
 }
 

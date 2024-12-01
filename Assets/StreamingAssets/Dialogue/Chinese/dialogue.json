@@ -5,20 +5,58 @@
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "I shall not leave the fairy alone..."
+                    "sentence": "I shall not leave you alone..."
                 }
             ]
         },
         {
-            "name": "Start",
+            "name": "Level 1 Start",
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "Why are you so afraid?"
+                    "sentence": "Why do you avoid me like this? What happened to you?"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "Have you forgotten me?"
+                    "sentence": "I don't understand... you were fine yesterday. Why have you changed?"
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "... I can't find the words. It's like you're a stranger now."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "What's happening? What should I do to help? Why are you so different now?"
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I really want to understand, but it's like there's a wall between us. I can't grasp what you're feeling."
+                }
+            ]
+        },
+        {
+            "name": "level 1 Pass",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "Where are you going? It's like you're slipping further away from me..."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "But I can't just leave you like this. Maybe... Maybe if I follow, I can help."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "Even if I don't understand, I'll stay by your side, and try."
+                }
+            ]
+        },
+        {
+            "name": "Level 2 Start",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "Where are you going...?"
                 },
                 {
                     "speaker": "Bear",
@@ -26,16 +64,107 @@
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I really want to understand, but I just can't grasp how you feel..."
+                    "sentence": "It looks like you're trying to leave... but stuck here."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "Maybe if I get you out, things will go back to the way they were."
                 }
             ]
         },
         {
-            "name": "Fairy Gone",
+            "name": "Level 3 Pursue",
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "Seems like the fairy is gone. I should hurry up so I won't lost it!"
+                    "sentence": "Why do you keep running away?"
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "What is it you're so afraid of?"
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I'm trying to help... trying to fix you."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I don't know what you're going through, but I want to understand."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I’m doing this for you. This is for your own good."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "Please... I can't imagine a world without you..."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "拜託你別演了。"
+                }
+            ]
+        },
+        {
+            "name": "Level 3 Comprehend",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "I think... maybe I need to try harder to understand you. I can't just keep assuming I know what's best."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I need to accept that you're not the same as you were. You've changed... and maybe I have to accept that."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I shouldn't try to force you to return to what you once were... or judge you for what you've become."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "Instead, I need to understand you. I need to accept you."
+                }
+            ]
+        },
+        {
+            "name": "Level 4 Start",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "Oh... my... What a world you see... How strange it all is..."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I can't fully comprehend it yet, but now... I understand more. I see more of what you're going through."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I'll stay with you, no matter how strange this place looks. I'm not leaving."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "Let's keep moving forward. Together. I'll help you however I can."
+                }
+            ]
+        },
+        {
+            "name": "Level 4 Complete",
+            "lines": [
+                {
+                    "speaker": "Bear",
+                    "sentence": "Now I can truly comprehend... I finally understand you."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I know I can't truly know what your feeling, but... now, I can embrace it."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I won't try to change you. I won't force you to be anything you're not. I'll just be here for you."
+                },
+                {
+                    "speaker": "Bear",
+                    "sentence": "I'll walk with you... Together, we'll find our way."
                 }
             ]
         }

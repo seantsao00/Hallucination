@@ -3,6 +3,9 @@
 > [!NOTE]
 > The characters in the story have no gender, so we use "they" as their pronoun in the story.
 
+> [!NOTE]
+> The bear and the fairy are not lovers.
+
 ## Story
 ### Story Overview
 

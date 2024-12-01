@@ -16,7 +16,7 @@ public class ParallaxController : MonoBehaviour {
 
     void Start() {
         cam = Camera.main.transform;
-        camPrevPos = cam.position;
+        // camPrevPos = cam.position;
 
         int backCount = transform.childCount;
         mat = new Material[backCount];
@@ -43,14 +43,27 @@ public class ParallaxController : MonoBehaviour {
     }
 
     private void LateUpdate() {
+        // if (!gameObject.activeInHierarchy) return;
         // Calculate X and Y distances
-        distanceX = cam.position.x - camPrevPos.x;
-        distanceY = cam.position.y - camPrevPos.y;
-        camPrevPos = cam.position;
+        if (camPrevPos != null && camPrevPos != Vector3.zero) {
+            Debug.Log($"camPrevPos: ({camPrevPos.x}, {camPrevPos.y})");
+            distanceX = cam.position.x - camPrevPos.x;
+            distanceY = cam.position.y - camPrevPos.y;
+        } else {
+            Debug.Log("camPrevPos is null");
+            distanceX = 0;
+            distanceY = 0;
+        }
+        if ((transform.parent.name == "FairyWorld"
+                && WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Fairy)
+            || (transform.parent.name == "BearWorld"
+                && WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Bear)) {
+            camPrevPos = cam.position;
+        }
 
         // Update the position of the parallax container (optional, keeps the layers aligned with the camera)
-        transform.position = new Vector3(cam.position.x, transform.position.y + distanceY * 0.85f , transform.position.z);
-        // transform.position = new Vector3(cam.position.x, 
+        transform.position = new Vector3(cam.position.x, transform.position.y + distanceY * 0.85f, transform.position.z);
+        // Debug.Log($"Cam: ({cam.position.x}, {cam.position.y}), Parallax: ({transform.position.x}, {transform.position.y})");
 
         for (int i = 0; i < backgrounds.Length; i++) {
             float speed = backSpeed[i] * parallaxSpeed;

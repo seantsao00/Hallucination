@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.EventSystems;
+using System.Xml.Serialization;
 
 public enum Language {
     English,
@@ -16,15 +17,16 @@ public class LocaleSelector : MonoBehaviour {
     void Awake() {
         gameObject.SetActive(false);
     }
-
     void OnEnable() {
         switch (Util.CurrentLanguage()) {
             case Language.English:
                 EventSystem.current.SetSelectedGameObject(EnglishButton);
                 break;
             case Language.Chinese:
+            default:
                 EventSystem.current.SetSelectedGameObject(ChineseButton);
                 break;
+                
         }
     }
     
@@ -38,11 +40,20 @@ public class LocaleSelector : MonoBehaviour {
     }
 
     IEnumerator ChangeLocale(int localeIndex) {
+        Debug.Log("Changing Locale");
         isChangingLocale = true;
-        yield return LocalizationSettings.InitializationOperation;
+
+        while (!LocalizationSettings.InitializationOperation.IsDone) {
+            yield return null;
+        }
+
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localeIndex];
+
         PlayerPrefs.SetString("Locale", LocalizationSettings.SelectedLocale.Identifier.Code);
         PlayerPrefs.Save();
+
         isChangingLocale = false;
     }
+
+    
 }

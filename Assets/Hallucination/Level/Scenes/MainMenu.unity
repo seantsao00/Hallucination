@@ -709,9 +709,9 @@ MonoBehaviour:
   m_ScrollWheelAction: {fileID: 0}
   m_TrackedDevicePositionAction: {fileID: 8766433641449135901, guid: 2cf8ae5b3b972784782d874859ff30c6, type: 3}
   m_TrackedDeviceOrientationAction: {fileID: -2285698445907070431, guid: 2cf8ae5b3b972784782d874859ff30c6, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
+  m_CursorLockBehavior: 1
   m_ScrollDeltaPerTick: 6
 --- !u!1 &853488730
 GameObject:
@@ -1035,8 +1035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97268be483231b14ba2233368f109cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeCanvasGroup: {fileID: 1014126202}
-  fadeDuration: 1
 --- !u!225 &1014126202
 CanvasGroup:
   m_ObjectHideFlags: 0

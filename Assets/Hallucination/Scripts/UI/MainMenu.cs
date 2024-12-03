@@ -1,15 +1,16 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
-    AsyncOperation loadingOperation;
     void Start() {
-        loadingOperation = SceneManager.LoadSceneAsync("Intro");
-        loadingOperation.allowSceneActivation = false;
+        StartCoroutine(Util.InitializeLocalizationAsync());
     }
+    
 
     public void PlayGame() {
-        loadingOperation.allowSceneActivation = true;
+        SceneManager.LoadSceneAsync("Intro");
     }
 
     public void QuitGame() {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
     [SerializeField] GameObject WorldSwitchIcon;
+    [SerializeField] GameObject Bear, Fairy;
     public GameObject[] WorldFairyEnvironment;
     public GameObject[] WorldBearEnvironment;
     public CanvasGroup FadingMask;
@@ -63,6 +64,22 @@ public class WorldSwitchManager : MonoBehaviour {
         locks.Clear();
         UpdateWorldSwitchIcon();
     }
+
+    public GameObject CurrentPlayedCharacter => currentWorld == CharacterTypeEnum.Bear ? Bear : Fairy;
+
+    /// <summary>
+    /// Locks the world switch.
+    /// This is used in scenarios where the same GameObject cannot lock and unlock the world switch,
+    /// such as checkpoints.
+    /// </summary>
+    public void LockWorldSwitch() { Lock(gameObject); }
+
+    /// <summary>
+    /// Unlocks the world switch.
+    /// This is used in scenarios where the same GameObject cannot lock and unlock the world switch,
+    /// such as checkpoints.
+    /// </summary>
+    public void UnlockWorldSwitch() { Unlock(gameObject); }
 
     public void UpdateWorldSwitchIcon() => WorldSwitchIcon.SetActive(
         locks.Count == 0 && InputManager.Control.World.SwitchWorld.enabled

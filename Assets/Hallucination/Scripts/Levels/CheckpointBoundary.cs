@@ -3,7 +3,6 @@ using UnityEngine;
 public class CheckpointBoundary : MonoBehaviour {
     [SerializeField] LevelCheckpoint checkpoint;
     [SerializeField] bool enableIfCheckpointCompleted;
-    
 
     void Awake() {
         if (enableIfCheckpointCompleted) {
@@ -16,6 +15,6 @@ public class CheckpointBoundary : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        DialogueManager.Instance.StartDialogue("Bear Touch Boundary", true);
+        DialogueManager.Instance.StartDialogue("Bear Touch Boundary");
     }
 }

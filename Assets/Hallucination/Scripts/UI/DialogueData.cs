@@ -1,5 +1,3 @@
-
-// Represents a single line of dialogue with a speaker and a sentence
 [System.Serializable]
 public class DialogueLine {
     public string speaker;
@@ -9,11 +7,20 @@ public class DialogueLine {
 // Represents a named dialogue (a collection of lines with a unique name)
 [System.Serializable]
 public class DialogueCollection {
-    public string name;  // The name of the dialogue (e.g., "introduction", "quest_start")
-    public DialogueLine[] lines;  // The actual lines of dialogue
+    /// <summary>
+    /// The name of the dialogue.
+    /// </summary>
+    public string name;
+    /// <summary>
+    /// Whether the game should be paused while the dialogue is active.
+    /// </summary>
+    public bool pauseGame;
+    /// <summary>
+    /// The actual lines of dialogue.
+    /// </summary>
+    public DialogueLine[] lines;
 }
 
-// Represents the entire set of dialogues, stored as an array of DialogueCollection
 [System.Serializable]
 public class DialogueData {
     public DialogueCollection[] dialogues;  // Array of named dialogues

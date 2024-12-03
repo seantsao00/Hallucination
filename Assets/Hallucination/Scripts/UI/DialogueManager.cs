@@ -16,7 +16,7 @@ public class DialogueManager : MonoBehaviour {
 
     private Queue<DialogueLine> dialogueLines;  // Queue to hold the dialogue lines
     private DialogueData dialogueData;  // Store all the dialogues from JSON
-    
+
     public GameObject leftImage;  // Reference to the left image GameObject (player's image)
     public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
     public static DialogueManager Instance { get; private set; }
@@ -63,7 +63,9 @@ public class DialogueManager : MonoBehaviour {
                 filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/English/dialogue.json");
                 break;
             case Language.Chinese:
-                filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/Chinese/dialogue.json");
+                // filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/Chinese/dialogue.json");
+                filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/English/dialogue.json");
+                Debug.LogWarning("Chinese dialogue not implemented yet. Using English dialogue instead.");
                 break;
         }
 
@@ -88,21 +90,27 @@ public class DialogueManager : MonoBehaviour {
         isLoaded = true;
     }
 
-    // Start a specific dialogue by its name
-    public async void StartDialogue(string dialogueName, bool pauseGame, Action callback = null) {
+    /// <summary>
+    /// Starts a specific dialogue by its name without a callback.
+    /// This function is useful for triggering dialogues from inspector buttons.
+    /// </summary>
+    /// <param name="dialogueName">The name of the dialogue to start.</param>
+    public void StartDialogue(string dialogueName) => StartDialogueWithCallback(dialogueName);
+
+    public async void StartDialogueWithCallback(string dialogueName, Action callback = null) {
         while (!isLoaded) await Task.Yield();
 
         gameObject.SetActive(true);
         canvasGroup.alpha = 1;
         callbackAfterDialogue = callback;
-        if (pauseGame) GameStateManager.Instance.CurrentGamePlayState = GamePlayState.DialogueActive;
-        
-        if (dialogueData != null) {
-            dialogueBox.SetActive(true);  // Show the dialogue box when dialogue starts
-            // Find the correct dialogue by name
-            DialogueCollection dialogueCollection = FindDialogueByName(dialogueName);
 
+        if (dialogueData != null) {
+            dialogueBox.SetActive(true);
+            DialogueCollection dialogueCollection = FindDialogueByName(dialogueName);
             if (dialogueCollection != null) {
+                if (dialogueCollection.pauseGame) {
+                    GameStateManager.Instance.CurrentGamePlayState = GamePlayState.DialogueActive;
+                }
                 dialogueLines.Clear();  // Clear any previously loaded lines
 
                 // Enqueue each line of the specified dialogue
@@ -128,8 +136,8 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
-        
-        Debug.Log(dialogueLines.Count);
+
+        // Debug.Log(dialogueLines.Count);
         // If dialogue is still typing and the game is paused, show the full sentence immediately
         if (isTyping && GameStateManager.Instance.CurrentGamePlayState == GamePlayState.DialogueActive) {
             StopAllCoroutines();
@@ -165,7 +173,7 @@ public class DialogueManager : MonoBehaviour {
         isTyping = true;
         dialogueText.text = dialogueLine.sentence;
         TMP_TextInfo textInfo = dialogueText.textInfo;
-        
+
         SetDialogueAlpha(0, textInfo);
         // Gradually reveal characters
         for (int i = 0; i < textInfo.characterCount; i++) {

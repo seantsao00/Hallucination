@@ -61,7 +61,7 @@ public class InputManager {
             case GamePlayState.Normal:
                 Control.Character.Enable();
                 Control.World.Enable();
-                GameObject currentPlayedCharacter = Util.FindCurrentPlayedCharacter();
+                GameObject currentPlayedCharacter = WorldSwitchManager.Instance.CurrentPlayedCharacter;
                 CharacterStateController characterStateController = currentPlayedCharacter.GetComponent<CharacterStateController>();
                 characterStateController.UpdateInput();
                 break;

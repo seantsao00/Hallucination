@@ -12,7 +12,6 @@ public class LevelController : MonoBehaviour {
         public bool LockWorldSwitch;
         public bool UnlockWorldSwitch;
         public string DialogueName;
-        public bool pauseGameWhenDialogueStart;
         public UnityEvent DialogueEndedEvent;
     }
     [System.Serializable]
@@ -91,19 +90,17 @@ public class LevelController : MonoBehaviour {
         if (!string.IsNullOrEmpty(checkpointData.DialogueName)) {
             StartCoroutine(WaitForWorldSwitchingAndStartDialogue(
                 checkpointData.DialogueName,
-                checkpointData.DialogueEndedEvent,
-                checkpointData.pauseGameWhenDialogueStart
+                checkpointData.DialogueEndedEvent
             ));
         }
     }
 
-    IEnumerator WaitForWorldSwitchingAndStartDialogue(string dialogueName, UnityEvent dialogueEndedEvent, bool pauseGame) {
-        Debug.Log("Start dialogue: " + dialogueName + " Pause: " + pauseGame);
+    IEnumerator WaitForWorldSwitchingAndStartDialogue(string dialogueName, UnityEvent dialogueEndedEvent) {
         yield return new WaitUntil(
             () => GameStateManager.Instance.CurrentGamePlayState != GamePlayState.SwitchingWorld
         );
-        DialogueManager.Instance.StartDialogue(
-            dialogueName, pauseGame,
+        DialogueManager.Instance.StartDialogueWithCallback(
+            dialogueName,
             () => dialogueEndedEvent?.Invoke()
         );
     }

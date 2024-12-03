@@ -23,13 +23,6 @@ public class Util {
         Debug.LogError("Can't find Bear Object");
         return null;
     }
-    static public GameObject FindCurrentPlayedCharacter() {
-        GameObject[] searchResults = GameObject.FindGameObjectsWithTag("Player");
-        Assert.IsTrue(searchResults.Length == 1);
-        GameObject currentPlayedCharacter = searchResults[0];
-        return currentPlayedCharacter;
-    }
-
     static public IEnumerator FadeIn(float fadeDuration, CanvasGroup FadeMask) {
         float fadeSpeed = 1f / fadeDuration;
 

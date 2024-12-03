@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
     [SerializeField] GameObject WorldSwitchIcon;
-    [SerializeField] GameObject Bear, Fairy;
+    public GameObject Bear, Fairy;
     public GameObject[] WorldFairyEnvironment;
     public GameObject[] WorldBearEnvironment;
     public CanvasGroup FadingMask;
@@ -105,7 +105,11 @@ public class WorldSwitchManager : MonoBehaviour {
         }
     }
 
-    public void SwitchToWorldWithFade(CharacterTypeEnum world) {
+    /// <summary>
+    /// <remarks>Force</remarks> switches the world with a fade effect.
+    /// </summary>
+    /// <param name="world"></param>
+    private void SwitchToWorldWithFade(CharacterTypeEnum world) {
         if (world == CharacterTypeEnum.None || currentWorld == world) return;
         StartCoroutine(PerformSwitchToWorldWithFade(world));
     }

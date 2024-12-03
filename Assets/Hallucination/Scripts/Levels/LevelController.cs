@@ -10,7 +10,7 @@ public class LevelController : MonoBehaviour {
         public CharacterTypeEnum WorldToSwitch;
         public GameObject FairySpawnPoint, BearSpawnPoint;
         public bool LockWorldSwitch;
-        public bool UnlockWorldSwitch;
+        public bool UnlockWorldSwitch = true;
         public string DialogueName;
         public UnityEvent DialogueEndedEvent;
     }
@@ -29,7 +29,6 @@ public class LevelController : MonoBehaviour {
     [SerializeField]
     CheckpointData restartData = new CheckpointData {
         WorldToSwitch = CharacterTypeEnum.Bear,
-        UnlockWorldSwitch = true
     };
     [SerializeField] CheckpointData[] checkpointDataList;
     
@@ -78,7 +77,7 @@ public class LevelController : MonoBehaviour {
 
     void LoadCheckpointData(CheckpointData checkpointData) {
         if (checkpointData.WorldToSwitch != CharacterTypeEnum.None)
-            WorldSwitchManager.Instance.SwitchToWorld(checkpointData.WorldToSwitch);
+            WorldSwitchManager.Instance.ForceSwitchToWorldWithFade(checkpointData.WorldToSwitch);
         if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.Lock(gameObject);
         if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.Unlock(gameObject);
         if (checkpointData.FairySpawnPoint != null) {

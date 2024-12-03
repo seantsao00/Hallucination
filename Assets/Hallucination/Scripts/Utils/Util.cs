@@ -7,22 +7,6 @@ using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Localization.Settings;
 
 public class Util {
-    static public GameObject GetFairyObjects() {
-        GameObject[] searchResults = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var characterObject in searchResults) {
-            if (characterObject.name == "Fairy") return characterObject;
-        }
-        Debug.LogError("Can't find Fairy Object");
-        return null;
-    }
-    static public GameObject GetBearObjects() {
-        GameObject[] searchResults = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var characterObject in searchResults) {
-            if (characterObject.name == "Bear") return characterObject;
-        }
-        Debug.LogError("Can't find Bear Object");
-        return null;
-    }
     static public IEnumerator FadeIn(float fadeDuration, CanvasGroup FadeMask) {
         float fadeSpeed = 1f / fadeDuration;
 

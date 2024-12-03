@@ -48,6 +48,7 @@ MonoBehaviour:
   CheckpointCompleted:
     m_PersistentCalls:
       m_Calls: []
+  activeAtStart: 1
 --- !u!61 &2482847155427513422
 BoxCollider2D:
   m_ObjectHideFlags: 0

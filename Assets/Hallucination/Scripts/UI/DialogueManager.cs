@@ -7,18 +7,23 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 using TMPro;
+using UnityEngine.Localization.SmartFormat.Utilities;
 
 
 public class DialogueManager : MonoBehaviour {
-    CanvasGroup canvasGroup;
-    public GameObject dialogueBox;
-    public TextMeshProUGUI dialogueText;  // Reference to the TextMeshPro component
+    [Serializable]
+    public class DialogueBox {
+        public GameObject dialogueBox;
+        public GameObject bearImage, darkBearImage;
+        public TextMeshProUGUI dialogueText;
+    }
 
-    private Queue<DialogueLine> dialogueLines;  // Queue to hold the dialogue lines
-    private DialogueData dialogueData;  // Store all the dialogues from JSON
+    [SerializeField] DialogueBox normalDialogueBox, inGameDialogueBox;
+    DialogueBox currentDialogueBox;
 
-    public GameObject leftImage;  // Reference to the left image GameObject (player's image)
-    public GameObject rightImage;  // Reference to the right image GameObject (other character's image)
+    private Queue<DialogueLine> dialogueLines;
+    private DialogueData dialogueData;
+
     public static DialogueManager Instance { get; private set; }
     bool isTyping = false;
     bool isLoaded = false;
@@ -34,13 +39,11 @@ public class DialogueManager : MonoBehaviour {
             return;
         }
         isTyping = false;
-        canvasGroup = GetComponent<CanvasGroup>();
         Instance = this;
         dialogueLines = new Queue<DialogueLine>();
         LoadDialoguesFromFile();  // Load all dialogues from the JSON file
-    }
-
-    void Start() {
+        normalDialogueBox.dialogueBox.SetActive(false);
+        inGameDialogueBox.dialogueBox.SetActive(false);
         gameObject.SetActive(false);
     }
 
@@ -101,15 +104,22 @@ public class DialogueManager : MonoBehaviour {
         while (!isLoaded) await Task.Yield();
 
         gameObject.SetActive(true);
-        canvasGroup.alpha = 1;
         callbackAfterDialogue = callback;
 
         if (dialogueData != null) {
-            dialogueBox.SetActive(true);
             DialogueCollection dialogueCollection = FindDialogueByName(dialogueName);
             if (dialogueCollection != null) {
                 if (dialogueCollection.pauseGame) {
                     GameStateManager.Instance.CurrentGamePlayState = GamePlayState.DialogueActive;
+                    WorldSwitchManager.Instance.Fairy.GetComponent<Character>()?.StopMotion();
+                    WorldSwitchManager.Instance.Bear.GetComponent<Character>()?.StopMotion();
+                    currentDialogueBox = normalDialogueBox;
+                    normalDialogueBox.dialogueBox.SetActive(true);
+                    inGameDialogueBox.dialogueBox.SetActive(false);
+                } else {
+                    currentDialogueBox = inGameDialogueBox;
+                    normalDialogueBox.dialogueBox.gameObject.SetActive(false);
+                    inGameDialogueBox.dialogueBox.gameObject.SetActive(true);
                 }
                 dialogueLines.Clear();  // Clear any previously loaded lines
 
@@ -136,13 +146,11 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
-
-        // Debug.Log(dialogueLines.Count);
         // If dialogue is still typing and the game is paused, show the full sentence immediately
         if (isTyping && GameStateManager.Instance.CurrentGamePlayState == GamePlayState.DialogueActive) {
             StopAllCoroutines();
-            dialogueText.text = currentSentence;
-            TMP_TextInfo textInfo = dialogueText.textInfo;
+            currentDialogueBox.dialogueText.text = currentSentence;
+            TMP_TextInfo textInfo = currentDialogueBox.dialogueText.textInfo;
             SetDialogueAlpha(255, textInfo);
             isTyping = false;
             return;
@@ -158,18 +166,21 @@ public class DialogueManager : MonoBehaviour {
         StopAllCoroutines();
         UpdateSpeakerImage(dialogueLine.speaker);
         currentSentence = dialogueLine.sentence;
-        StartCoroutine(TypeSentence(dialogueLine));
+        StartCoroutine(TypeSentence(dialogueLine, 2));
     }
     void UpdateSpeakerImage(string speaker) {
-        if (speaker == "Fairy") {
-            leftImage.SetActive(true);
-            rightImage.SetActive(false);
+        if (speaker == "Bear") {
+            currentDialogueBox.bearImage.SetActive(true);
+            currentDialogueBox.darkBearImage.SetActive(false);
+        } else if (speaker == "DarkBear") {
+            currentDialogueBox.bearImage.SetActive(false);
+            currentDialogueBox.darkBearImage.SetActive(true);
         } else {
-            leftImage.SetActive(false);
-            rightImage.SetActive(true);
+            Debug.LogError("Speaker not recognized: " + speaker);
         }
     }
-    IEnumerator TypeSentence(DialogueLine dialogueLine) {
+    IEnumerator TypeSentence(DialogueLine dialogueLine, float speed = 1f) {
+        var dialogueText = currentDialogueBox.dialogueText;
         isTyping = true;
         dialogueText.text = dialogueLine.sentence;
         TMP_TextInfo textInfo = dialogueText.textInfo;
@@ -184,7 +195,7 @@ public class DialogueManager : MonoBehaviour {
             Color32[] vertexColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
             float alpha = 0;
             while (alpha < 1) {
-                alpha += Time.deltaTime * 20f;
+                alpha += Time.deltaTime * 20f * speed;
                 alpha = Math.Min(alpha, 1);
                 byte newAlpha = (byte)(alpha * 255);
 
@@ -200,6 +211,7 @@ public class DialogueManager : MonoBehaviour {
     }
 
     void SetDialogueAlpha(byte alpha, TMP_TextInfo textInfo) {
+        var dialogueText = currentDialogueBox.dialogueText;
         dialogueText.ForceMeshUpdate();
         for (int i = 0; i < textInfo.characterCount; i++) {
             TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
@@ -217,7 +229,6 @@ public class DialogueManager : MonoBehaviour {
 
     void EndDialogue() {
         // Debug.Log("End of dialogue");
-        canvasGroup.alpha = 0;
         gameObject.SetActive(false);
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
         callbackAfterDialogue?.Invoke();

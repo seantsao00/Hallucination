@@ -40,9 +40,8 @@ public class Flower : MonoBehaviour {
     }
 
     void DuplicateProjectionObjects() {
-        GameObject[] projections = detector.ProjectionObjects.ToArray();
-        // Debug.Log($"Duplicating {projections.Length} objects");
-        foreach (var projection in projections) {
+        Debug.Log($"Duplicating {detector.ProjectionObjects.Count} objects");
+        foreach (var projection in detector.ProjectionObjects) {
             Vector2 relativePosition = detector.GetRelativePosition(projection);
             Vector2 newPosition = (Vector2)gameObject.transform.position + relativePosition;
             Transform parent = gameObject.transform.parent;

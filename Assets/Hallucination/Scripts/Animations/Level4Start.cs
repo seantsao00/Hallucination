@@ -30,7 +30,9 @@ public class Level4Start : MonoBehaviour {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
         bear.body.gameObject.SetActive(false);
         WorldSwitchManager.Instance.Bear.transform.position = bear.points[bear.points.Length - 1].position;
-        DialogueManager.Instance.StartDialogue(dialogueName);
+        DialogueManager.Instance.StartDialogueWithCallback(dialogueName, () => {
+            LevelNavigator.Instance.CompleteCurrentLevel();
+        });
     }
 
     IEnumerator FairyAnimation() {

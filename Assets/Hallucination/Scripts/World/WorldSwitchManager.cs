@@ -83,6 +83,10 @@ public class WorldSwitchManager : MonoBehaviour {
     /// </summary>
     public void UnlockWorldSwitch() { Unlock(gameObject); }
 
+    public void LogLocks() {
+        Debug.Log($"{locks.Count} Locks: {string.Join(", ", locks)}");
+    }
+
     public void UpdateWorldSwitchIcon() => WorldSwitchIcon.SetActive(
         locks.Count == 0 && InputManager.Control.World.SwitchWorld.enabled
     );

@@ -78,8 +78,8 @@ public class LevelController : MonoBehaviour {
     void LoadCheckpointData(CheckpointData checkpointData) {
         if (checkpointData.WorldToSwitch != CharacterTypeEnum.None)
             WorldSwitchManager.Instance.ForceSwitchToWorldWithFade(checkpointData.WorldToSwitch);
-        if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.Lock(gameObject);
-        if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.Unlock(gameObject);
+        if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.LockWorldSwitch();
+        if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.UnlockWorldSwitch();
         if (checkpointData.FairySpawnPoint != null) {
             fairyWorldFairy.transform.position = checkpointData.FairySpawnPoint.transform.position;
         }
@@ -106,18 +106,10 @@ public class LevelController : MonoBehaviour {
         );
     }
 
-    void FulfillCheckpoint() {
-        numberOfFulfilledCheckpoints++;
-        if (numberOfFulfilledCheckpoints == checkpointDataList.Length) {
-            LevelNavigator.Instance.CompleteCurrentLevel();
-        }
-    }
-
     void RegisterHandler() {
         foreach (var checkpointData in checkpointDataList) {
             checkpointData.Checkpoint.CheckpointCompleted.AddListener(Action => {
                 LoadCheckpointData(checkpointData);
-                FulfillCheckpoint();
             });
         }
     }

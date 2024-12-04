@@ -111,13 +111,19 @@
             ]
         },
         {
-            "name": "Level 3 Comprehend",
+            "name": "Level 3 Comprehend_0",
             "pauseGame": true,
             "lines": [
                 {
                     "speaker": "Bear",
                     "sentence": "I think... maybe I need to try harder to understand you. I can't just keep assuming I know what's best."
-                },
+                }
+            ]
+        },
+        {
+            "name": "Level 3 Comprehend_1",
+            "pauseGame": true,
+            "lines": [
                 {
                     "speaker": "Bear",
                     "sentence": "I need to accept that you're not the same as you were. You've changed... and maybe I have to accept that."
@@ -125,7 +131,13 @@
                 {
                     "speaker": "Bear",
                     "sentence": "I shouldn't try to force you to return to what you once were... or judge you for what you've become."
-                },
+                }
+            ]
+        },
+        {
+            "name": "Level 3 Comprehend_2",
+            "pauseGame": true,
+            "lines": [
                 {
                     "speaker": "Bear",
                     "sentence": "Instead, I need to understand you. I need to accept you."

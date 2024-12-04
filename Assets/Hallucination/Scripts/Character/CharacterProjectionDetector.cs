@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class CharacterProjectionDetector : MonoBehaviour {
     public HashSet<GameObject> ProjectionObjects = new();
+    public float radius => GetComponent<CircleCollider2D>().radius;
 
     void Awake() {
         WorldSwitchManager.Instance.WorldSwitching.AddListener(() => gameObject.SetActive(false));

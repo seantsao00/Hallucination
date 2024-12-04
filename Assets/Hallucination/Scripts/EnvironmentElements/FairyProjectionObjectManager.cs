@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class FairyObjectProjectionManager : MonoBehaviour {
     [SerializeField] LayerMask excludeLayerMask;
@@ -15,8 +16,10 @@ public class FairyObjectProjectionManager : MonoBehaviour {
             return;
         }
         Instance = this;
-        Projections = new HashSet<GameObject>(GameObject.FindGameObjectsWithTag("FairyWorldProjectionObject"));
-        foreach (GameObject projection in Projections) {
+        foreach (GameObject projection in GameObject.FindGameObjectsWithTag("FairyWorldProjectionObject")) {
+            foreach (var tilemap in projection.GetComponentsInChildren<Tilemap>()) {
+                tilemap.CompressBounds();
+            }
             foreach (var collider in projection.GetComponentsInChildren<Collider2D>()) {
                 // Debug.Log("Normal Collider");
                 SetColliderExcludeLayers(collider);

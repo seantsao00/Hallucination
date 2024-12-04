@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 using TMPro;
-using UnityEngine.Localization.SmartFormat.Utilities;
 
 
 public class DialogueManager : MonoBehaviour {

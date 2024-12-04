@@ -69,6 +69,8 @@ public class InputManager {
                 Control.UI.Enable();
                 Control.Dialogue.Enable();
                 break;
+            case GamePlayState.Cinematic:
+                break;
             case GamePlayState.FullScreenTip:
                 Control.Tip.Enable();
                 Control.Game.Disable();

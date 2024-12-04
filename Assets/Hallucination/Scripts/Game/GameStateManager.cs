@@ -13,6 +13,7 @@ public enum GamePlayState {
     Normal,
     DialogueActive,
     SwitchingWorld,
+    Cinematic,
     FullScreenTip,
     AllInputDisabled
 }

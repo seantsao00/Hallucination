@@ -91,6 +91,8 @@ public class LevelController : MonoBehaviour {
                 checkpointData.DialogueName,
                 checkpointData.DialogueEndedEvent
             ));
+        } else {
+            checkpointData.DialogueEndedEvent?.Invoke();
         }
     }
 

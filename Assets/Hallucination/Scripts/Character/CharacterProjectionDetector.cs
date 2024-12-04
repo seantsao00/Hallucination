@@ -1,29 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 public class CharacterProjectionDetector : MonoBehaviour {
-    List<GameObject> projectionObjects = new();
-    public List<GameObject> ProjectionObjects {get {return projectionObjects;}}
-    
+    public List<GameObject> ProjectionObjects = new();
+
     void OnTriggerEnter2D(Collider2D other) {
-        
-        if (other.CompareTag("FairyWorldProjectionObject") && !projectionObjects.Contains(other.gameObject)) {
-            print(other.gameObject.name + " Entered");
-            projectionObjects.Add(other.gameObject);
-            
+        if (FairyObjectProjectionManager.Instance.Projections.Contains(other.gameObject)
+            && !ProjectionObjects.Contains(other.gameObject)) {
+            // Debug.Log("Projection detected: " + other.gameObject.name + " Entered");
+            ProjectionObjects.Add(other.gameObject);
         }
     }
     void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("FairyWorldProjectionObject") && gameObject.activeInHierarchy) {
-            projectionObjects.Remove(other.gameObject);
-            print(other.gameObject.name + " Exited");
+        if (FairyObjectProjectionManager.Instance.Projections.Contains(other.gameObject)
+            && gameObject.activeInHierarchy) {
+            // Debug.Log("Projection detected" + other.gameObject.name + " Exited");
+            ProjectionObjects.Remove(other.gameObject);
         }
     }
     public Vector2 GetRelativePosition(GameObject projection) {
         return (Vector2)(projection.transform.position - gameObject.transform.position);
     }
-
-    Transform GetParentTransform(Collider2D other) {
-        return other.transform.parent.transform;
-    }
-
 }

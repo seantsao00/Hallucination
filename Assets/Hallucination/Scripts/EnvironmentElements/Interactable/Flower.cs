@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Timeline;
 
 public class Flower : MonoBehaviour {
-    bool isPlayerInRange;
-    public CharacterProjectionDetector detector;
+    bool isPlayerInRange = false;
+    CharacterProjectionDetector detector;
     List<GameObject> duplicatedObjects;
     public float activateDuration = 3f;
     public LayerMask excludeLayerMask;
     bool isFlowerActivated = false;
+
+    void Awake() {
+        detector = WorldSwitchManager.Instance.Bear.GetComponentInChildren<CharacterProjectionDetector>();
+    }
+
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player") && !isFlowerActivated) {
-            
-            print("entered");
             isPlayerInRange = true;
             StartCoroutine(HandleActivation());
         }
@@ -37,9 +38,10 @@ public class Flower : MonoBehaviour {
         duplicatedObjects = null;
         WorldSwitchManager.Instance.Unlock(gameObject);
     }
-    
+
     void DuplicateProjectionObjects() {
         GameObject[] projections = detector.ProjectionObjects.ToArray();
+        // Debug.Log($"Duplicating {projections.Length} objects");
         foreach (var projection in projections) {
             Vector2 relativePosition = detector.GetRelativePosition(projection);
             Vector2 newPosition = (Vector2)gameObject.transform.position + relativePosition;
@@ -48,6 +50,9 @@ public class Flower : MonoBehaviour {
             duplicatedObjects.Add(duplicatedObject);
             RecoverCollisionLayer(duplicatedObject);
             duplicatedObject.name = projection.name + "_Copy";
+            if (duplicatedObject.layer == LayerMask.NameToLayer("ProjectionGround")) {
+                duplicatedObject.layer = LayerMask.NameToLayer("Ground");
+            }
 
             Debug.Log($"Duplicated {projection.name} to new position {newPosition}");
         }
@@ -57,11 +62,11 @@ public class Flower : MonoBehaviour {
         collider.excludeLayers = excludeLayerMask;
     }
     void DestroyProjectionObjects() {
-        print(duplicatedObjects);
+        // print(duplicatedObjects);
         foreach (var duplicatedObject in duplicatedObjects) {
             Destroy(duplicatedObject);
         }
     }
 
-    
+
 }

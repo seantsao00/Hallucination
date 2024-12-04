@@ -20,7 +20,7 @@ public class Level4Start : MonoBehaviour {
 
     IEnumerator Animation() {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Cinematic;
-        while (!Move(train.body, train.points[0], 6f, 4f)) {
+        while (!Move(train.body, train.points[0], trainSpeed, 4f)) {
             yield return null;
         }
         StartCoroutine(FairyAnimation());

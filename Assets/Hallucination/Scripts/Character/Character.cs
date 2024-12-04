@@ -40,8 +40,6 @@ public class Character : MonoBehaviour {
     [HideInInspector] public bool IsBellyInGround;
     [HideInInspector] public bool IsLedgeDetected;
 
-    public bool isFairy;
-
     private void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;
         if (direction.x < 0) transform.rotation = Quaternion.Euler(angle.x, 180, angle.z);

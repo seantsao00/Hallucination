@@ -8,8 +8,8 @@ public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
     [SerializeField] GameObject WorldSwitchIcon;
     public GameObject Bear, Fairy;
-    public GameObject[] WorldFairyEnvironment;
-    public GameObject[] WorldBearEnvironment;
+    GameObject[] fairyWorldEnvironments;
+    GameObject[] bearWorldEnvironments;
     public CanvasGroup FadingMask;
     public UnityEvent WorldSwitching;
     public UnityEvent WorldSwitched;
@@ -32,6 +32,8 @@ public class WorldSwitchManager : MonoBehaviour {
             return;
         }
         Instance = this;
+        fairyWorldEnvironments = GameObject.FindGameObjectsWithTag("FairyWorldEnvironment");
+        bearWorldEnvironments = GameObject.FindGameObjectsWithTag("BearWorldEnvironment");
     }
 
     private void OnDestroy() {
@@ -159,13 +161,13 @@ public class WorldSwitchManager : MonoBehaviour {
 
     void SetWorldFairy() {
         currentWorld = CharacterTypeEnum.Fairy;
-        foreach (var environment in WorldFairyEnvironment) { environment.SetActive(true); }
-        foreach (var environment in WorldBearEnvironment) { environment.SetActive(false); }
+        foreach (var environment in fairyWorldEnvironments) { environment.SetActive(true); }
+        foreach (var environment in bearWorldEnvironments) { environment.SetActive(false); }
     }
 
     void SetWorldBear() {
         currentWorld = CharacterTypeEnum.Bear;
-        foreach (var environment in WorldFairyEnvironment) { environment.SetActive(false); }
-        foreach (var environment in WorldBearEnvironment) { environment.SetActive(true); }
+        foreach (var environment in fairyWorldEnvironments) { environment.SetActive(false); }
+        foreach (var environment in bearWorldEnvironments) { environment.SetActive(true); }
     }
 }

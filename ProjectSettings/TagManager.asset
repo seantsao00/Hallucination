@@ -8,6 +8,8 @@ TagManager:
   - Stone
   - Substitute
   - FairyWorldProjectionObject
+  - FairyWorldEnvironment
+  - BearWorldEnvironment
   layers:
   - Default
   - TransparentFX

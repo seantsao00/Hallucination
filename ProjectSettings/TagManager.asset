@@ -14,7 +14,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BackGround
   - Water
   - UI
   - Ground
@@ -23,7 +23,7 @@ TagManager:
   - BehindGround
   - FairyProjection
   - ProjectionGround
-  - 
+  - UniversalPipeline
   - 
   - 
   - 

@@ -91,67 +91,43 @@ public class WorldSwitchManager : MonoBehaviour {
         locks.Count == 0 && InputManager.Control.World.SwitchWorld.enabled
     );
 
-    public void SwitchWorldWithFade() {
-        if (locks.Count != 0) return;
-
-        ForceSwitchWorldWithFade();
-    }
-
-    public void ForceSwitchWorldWithFade() {
-        if (locks.Count != 0) {
-            Debug.LogWarning("Lock count is not 0. Automatically release all locks.");
-            locks.Clear();
-        }
+    public void SwitchWorld(bool force = false, bool withFade = false) {
         if (currentWorld == CharacterTypeEnum.Bear) {
-            SwitchToWorldWithFade(CharacterTypeEnum.Fairy);
+            SwitchToWorld(CharacterTypeEnum.Fairy, force, withFade);
         } else if (currentWorld == CharacterTypeEnum.Fairy) {
-            SwitchToWorldWithFade(CharacterTypeEnum.Bear);
+            SwitchToWorld(CharacterTypeEnum.Bear, force, withFade);
         } else {
             Debug.LogError($"Unexpected {nameof(currentWorld)} value: {currentWorld}");
         }
     }
 
-    /// <summary>
-    /// <remarks>Force</remarks> switches the world with a fade effect.
-    /// </summary>
-    /// <param name="world"></param>
-    private void SwitchToWorldWithFade(CharacterTypeEnum world) {
-        if (world == CharacterTypeEnum.None || currentWorld == world) return;
-        StartCoroutine(PerformSwitchToWorldWithFade(world));
+    public void SwitchToWorld(CharacterTypeEnum targetWorld, bool force = false, bool withFade = false) {
+        if (!force && locks.Count != 0) return;
+        if (force) ClearLocks();
+
+        WorldSwitching?.Invoke();
+        if (withFade) {
+            StartCoroutine(PerformSwitchToWorldWithFade(targetWorld));
+        } else {
+            if (targetWorld == CharacterTypeEnum.Bear) {
+                SetWorldBear();
+            } else if (targetWorld == CharacterTypeEnum.Fairy) {
+                SetWorldFairy();
+            } else {
+                Debug.LogError($"Unexpected {nameof(targetWorld)} value: {targetWorld}");
+            }
+        }
+        WorldSwitched?.Invoke();
     }
 
     private void SwitchWorldByInput(InputAction.CallbackContext context) {
-        SwitchWorldWithFade();
-    }
-
-    public void SwitchToWorld(CharacterTypeEnum world) {
-        if (world == CharacterTypeEnum.None || currentWorld == world || locks.Count != 0) return;
-
-        WorldSwitching?.Invoke();
-        WorldSwitched?.Invoke();
-        if (world == CharacterTypeEnum.Bear) {
-            SetWorldBear();
-        } else if (world == CharacterTypeEnum.Fairy) {
-            SetWorldFairy();
-        } else {
-            Debug.LogError($"Unexpected {nameof(world)} value: {world}");
-        }
-    }
-
-    public void ForceSwitchToWorldWithFade(CharacterTypeEnum world) {
-        if (locks.Count != 0) {
-            Debug.LogWarning("Lock count is not 0. Automatically release all locks.");
-            locks.Clear();
-        }
-        StartCoroutine(PerformSwitchToWorldWithFade(world));
+        SwitchWorld(withFade: true);
     }
 
     IEnumerator PerformSwitchToWorldWithFade(CharacterTypeEnum world) {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.SwitchingWorld;
-        WorldSwitching?.Invoke();
         yield return StartCoroutine(Util.FadeOut(0.4f, FadingMask));
 
-        WorldSwitched?.Invoke();
         if (world == CharacterTypeEnum.Bear) {
             SetWorldBear();
         } else if (world == CharacterTypeEnum.Fairy) {
@@ -163,13 +139,13 @@ public class WorldSwitchManager : MonoBehaviour {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
     }
 
-    void SetWorldFairy() {
+    private void SetWorldFairy() {
         currentWorld = CharacterTypeEnum.Fairy;
         foreach (var environment in fairyWorldEnvironments) { environment.SetActive(true); }
         foreach (var environment in bearWorldEnvironments) { environment.SetActive(false); }
     }
 
-    void SetWorldBear() {
+    private void SetWorldBear() {
         currentWorld = CharacterTypeEnum.Bear;
         foreach (var environment in fairyWorldEnvironments) { environment.SetActive(false); }
         foreach (var environment in bearWorldEnvironments) { environment.SetActive(true); }

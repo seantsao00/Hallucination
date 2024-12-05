@@ -31,7 +31,7 @@ public class LevelController : MonoBehaviour {
         WorldToSwitch = CharacterTypeEnum.Bear,
     };
     [SerializeField] CheckpointData[] checkpointDataList;
-    
+
     int numberOfFulfilledCheckpoints;
 
     void Awake() {
@@ -66,7 +66,7 @@ public class LevelController : MonoBehaviour {
     IEnumerator PerformApplyCharacterSyncMethods(GameObject character, Syncable method) {
         Destroy(fairyWorldFairy.GetComponent<Syncable>());
         yield return null;
-        
+
         if (method != null) {
             var syncable = character.AddComponent<Syncable>();
             Syncable.CopyData(method, syncable);
@@ -77,7 +77,7 @@ public class LevelController : MonoBehaviour {
 
     void LoadCheckpointData(CheckpointData checkpointData) {
         if (checkpointData.WorldToSwitch != CharacterTypeEnum.None)
-            WorldSwitchManager.Instance.ForceSwitchToWorldWithFade(checkpointData.WorldToSwitch);
+            WorldSwitchManager.Instance.SwitchToWorld(force: true, targetWorld: checkpointData.WorldToSwitch);
         if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.LockWorldSwitch();
         if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.UnlockWorldSwitch();
         if (checkpointData.FairySpawnPoint != null) {
@@ -168,7 +168,7 @@ public class LevelController : MonoBehaviour {
         Assert.IsTrue(this == LevelNavigator.Instance.CurrentLevel);
         LevelNavigator.Instance.CompleteCurrentLevel();
 
-        transform.Find("FairyWorld").Find("LevelMainCamera").gameObject.SetActive(false);
-        transform.Find("BearWorld").Find("LevelMainCamera").gameObject.SetActive(false);
+        transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(false);
+        transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(false);
     }
 }

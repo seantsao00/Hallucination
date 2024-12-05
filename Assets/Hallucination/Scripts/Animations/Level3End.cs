@@ -28,12 +28,13 @@ public class Level3End : MonoBehaviour {
 
 
     IEnumerator Animation() {
-        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Cinematic;
+        
         Animator fairyAnimator = fairy.body.GetComponent<Animator>();
         Animator bearAnimator = bear.body.GetComponent<Animator>();
         int currentPointIndex = 0;
         string[] dialogueNames = {"Level 3 Comprehend_0", "Level 3 Comprehend_1", "Level 3 Comprehend_2"};
         while (currentPointIndex < fairy.points.Length) {
+            GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Cinematic;
             isBearMoveFinished = false;
             isFairyMoveFinished = false;
             StartCoroutine(FairyMove(fairy.points[currentPointIndex]));
@@ -46,8 +47,9 @@ public class Level3End : MonoBehaviour {
             while (!dialogueComplete) {
                 yield return null;
             }
-            GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Cinematic;
         }
+        print(GameStateManager.Instance.CurrentGamePlayState);
+        LevelNavigator.Instance.CompleteCurrentLevel();
     }
 
     IEnumerator FairyMove(Transform point) {
@@ -83,5 +85,11 @@ public class Level3End : MonoBehaviour {
         }
         body.transform.position += Movement;
         return (target.position - body.position).magnitude < eps;
+    }
+    void EndAnimation() {
+
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
+        bear.body.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        fairy.body.gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 }

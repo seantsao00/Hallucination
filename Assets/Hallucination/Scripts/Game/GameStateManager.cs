@@ -76,7 +76,7 @@ public class GameStateManager {
             ) {
                 Debug.LogError(
                     $"You switched the state to {currentGamePlayState}" +
-                    $"You must switch the state back to {nameof(GamePlayState.Normal)} or {nameof(GamePlayState.None)}" +
+                    $"You must switch the state back to {nameof(GamePlayState.Normal)} or {nameof(GamePlayState.None)} " +
                     $"from {nameof(GamePlayState.SwitchingWorld)}"
                 );
             }

@@ -67,6 +67,7 @@ public class LevelNavigator : MonoBehaviour {
     }
 
     public void CompleteCurrentLevel() {
+        CurrentLevel.CompleteLevel();
         currentLevelIndex += 1;
         PlayerPrefs.SetInt("StartLevelIndex", currentLevelIndex);
         if (currentLevelIndex == levels.Length) {

@@ -166,7 +166,6 @@ public class LevelController : MonoBehaviour {
 
     public void CompleteLevel() {
         Assert.IsTrue(this == LevelNavigator.Instance.CurrentLevel);
-        LevelNavigator.Instance.CompleteCurrentLevel();
 
         transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(false);
         transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(false);

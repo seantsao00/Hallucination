@@ -41,7 +41,6 @@ public class CaptureBackground : MonoBehaviour {
 
         // Read the rendered image into a Texture2D
         Texture2D capturedTexture = new Texture2D(captureWidth, captureHeight, TextureFormat.RGBA32, false);
-        print(circleCenter);
         capturedTexture.ReadPixels(new Rect(0, 0, captureWidth, captureHeight), 0, 0);
         capturedTexture.Apply();
         System.IO.File.WriteAllBytes(Application.dataPath + "/Hallucination/Captures/Original.png", capturedTexture.EncodeToPNG());
@@ -54,7 +53,7 @@ public class CaptureBackground : MonoBehaviour {
         byte[] bytes = circularTexture.EncodeToPNG();
         System.IO.File.WriteAllBytes(Application.dataPath + "/Hallucination/Captures/CapturedGameObjectsCircle.png", bytes);
 
-        Debug.Log("Captured circular part saved as CapturedGameObjectsCircle.png");
+        // Debug.Log("Captured circular part saved as CapturedGameObjectsCircle.png");
 
         // Cleanup
         Destroy(renderTexture);

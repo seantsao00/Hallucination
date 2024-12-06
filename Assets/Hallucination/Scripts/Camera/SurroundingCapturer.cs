@@ -1,18 +1,45 @@
 using UnityEngine;
 
 public class SurroundingCapturer : MonoBehaviour {
+    public static SurroundingCapturer Instance { get; private set; }
     Camera captureCamera;
     int captureWidth = 1920; // Width of the capture
     int captureHeight = 1080; // Height of the capture
     Vector2 circleCenter;
     float radius;
+    public Texture2D cachedTexture;
     [SerializeField] float localRadius;
     string capturePath;
 
     void Awake() {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning($"{typeof(SurroundingCapturer)}: " +
+            "Duplicate instance detected and removed. Only one instance of SurroundingCapture is allowed.");
+            Destroy(Instance);
+            return;
+        }
+        Instance = this;
         capturePath = Application.dataPath + "/Hallucination/Captures";
         System.IO.Directory.CreateDirectory(capturePath);
         captureCamera = GetComponent<Camera>();
+        WorldSwitchManager.Instance.WorldSwitching.AddListener(CaptureWhenSwitched);
+    }
+
+    void Update() {
+        if (WorldSwitchManager.Instance != null && WorldSwitchManager.Instance.Bear != null) {
+            Quaternion currentRotation = gameObject.transform.rotation;
+
+            float bearYRotation = WorldSwitchManager.Instance.Bear.transform.eulerAngles.y;
+            
+            /*
+            gameObject.transform.rotation = Quaternion.Euler(
+                currentRotation.eulerAngles.x,
+                bearYRotation,
+                currentRotation.eulerAngles.z
+            );
+            */
+            // print(currentRotation + " " + gameObject.transform.rotation);
+        }
     }
 
     void CalculateParameter() {
@@ -21,8 +48,18 @@ public class SurroundingCapturer : MonoBehaviour {
         circleCenter = captureCamera.WorldToScreenPoint(transform.position);
     }
 
+    void CaptureWhenSwitched() {
+        if (WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Bear) Capture();
+    }
     void Capture() {
+        
         CalculateParameter();
+        gameObject.transform.position = new Vector3(WorldSwitchManager.Instance.Bear.transform.position.x, 
+                                                WorldSwitchManager.Instance.Bear.transform.position.y,
+                                                -10);
+        
+
+        Debug.Log("Capture called! Camera position:" + gameObject.transform.position);
         RenderTexture renderTexture = new RenderTexture(captureWidth, captureHeight, 24);
         captureCamera.targetTexture = renderTexture;
         captureCamera.Render();
@@ -38,12 +75,12 @@ public class SurroundingCapturer : MonoBehaviour {
         RenderTexture.active = null;
 
         Texture2D circularTexture = ApplyCircularMask(capturedTexture);
-
+        cachedTexture = circularTexture;
         byte[] bytes = circularTexture.EncodeToPNG();
         System.IO.File.WriteAllBytes(Application.dataPath + "/Hallucination/Captures/CapturedGameObjectsCircle.png", bytes);
 
         // Debug.Log("Captured circular part saved as CapturedGameObjectsCircle.png");
-
+        
         // Cleanup
         Destroy(renderTexture);
         Destroy(capturedTexture);

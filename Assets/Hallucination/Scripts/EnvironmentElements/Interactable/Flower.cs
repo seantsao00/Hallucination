@@ -8,7 +8,7 @@ public class Flower : MonoBehaviour {
     CharacterProjectionDetector detector;
     List<GameObject> duplicatedObjects;
     public float activateDuration = 3f;
-    public GameObject bearWorldBackground;
+    public CapturedSurroundings capturedSurroundings;
     bool isFlowerActivated = false;
 
     void Awake() {
@@ -30,6 +30,7 @@ public class Flower : MonoBehaviour {
 
     IEnumerator HandleActivation() {
         isFlowerActivated = true;
+        capturedSurroundings.Activate();
         duplicatedObjects = new();
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         WorldSwitchManager.Instance.Lock(gameObject);
@@ -37,6 +38,7 @@ public class Flower : MonoBehaviour {
         yield return new WaitForSecondsRealtime(activateDuration);
         DestroyProjectionObjects();
         isFlowerActivated = false;
+        capturedSurroundings.Deactivate();
         duplicatedObjects = null;
         WorldSwitchManager.Instance.Unlock(gameObject);
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);

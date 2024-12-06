@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
@@ -10,8 +8,11 @@ using UnityEditor;
 public class LevelNavigatorInspector : Editor {
     int startLevelIndex;
     public override void OnInspectorGUI() {
+        // LevelNavigator levelNavigator = (LevelNavigator)target;
+        if (GUILayout.Button("First Play (don't trigger restart at first level)")) {
+            LevelNavigator.SetFirstPlay(true);
+        }
         startLevelIndex = PlayerPrefs.GetInt("StartLevelIndex", 0);
-        LevelNavigator levelNavigator = (LevelNavigator)target;
         int newStartLevelIndex = EditorGUILayout.IntField("Start Level Index", startLevelIndex);
         if (newStartLevelIndex != startLevelIndex) {
             startLevelIndex = newStartLevelIndex;
@@ -26,12 +27,16 @@ public class LevelNavigator : MonoBehaviour {
     public static LevelNavigator Instance { get; private set; }
     [SerializeField] LevelController[] levels;
     int currentLevelIndex;
-    bool firstLoad = true;
+    bool firstLoad;
 
     public LevelController CurrentLevel => levels[currentLevelIndex];
 
     public static void SetStartLevelIndex(int levelIndex) {
         PlayerPrefs.SetInt("StartLevelIndex", levelIndex);
+    }
+
+    public static void SetFirstPlay(bool isFirstPlay) {
+        PlayerPrefs.SetInt("FirstPlay", isFirstPlay ? 1 : 0);
     }
 
     void Awake() {
@@ -44,6 +49,7 @@ public class LevelNavigator : MonoBehaviour {
         }
         Instance = this;
         currentLevelIndex = PlayerPrefs.GetInt("StartLevelIndex", 0);
+        firstLoad = PlayerPrefs.GetInt("FirstPlay", 1) == 1;
         if (currentLevelIndex >= levels.Length) {
             Debug.LogWarning("currentLevelIndex is out of range. Set to last level.");
             currentLevelIndex = levels.Length - 1;
@@ -67,6 +73,8 @@ public class LevelNavigator : MonoBehaviour {
     }
 
     public void CompleteCurrentLevel() {
+        Debug.Log("Complete Level" + CurrentLevel.gameObject.name);
+        CurrentLevel.CompleteLevel();
         currentLevelIndex += 1;
         PlayerPrefs.SetInt("StartLevelIndex", currentLevelIndex);
         if (currentLevelIndex == levels.Length) {
@@ -80,6 +88,7 @@ public class LevelNavigator : MonoBehaviour {
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         if (firstLoad) {
             firstLoad = false;
+            PlayerPrefs.SetInt("FirstPlay", 0);
             if (CurrentLevel.CanBeStartLevel) {
                 CurrentLevel.StartLevel();
             } else {

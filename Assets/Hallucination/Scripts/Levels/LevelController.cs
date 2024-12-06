@@ -40,10 +40,6 @@ public class LevelController : MonoBehaviour {
         }
     }
 
-    void Start() {
-        RegisterHandler();
-    }
-
     void ApplyCharacterSyncMethod(GameObject character, Syncable method) {
         if (character == null) {
             if (method != null) {
@@ -138,12 +134,11 @@ public class LevelController : MonoBehaviour {
             }
             LoadCheckpointData(startData);
 
-            StartCoroutine(Util.FadeIn(1f, WorldSwitchManager.Instance.FadingMask));
-
             transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
             transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
         }
         ApplyCharacterSyncMethods();
+        RegisterHandler();
     }
 
     public void RestartLevel() {
@@ -162,11 +157,11 @@ public class LevelController : MonoBehaviour {
             transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
         }
         ApplyCharacterSyncMethods();
+        RegisterHandler();
     }
 
     public void CompleteLevel() {
         Assert.IsTrue(this == LevelNavigator.Instance.CurrentLevel);
-        LevelNavigator.Instance.CompleteCurrentLevel();
 
         transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(false);
         transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(false);

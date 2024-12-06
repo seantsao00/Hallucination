@@ -8,7 +8,7 @@ public class Flower : MonoBehaviour {
     CharacterProjectionDetector detector;
     List<GameObject> duplicatedObjects;
     public float activateDuration = 3f;
-    public CapturedSurroundings capturedSurroundings;
+    [SerializeField] CapturedSurroundings capturedSurroundings;
     bool isFlowerActivated = false;
 
     void Awake() {
@@ -18,13 +18,18 @@ public class Flower : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player") && !isFlowerActivated) {
             isPlayerInRange = true;
-            StartCoroutine(HandleActivation());
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             isPlayerInRange = false;
+        }
+    }
+
+    void Update() {
+        if (isPlayerInRange && !isFlowerActivated) {
+            StartCoroutine(HandleActivation());
         }
     }
 
@@ -47,6 +52,7 @@ public class Flower : MonoBehaviour {
     void DuplicateProjectionObjects() {
         Vector2 offsetF = transform.position - detector.transform.position;
         Vector2Int offset = new Vector2Int(Mathf.RoundToInt(offsetF.x), Mathf.RoundToInt(offsetF.y));
+        // Debug.Log($"duplicating ${detector.ProjectionObjects.Count} projection objects");
         foreach (var projection in detector.ProjectionObjects) {
             GameObject duplicatedObject;
             Vector2 newPosition = (Vector2)projection.transform.position + offset;
@@ -65,6 +71,8 @@ public class Flower : MonoBehaviour {
             duplicatedObject.name = projection.name + "_Copy";
             if (projection.layer == LayerMask.NameToLayer("ProjectionGround")) {
                 duplicatedObject.layer = LayerMask.NameToLayer("Ground");
+            } else if (projection.layer == LayerMask.NameToLayer("FairyProjection")) {
+                duplicatedObject.layer = LayerMask.NameToLayer("Default");
             }
             duplicatedObjects.Add(duplicatedObject);
         }

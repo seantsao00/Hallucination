@@ -59,7 +59,7 @@ public class SurroundingCapturer : MonoBehaviour {
                                                 -10);
         
 
-        Debug.Log("Capture called! Camera position:" + gameObject.transform.position);
+        // Debug.Log("Capture called! Camera position:" + gameObject.transform.position);
         RenderTexture renderTexture = new RenderTexture(captureWidth, captureHeight, 24);
         captureCamera.targetTexture = renderTexture;
         captureCamera.Render();

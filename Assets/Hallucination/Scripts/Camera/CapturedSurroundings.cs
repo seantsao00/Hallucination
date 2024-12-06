@@ -24,7 +24,7 @@ public class CapturedSurroundings : MonoBehaviour
     void UpdateSprite()
     {
         Texture2D newTexture = SurroundingCapturer.Instance.cachedTexture;
-        print("updated!");
+        // print("updated!");
         if (newTexture == null)
         {
             Debug.LogError("New texture is null!");

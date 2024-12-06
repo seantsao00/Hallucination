@@ -1,21 +1,39 @@
 using System.Collections;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 public class CaptureBackground : MonoBehaviour {
     public Camera captureCamera; // Assign a secondary camera in the inspector
-    public int captureWidth = 512; // Width of the capture
-    public int captureHeight = 512; // Height of the capture
-    public Vector2 circleCenter = new Vector2(256, 256); // Circle center in the capture
-    public float radius = 200; // Radius of the circle
+    int captureWidth; // Width of the capture
+    int captureHeight; // Height of the capture
+    Vector2 circleCenter; // Circle center in the capture
+    Vector2 captureCenter;
+    float radius;
+    public float localRadius = 3; // Radius of the circle
+    public Transform bearTransform;
     void Start() {
         StartCoroutine(DelayCapture());
+        
     }
+
+    void Update() {
+        // Debug.Log(captureCamera.WorldToScreenPoint(bearTransform.position));
+    }
+
+    void CalculateParameter() {
+        float pixelsPerUnit = captureCamera.pixelWidth / (captureCamera.orthographicSize * 2 * captureCamera.aspect);
+        radius = localRadius * pixelsPerUnit;
+        captureHeight = captureWidth = (int)((localRadius + 1f) * 2f * pixelsPerUnit);
+        circleCenter = new Vector2(captureWidth / 2, captureHeight / 2);
+    } 
     IEnumerator DelayCapture() {
         yield return new WaitForSeconds(3);
         Capture();
     }
     void Capture()
     {   
+        
+        CalculateParameter();
         // Set up a RenderTexture
         RenderTexture renderTexture = new RenderTexture(captureWidth, captureHeight, 24);
         captureCamera.targetTexture = renderTexture;
@@ -28,9 +46,10 @@ public class CaptureBackground : MonoBehaviour {
 
         // Read the rendered image into a Texture2D
         Texture2D capturedTexture = new Texture2D(captureWidth, captureHeight, TextureFormat.RGBA32, false);
-        System.IO.File.WriteAllBytes("C:\\Users\\user\\Game Programming Project\\Hallucination\\Captures" + "/Original.png", capturedTexture.EncodeToPNG());
+        print(circleCenter);
         capturedTexture.ReadPixels(new Rect(0, 0, captureWidth, captureHeight), 0, 0);
         capturedTexture.Apply();
+        System.IO.File.WriteAllBytes("C:\\Users\\user\\Game Programming Project\\Hallucination\\Captures" + "/Original.png", capturedTexture.EncodeToPNG());
 
         // Reset the camera's targetTexture and RenderTexture
         captureCamera.targetTexture = null;

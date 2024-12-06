@@ -8,6 +8,7 @@ public class Flower : MonoBehaviour {
     CharacterProjectionDetector detector;
     List<GameObject> duplicatedObjects;
     public float activateDuration = 3f;
+    public GameObject bearWorldBackground;
     bool isFlowerActivated = false;
 
     void Awake() {

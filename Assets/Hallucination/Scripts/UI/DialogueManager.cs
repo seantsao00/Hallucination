@@ -185,6 +185,7 @@ public class DialogueManager : MonoBehaviour {
         TMP_TextInfo textInfo = dialogueText.textInfo;
 
         SetDialogueAlpha(0, textInfo);
+        dialogueText.ForceMeshUpdate();
         // Gradually reveal characters
         for (int i = 0; i < textInfo.characterCount; i++) {
             TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
@@ -193,8 +194,10 @@ public class DialogueManager : MonoBehaviour {
             int vertexIndex = charInfo.vertexIndex;
             Color32[] vertexColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
             float alpha = 0;
+            
             while (alpha < 1) {
-                alpha += Time.deltaTime * 20f * speed;
+                
+                alpha += Time.deltaTime * 10f * speed;
                 alpha = Math.Min(alpha, 1);
                 byte newAlpha = (byte)(alpha * 255);
 

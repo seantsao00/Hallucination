@@ -1,24 +1,24 @@
 using UnityEngine;
 
 public class SurroundingCapturer : MonoBehaviour {
-    public Camera captureCamera;
+    Camera captureCamera;
     int captureWidth = 1920; // Width of the capture
     int captureHeight = 1080; // Height of the capture
     Vector2 circleCenter;
     float radius;
-    public float localRadius;
-    public Transform bearTransform;
+    [SerializeField] float localRadius;
     string capturePath;
 
     void Awake() {
         capturePath = Application.dataPath + "/Hallucination/Captures";
         System.IO.Directory.CreateDirectory(capturePath);
+        captureCamera = GetComponent<Camera>();
     }
 
     void CalculateParameter() {
         float pixelsPerUnit = captureWidth / 40f;
         radius = localRadius * pixelsPerUnit;
-        circleCenter = captureCamera.WorldToScreenPoint(bearTransform.position);
+        circleCenter = captureCamera.WorldToScreenPoint(transform.position);
     }
 
     void Capture() {

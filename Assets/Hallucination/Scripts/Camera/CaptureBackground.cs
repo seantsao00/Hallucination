@@ -49,7 +49,7 @@ public class CaptureBackground : MonoBehaviour {
         print(circleCenter);
         capturedTexture.ReadPixels(new Rect(0, 0, captureWidth, captureHeight), 0, 0);
         capturedTexture.Apply();
-        System.IO.File.WriteAllBytes("C:\\Users\\user\\Game Programming Project\\Hallucination\\Captures" + "/Original.png", capturedTexture.EncodeToPNG());
+        System.IO.File.WriteAllBytes("Captures" + "/Original.png", capturedTexture.EncodeToPNG());
 
         // Reset the camera's targetTexture and RenderTexture
         captureCamera.targetTexture = null;

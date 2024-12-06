@@ -9,7 +9,7 @@ public class LevelNavigatorInspector : Editor {
     int startLevelIndex;
     public override void OnInspectorGUI() {
         // LevelNavigator levelNavigator = (LevelNavigator)target;
-        if (GUILayout.Button("First Play (don't trigger restart at first level)")) {
+        if (GUILayout.Button("Set first time play")) {
             LevelNavigator.SetFirstPlay(true);
         }
         startLevelIndex = PlayerPrefs.GetInt("StartLevelIndex", 0);
@@ -50,15 +50,32 @@ public class LevelNavigator : MonoBehaviour {
         Instance = this;
         currentLevelIndex = PlayerPrefs.GetInt("StartLevelIndex", 0);
         firstLoad = PlayerPrefs.GetInt("FirstPlay", 1) == 1;
+        foreach (var level in levels) {
+            level.gameObject.SetActive(false);
+        }
         if (currentLevelIndex >= levels.Length) {
             Debug.LogWarning("currentLevelIndex is out of range. Set to last level.");
-            currentLevelIndex = levels.Length - 1;
+            currentLevelIndex = 0;
             PlayerPrefs.SetInt("StartLevelIndex", currentLevelIndex);
         }
-    }
 
-    void OnEnable() {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        CurrentLevel.gameObject.SetActive(true);
+        if (firstLoad) {
+            firstLoad = false;
+            PlayerPrefs.SetInt("FirstPlay", 0);
+            if (CurrentLevel.CanBeStartLevel) {
+                CurrentLevel.StartLevel();
+            } else {
+                Debug.LogWarning(
+                    $"Start the game from a level {CurrentLevel} that does not set start world." +
+                    "Automatically invoke restart."
+                );
+                CurrentLevel.RestartLevel();
+            }
+        } else {
+            CurrentLevel.RestartLevel();
+        }
+        GameStateManager.Instance.CurrentGameState = GameState.Play;
     }
 
     public void RestartCurrentLevel() {
@@ -81,30 +98,8 @@ public class LevelNavigator : MonoBehaviour {
             Debug.LogWarning("The last level completed");
         } else {
             Debug.Log($"New Level: {CurrentLevel.gameObject.name}");
+            CurrentLevel.gameObject.SetActive(true);
             CurrentLevel.StartLevel();
         }
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if (firstLoad) {
-            firstLoad = false;
-            PlayerPrefs.SetInt("FirstPlay", 0);
-            if (CurrentLevel.CanBeStartLevel) {
-                CurrentLevel.StartLevel();
-            } else {
-                Debug.LogWarning(
-                    $"Start the game from a level {CurrentLevel} that does not set start world." +
-                    "Automatically invoke restart."
-                );
-                CurrentLevel.RestartLevel();
-            }
-        } else {
-            CurrentLevel.RestartLevel();
-        }
-        GameStateManager.Instance.CurrentGameState = GameState.Play;
-    }
-
-    void OnDestroy() {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

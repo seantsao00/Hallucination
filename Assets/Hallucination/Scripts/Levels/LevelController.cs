@@ -21,6 +21,7 @@ public class LevelController : MonoBehaviour {
         public Syncable bearWorldFairy;
         public Syncable bearWorldBear;
     }
+    [SerializeField] float deactivateAfterCompleteDelay = 0f;
     [SerializeField] GameObject fairyWorldFairy, fairyWorldBear, bearWorldFairy, bearWorldBear;
     [SerializeField] CharacterSyncMethod characterSyncMethod;
     [SerializeField] CheckpointData startData;
@@ -165,5 +166,12 @@ public class LevelController : MonoBehaviour {
 
         transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(false);
         transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(false);
+
+        StartCoroutine(PerformDeactivateAfterComplete());
+    }
+
+    IEnumerator PerformDeactivateAfterComplete() {
+        yield return new WaitForSeconds(deactivateAfterCompleteDelay);
+        gameObject.SetActive(false);
     }
 }

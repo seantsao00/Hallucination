@@ -80,6 +80,8 @@ public class Character : MonoBehaviour {
     }
 
     public void StopMotion() {
-        rb.velocity = new Vector2(0, 0);
+        if (rb != null)
+            rb.velocity = new Vector2(0, 0);
+        GetComponent<CharacterDash>()?.ResetDash();
     }
 }

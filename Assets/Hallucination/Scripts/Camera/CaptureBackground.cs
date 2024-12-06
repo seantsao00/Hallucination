@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class CaptureBackground : MonoBehaviour {
     public Camera captureCamera; // Assign a secondary camera in the inspector
-    int captureWidth; // Width of the capture
-    int captureHeight; // Height of the capture
+    int captureWidth = 1920; // Width of the capture
+    int captureHeight = 1080; // Height of the capture
     Vector2 circleCenter; // Circle center in the capture
     Vector2 captureCenter;
     float radius;
-    public float localRadius = 3; // Radius of the circle
+    public float localRadius; // Radius of the circle
     public Transform bearTransform;
     void Start() {
         StartCoroutine(DelayCapture());
-        
+
     }
 
     void Update() {
@@ -21,18 +21,16 @@ public class CaptureBackground : MonoBehaviour {
     }
 
     void CalculateParameter() {
-        float pixelsPerUnit = captureCamera.pixelWidth / (captureCamera.orthographicSize * 2 * captureCamera.aspect);
+        float pixelsPerUnit = captureWidth / 40f;
         radius = localRadius * pixelsPerUnit;
-        captureHeight = captureWidth = (int)((localRadius + 1f) * 2f * pixelsPerUnit);
-        circleCenter = new Vector2(captureWidth / 2, captureHeight / 2);
-    } 
+        circleCenter = captureCamera.WorldToScreenPoint(bearTransform.position);
+    }
     IEnumerator DelayCapture() {
         yield return new WaitForSeconds(3);
         Capture();
     }
-    void Capture()
-    {   
-        
+    void Capture() {
+        print(Application.dataPath);
         CalculateParameter();
         // Set up a RenderTexture
         RenderTexture renderTexture = new RenderTexture(captureWidth, captureHeight, 24);
@@ -40,7 +38,7 @@ public class CaptureBackground : MonoBehaviour {
 
         // Render the camera
         captureCamera.Render();
-        
+
         // Set the RenderTexture as active
         RenderTexture.active = renderTexture;
 
@@ -49,7 +47,7 @@ public class CaptureBackground : MonoBehaviour {
         print(circleCenter);
         capturedTexture.ReadPixels(new Rect(0, 0, captureWidth, captureHeight), 0, 0);
         capturedTexture.Apply();
-        System.IO.File.WriteAllBytes("Captures" + "/Original.png", capturedTexture.EncodeToPNG());
+        System.IO.File.WriteAllBytes(Application.dataPath + "/Hallucination/Captures/Original.png", capturedTexture.EncodeToPNG());
 
         // Reset the camera's targetTexture and RenderTexture
         captureCamera.targetTexture = null;
@@ -60,7 +58,7 @@ public class CaptureBackground : MonoBehaviour {
 
         // Save the circular texture as a PNG file
         byte[] bytes = circularTexture.EncodeToPNG();
-        System.IO.File.WriteAllBytes("C:\\Users\\user\\Game Programming Project\\Hallucination\\Captures" + "/CapturedGameObjectsCircle.png", bytes);
+        System.IO.File.WriteAllBytes(Application.dataPath + "/Hallucination/Captures/CapturedGameObjectsCircle.png", bytes);
 
         Debug.Log("Captured circular part saved as CapturedGameObjectsCircle.png");
 
@@ -69,31 +67,39 @@ public class CaptureBackground : MonoBehaviour {
         Destroy(capturedTexture);
     }
 
-    Texture2D ApplyCircularMask(Texture2D originalTexture)
-    {
-        Texture2D circularTexture = new Texture2D(originalTexture.width, originalTexture.height, TextureFormat.RGBA32, false);
+    Texture2D ApplyCircularMask(Texture2D originalTexture) {
+        // Calculate the bounding box of the circular region
+        int minX = Mathf.Clamp(Mathf.FloorToInt(circleCenter.x - radius), 0, originalTexture.width);
+        int maxX = Mathf.Clamp(Mathf.CeilToInt(circleCenter.x + radius), 0, originalTexture.width);
+        int minY = Mathf.Clamp(Mathf.FloorToInt(circleCenter.y - radius), 0, originalTexture.height);
+        int maxY = Mathf.Clamp(Mathf.CeilToInt(circleCenter.y + radius), 0, originalTexture.height);
 
-        for (int y = 0; y < originalTexture.height; y++)
-        {
-            for (int x = 0; x < originalTexture.width; x++)
-            {
+        // Create a smaller texture to fit the bounding box
+        int croppedWidth = maxX - minX;
+        int croppedHeight = maxY - minY;
+        Texture2D croppedTexture = new Texture2D(croppedWidth, croppedHeight, TextureFormat.RGBA32, false);
+
+        // Copy pixels within the bounding box, applying the circular mask
+        for (int y = 0; y < croppedHeight; y++) {
+            for (int x = 0; x < croppedWidth; x++) {
+                int sourceX = minX + x;
+                int sourceY = minY + y;
+
                 // Calculate the distance from the circle center
-                float distance = Vector2.Distance(new Vector2(x, y), circleCenter);
+                float distance = Vector2.Distance(new Vector2(sourceX, sourceY), circleCenter);
 
-                if (distance <= radius)
-                {
+                if (distance <= radius) {
                     // Within the circle: keep the pixel
-                    circularTexture.SetPixel(x, y, originalTexture.GetPixel(x, y));
-                }
-                else
-                {
+                    croppedTexture.SetPixel(x, y, originalTexture.GetPixel(sourceX, sourceY));
+                } else {
                     // Outside the circle: make it transparent
-                    circularTexture.SetPixel(x, y, Color.clear);
+                    croppedTexture.SetPixel(x, y, Color.clear);
                 }
             }
         }
 
-        circularTexture.Apply();
-        return circularTexture;
+        croppedTexture.Apply();
+        return croppedTexture;
     }
+
 }

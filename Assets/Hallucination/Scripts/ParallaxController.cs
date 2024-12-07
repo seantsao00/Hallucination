@@ -43,6 +43,12 @@ public class ParallaxController : MonoBehaviour {
     }
 
     private void LateUpdate() {
+        if (gameObject.CompareTag("BearWorldEnvironment") && WorldSwitchManager.Instance.currentWorld != CharacterTypeEnum.Bear) {
+            return;
+        }
+        if (gameObject.CompareTag("FairyWorldEnvironment") && WorldSwitchManager.Instance.currentWorld != CharacterTypeEnum.Fairy) {
+            return;
+        }
         if (camPrevPos != null && camPrevPos != Vector3.zero) {
             distanceX = cam.position.x - camPrevPos.x;
             distanceY = cam.position.y - camPrevPos.y;

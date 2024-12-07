@@ -8,8 +8,6 @@ public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
     [SerializeField] GameObject WorldSwitchIcon;
     public GameObject Bear, Fairy;
-    GameObject[] fairyWorldEnvironments;
-    GameObject[] bearWorldEnvironments;
     public CanvasGroup FadingMask;
     public UnityEvent WorldSwitching;
     public UnityEvent WorldSwitched;
@@ -32,8 +30,6 @@ public class WorldSwitchManager : MonoBehaviour {
             return;
         }
         Instance = this;
-        fairyWorldEnvironments = GameObject.FindGameObjectsWithTag("FairyWorldEnvironment");
-        bearWorldEnvironments = GameObject.FindGameObjectsWithTag("BearWorldEnvironment");
     }
 
     private void OnDestroy() {
@@ -141,13 +137,17 @@ public class WorldSwitchManager : MonoBehaviour {
 
     private void SetWorldFairy() {
         currentWorld = CharacterTypeEnum.Fairy;
-        foreach (var environment in fairyWorldEnvironments) { environment.SetActive(true); }
-        foreach (var environment in bearWorldEnvironments) { environment.SetActive(false); }
+        LevelNavigator.Instance.CurrentLevel.fairyWorldMainCamera.SetActive(true);
+        Fairy.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        LevelNavigator.Instance.CurrentLevel.bearWorldMainCamera.SetActive(false);
+        Bear.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
 
     private void SetWorldBear() {
         currentWorld = CharacterTypeEnum.Bear;
-        foreach (var environment in fairyWorldEnvironments) { environment.SetActive(false); }
-        foreach (var environment in bearWorldEnvironments) { environment.SetActive(true); }
+        LevelNavigator.Instance.CurrentLevel.fairyWorldMainCamera.SetActive(false);
+        Fairy.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        LevelNavigator.Instance.CurrentLevel.bearWorldMainCamera.SetActive(true);
+        Bear.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 }

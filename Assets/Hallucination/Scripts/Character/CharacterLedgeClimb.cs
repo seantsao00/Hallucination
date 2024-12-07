@@ -17,6 +17,7 @@ public class CharacterLedgeClimb : MonoBehaviour {
     }
 
     void Update() {
+        if (rb.bodyType == RigidbodyType2D.Static) return;
         if (!InputManager.Control.Character.HorizontalMove.enabled) return;
         if (isClimbingLedge) return;
         if (Mathf.Abs(rb.velocity.y) > eps) return;

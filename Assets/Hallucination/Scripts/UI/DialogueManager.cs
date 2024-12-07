@@ -171,7 +171,7 @@ public class DialogueManager : MonoBehaviour {
         if (speaker == "Bear") {
             currentDialogueBox.bearImage.SetActive(true);
             currentDialogueBox.darkBearImage.SetActive(false);
-        } else if (speaker == "DarkBear") {
+        } else if (speaker == "Dark Bear") {
             currentDialogueBox.bearImage.SetActive(false);
             currentDialogueBox.darkBearImage.SetActive(true);
         } else {

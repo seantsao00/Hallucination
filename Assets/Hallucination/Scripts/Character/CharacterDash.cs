@@ -54,6 +54,7 @@ public class CharacterDash : MonoBehaviour {
     }
 
     void Dash(InputAction.CallbackContext context) {
+        if (rb.bodyType == RigidbodyType2D.Static) return;
         if (isDashCooling || !canDash) return;
         if (dashSound != null) {
             audioSource.PlayOneShot(dashSound);

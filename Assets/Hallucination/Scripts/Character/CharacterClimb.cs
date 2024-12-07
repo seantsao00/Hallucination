@@ -14,6 +14,7 @@ public class CharacterClimb : MonoBehaviour {
     }
 
     void Update() {
+        if (rb.bodyType == RigidbodyType2D.Static) return;
         float direction = InputManager.Instance.CharacterVerticalMove;
 
         if (!characterStateController.HasState(CharacterState.Climbing)) {

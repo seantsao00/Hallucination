@@ -1,5 +1,5 @@
 {
-    "dotnet.defaultSolution": "Hallucination.sln",
+    "dotnet.defaultSolution": "NTU-GP-2024-Fall.sln",
     "files.autoSave": "off",
     "files.exclude": {
         "**/.DS_Store": true,

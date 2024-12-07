@@ -42,7 +42,7 @@ public class ParallaxController : MonoBehaviour {
         }
     }
 
-    private void LateUpdate() {
+    private void FixedUpdate() {
         if (camPrevPos != null && camPrevPos != Vector3.zero) {
             distanceX = cam.position.x - camPrevPos.x;
             distanceY = cam.position.y - camPrevPos.y;
@@ -50,9 +50,9 @@ public class ParallaxController : MonoBehaviour {
             distanceX = 0;
             distanceY = 0;
         }
-        if ((transform.parent.name == "FairyWorld"
+        if ((transform.parent.name == "FairyRelated"
                 && WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Fairy)
-            || (transform.parent.name == "BearWorld"
+            || (transform.parent.name == "BearRelated"
                 && WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Bear)) {
             camPrevPos = cam.position;
         }

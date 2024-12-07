@@ -9,7 +9,7 @@ public class Flower : MonoBehaviour {
     List<GameObject> duplicatedObjects;
     public float activateDuration = 3f;
     [SerializeField] CapturedSurroundings capturedSurroundings;
-    bool isFlowerActivated = false;
+    public bool isActivated { get; private set; } = false;
     float targetAlpha = 0.8f;
 
     void Awake() {
@@ -17,7 +17,7 @@ public class Flower : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Player") && !isFlowerActivated) {
+        if (other.CompareTag("Player") && !isActivated) {
             isPlayerInRange = true;
         }
     }
@@ -29,25 +29,25 @@ public class Flower : MonoBehaviour {
     }
 
     void Update() {
-        if (isPlayerInRange && !isFlowerActivated) {
+        if (isPlayerInRange && !isActivated) {
             StartCoroutine(HandleActivation());
         }
     }
 
     IEnumerator HandleActivation() {
-        isFlowerActivated = true;
+        isActivated = true;
         capturedSurroundings.Activate();
         duplicatedObjects = new();
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         WorldSwitchManager.Instance.Lock(gameObject);
         DuplicateProjectionObjects();
-        yield return new WaitForSecondsRealtime(activateDuration);
+        yield return new WaitForSeconds(activateDuration);
         DestroyProjectionObjects();
-        isFlowerActivated = false;
         capturedSurroundings.Deactivate();
         duplicatedObjects = null;
         WorldSwitchManager.Instance.Unlock(gameObject);
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+        isActivated = false;
     }
 
     void DuplicateProjectionObjects() {
@@ -122,9 +122,18 @@ public class Flower : MonoBehaviour {
     void DestroyProjectionObjects() {
         // print(duplicatedObjects);
         foreach (var duplicatedObject in duplicatedObjects) {
-            Destroy(duplicatedObject);
+            Flower flower = duplicatedObject.GetComponent<Flower>();
+            if (flower != null) {
+                flower.DestroySelfAfterDeactivated();
+            } else {
+                Destroy(duplicatedObject);
+            }
         }
     }
 
-
+    void DestroySelfAfterDeactivated() => StartCoroutine(DestroyCoroutine());
+    IEnumerator DestroyCoroutine() {
+        yield return new WaitUntil(() => !isActivated);
+        Destroy(gameObject);
+    }
 }

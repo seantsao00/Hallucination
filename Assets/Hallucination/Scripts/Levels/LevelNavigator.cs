@@ -60,6 +60,8 @@ public class LevelNavigator : MonoBehaviour {
         }
 
         CurrentLevel.gameObject.SetActive(true);
+        GameStateManager.Instance.CurrentGameState = GameState.Play;
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
         if (firstLoad) {
             firstLoad = false;
             PlayerPrefs.SetInt("FirstPlay", 0);
@@ -75,7 +77,6 @@ public class LevelNavigator : MonoBehaviour {
         } else {
             CurrentLevel.RestartLevel();
         }
-        GameStateManager.Instance.CurrentGameState = GameState.Play;
     }
 
     public void RestartCurrentLevel() {

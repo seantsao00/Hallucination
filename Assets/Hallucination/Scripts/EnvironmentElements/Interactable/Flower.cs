@@ -103,6 +103,15 @@ public class Flower : MonoBehaviour {
         Vector2 fairyPosition = WorldSwitchManager.Instance.Fairy.transform.position;
         foreach (var collider in colliders) {
             collider.excludeLayers = 0;
+            // if (obj.layer == LayerMask.NameToLayer("Ground")) {
+            //     if (collider.OverlapPoint(fairyPosition)) {
+            //         Vector2 closestPoint = collider.ClosestPoint(fairyPosition);
+            //         Debug.Log(closestPoint);
+            //         Vector2 direction = (fairyPosition - closestPoint).normalized;
+            //         obj.transform.position = closestPoint + direction * 0.1f;
+            //         // WorldSwitchManager.Instance.Fairy.GetComponent<CharacterDeath>().TakeDamage();
+            //     }
+            // }
         }
     }
     void DestroyProjectionObjects() {

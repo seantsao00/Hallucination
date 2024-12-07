@@ -127,36 +127,35 @@ public class LevelController : MonoBehaviour {
 
     public void StartLevel() {
         Debug.Log($"Start Level: {gameObject.name}");
-        if (startData != null) {
-            if (startData.Checkpoint != null) {
-                Debug.LogWarning(
-                    $"The {nameof(LevelCheckpoint)} assignment in start data is redundant and will have no effect."
-                );
-            }
-            LoadCheckpointData(startData);
-
-            transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
-            transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
+        if (startData.Checkpoint != null) {
+            Debug.LogWarning(
+                $"The {nameof(LevelCheckpoint)} assignment in start data is redundant and will have no effect."
+            );
         }
-        ApplyCharacterSyncMethods();
-        RegisterHandler();
+        HandleLevelBegin(startData);
     }
 
     public void RestartLevel() {
         Debug.Log($"Restart Level: {gameObject.name}");
-        if (restartData != null) {
-            if (restartData.Checkpoint != null) {
-                Debug.LogWarning(
-                    $"The {nameof(LevelCheckpoint)} assignment in restart data is redundant and will have no effect."
-                );
-            }
-            LoadCheckpointData(restartData);
-
-            StartCoroutine(Util.FadeIn(1f, WorldSwitchManager.Instance.FadingMask));
-
-            transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
-            transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
+        if (restartData.Checkpoint != null) {
+            Debug.LogWarning(
+                $"The {nameof(LevelCheckpoint)} assignment in restart data is redundant and will have no effect."
+            );
         }
+        HandleLevelBegin(restartData, fadeIn: true);
+    }
+
+    void HandleLevelBegin(CheckpointData levelData, bool fadeIn = false) {
+        if (levelData == null) {
+            Debug.LogError("Level data is null.");
+            return;
+        }
+        LoadCheckpointData(levelData);
+
+        if (fadeIn) StartCoroutine(Util.FadeIn(1f, WorldSwitchManager.Instance.FadingMask));
+
+        transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
+        transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
         ApplyCharacterSyncMethods();
         RegisterHandler();
     }

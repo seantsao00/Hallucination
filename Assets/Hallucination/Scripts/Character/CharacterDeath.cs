@@ -13,6 +13,7 @@ public class CharacterDeath : MonoBehaviour {
 
     void Die() {
         GetComponent<CharacterStateController>().AddState(CharacterState.Dead);
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.AllInputDisabled;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GetComponent<SpriteRenderer>().enabled = false;
 

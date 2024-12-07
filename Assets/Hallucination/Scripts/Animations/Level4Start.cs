@@ -31,6 +31,7 @@ public class Level4Start : MonoBehaviour {
         bear.body.gameObject.SetActive(false);
         WorldSwitchManager.Instance.Bear.transform.position = bear.points[bear.points.Length - 1].position;
         WorldSwitchManager.Instance.Bear.GetComponent<SpriteRenderer>().enabled = true;
+        WorldSwitchManager.Instance.Fairy.GetComponent<SpriteRenderer>().enabled = true;
         DialogueManager.Instance.StartDialogueWithCallback(dialogueName, () => {
             LevelNavigator.Instance.CompleteCurrentLevel();
         });

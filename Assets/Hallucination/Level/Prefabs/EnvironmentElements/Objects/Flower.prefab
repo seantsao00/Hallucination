@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9169134212175468622}
   - component: {fileID: 6104791814760137000}
-  - component: {fileID: 2283452784432497765}
   - component: {fileID: 2111934164689075886}
+  - component: {fileID: 51328426184761842}
   - component: {fileID: 1664846210616052807}
   m_Layer: 0
   m_Name: Flower
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3005136776459459571}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3889, y: 10.0589, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -88,8 +88,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &2283452784432497765
-PolygonCollider2D:
+--- !u!114 &2111934164689075886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3005136776459459571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071dfdc223a7de44cb4e19661177289d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateDuration: 3
+  capturedSurroundings: {fileID: 960395703858152864}
+--- !u!61 &51328426184761842
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -130,27 +144,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 0.25}
-      - {x: -0.5, y: 0}
-      - {x: 0, y: -0.25}
-      - {x: 0.5, y: 0}
-  m_UseDelaunayMesh: 0
---- !u!114 &2111934164689075886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3005136776459459571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 071dfdc223a7de44cb4e19661177289d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activateDuration: 3
-  capturedSurroundings: {fileID: 960395703858152864}
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8}
+  m_EdgeRadius: 0
 --- !u!95 &1664846210616052807
 Animator:
   serializedVersion: 5

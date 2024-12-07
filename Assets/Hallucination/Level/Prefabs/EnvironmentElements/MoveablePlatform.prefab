@@ -438,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3930003841540556765, guid: 2faaf5b7af1dc884cbb521d587f2108d, type: 3}
       propertyPath: m_SortingLayer
-      value: -3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3930003841540556765, guid: 2faaf5b7af1dc884cbb521d587f2108d, type: 3}
       propertyPath: m_SortingLayerID
@@ -606,7 +606,7 @@ MonoBehaviour:
   points:
   - {fileID: 6152548738504648083}
   - {fileID: 9092946500247757954}
-  slowDownLength: 2
-  minSpeedRatio: 0.33
+  slowDownLength: 1
+  minSpeedRatio: 0.5
   initialPositionIndex: 0
-  speed: 3
+  speed: 4

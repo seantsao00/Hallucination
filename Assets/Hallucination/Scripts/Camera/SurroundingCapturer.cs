@@ -8,8 +8,9 @@ public class SurroundingCapturer : MonoBehaviour {
     Vector2 circleCenter;
     float radius;
     public Texture2D cachedTexture;
-    [SerializeField] float localRadius;
     string capturePath;
+
+    float localRadius => WorldSwitchManager.Instance.Bear.GetComponentInChildren<CharacterProjectionDetector>().radius;
 
     void Awake() {
         if (Instance != null && Instance != this) {

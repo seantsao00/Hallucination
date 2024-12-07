@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseGameMenu : MonoBehaviour {
+    public Button initialButton;
 
     void Awake() {
         GameStateManager.Instance.GameStateChangedEvent.AddListener(HandleGameStateChange);
@@ -21,17 +24,26 @@ public class PauseGameMenu : MonoBehaviour {
     }
 
     public void PauseHandler(InputAction.CallbackContext context) {
-        switch(GameStateManager.Instance.CurrentGameState) {
+        switch (GameStateManager.Instance.CurrentGameState) {
             case GameState.Paused:
                 GameStateManager.Instance.CurrentGameState = GameState.Play;
                 break;
             case GameState.Play:
                 GameStateManager.Instance.CurrentGameState = GameState.Paused;
+                SetFocusOnButton();
                 break;
             default:
                 Debug.LogError($"Pause is not supported in the current GameState: {GameStateManager.Instance.CurrentGameState}");
                 break;
         }
+    }
+    public void SetFocusOnButton() {
+        if (initialButton != null) {
+            EventSystem.current.SetSelectedGameObject(initialButton.gameObject);
+        } else {
+            Debug.LogWarning("Target button is not assigned.");
+        }
+        Debug.Log("Focus set");
     }
 
     void OnDestroy() {

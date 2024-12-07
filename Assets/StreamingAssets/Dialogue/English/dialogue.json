@@ -81,31 +81,31 @@
             "pauseGame": false,
             "lines": [
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "Why do you keep running away?"
                 },
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "What is it you're so afraid of?"
                 },
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "I'm trying to help... trying to fix you."
                 },
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "I don't know what you're going through, but I want to understand."
                 },
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "I'm doing this for you. This is for your own good."
                 },
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "Please... I can't imagine a world without you..."
                 },
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "Stop pretending... Stop running ..."
                 }
             ]
@@ -115,7 +115,7 @@
             "pauseGame": true,
             "lines": [
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "I think... maybe I need to try harder to understand you. I can't just keep assuming I know what's best."
                 }
             ]
@@ -125,11 +125,11 @@
             "pauseGame": true,
             "lines": [
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "I need to accept that you're not the same as you were. You've changed... and maybe I have to accept that."
                 },
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "I shouldn't try to force you to return to what you once were... or judge you for what you've become."
                 }
             ]
@@ -139,7 +139,7 @@
             "pauseGame": true,
             "lines": [
                 {
-                    "speaker": "Bear",
+                    "speaker": "Dark Bear",
                     "sentence": "Instead, I need to understand you. I need to accept you."
                 }
             ]

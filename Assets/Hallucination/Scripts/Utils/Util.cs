@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
@@ -22,14 +23,17 @@ public class Util {
     }
 
     static Language cachedLanguage;
-    static bool isInitialized = false;
+    public static bool isInitialized = false;
 
-    static public IEnumerator InitializeLocalizationAsync() {
+    static public IEnumerator InitializeLocalizationAsync(LoadingScreen loadingScreen) {
+        // loadingScreen.ShowLoadingScreen();
+        yield return null;
         while (!LocalizationSettings.InitializationOperation.IsDone) {
             Debug.Log("Still initializing");
             yield return null;
 
         }
+
         Debug.Log("Initialized");
         int localeIndex = PlayerPrefs.GetInt(
             "Locale",
@@ -42,6 +46,7 @@ public class Util {
             _ => Language.English,
         };
         isInitialized = true;
+        loadingScreen.gameObject.SetActive(false);
     }
 
     static public Language CurrentLanguage() {

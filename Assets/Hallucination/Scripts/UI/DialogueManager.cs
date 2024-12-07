@@ -145,6 +145,7 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
+        Debug.Log("Next sentence");
         // If dialogue is still typing and the game is paused, show the full sentence immediately
         if (isTyping && GameStateManager.Instance.CurrentGamePlayState == GamePlayState.DialogueActive) {
             StopAllCoroutines();

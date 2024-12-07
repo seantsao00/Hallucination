@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Assertions;
-using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Localization.Settings;
 
 public class Util {
@@ -25,17 +21,6 @@ public class Util {
         }
     }
 
-    static public IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup, float fadeDuration, Action callback = null) {
-        canvasGroup.alpha = 0f;
-        float fadeSpeed = 1f / fadeDuration;
-        for (float t = 0f; t < 1f; t += Time.deltaTime * fadeSpeed) {
-            canvasGroup.alpha = t;
-            yield return null;
-        }
-        canvasGroup.alpha = 1f;
-        callback?.Invoke();
-    }
-
     static Language cachedLanguage;
     static bool isInitialized = false;
 
@@ -43,7 +28,7 @@ public class Util {
         while (!LocalizationSettings.InitializationOperation.IsDone) {
             Debug.Log("Still initializing");
             yield return null;
-            
+
         }
         Debug.Log("Initialized");
         int localeIndex = PlayerPrefs.GetInt(

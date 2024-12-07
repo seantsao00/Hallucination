@@ -19,8 +19,8 @@ public class Level3End : MonoBehaviour {
     public void StartAnimation() {
         WorldSwitchManager.Instance.Fairy.GetComponent<Character>().StopMotion();
         WorldSwitchManager.Instance.Bear.GetComponent<Character>().StopMotion();
-        bear.body.GetComponent<SpriteRenderer>().enabled = true;
-        fairy.body.GetComponent<SpriteRenderer>().enabled = true;
+        bear.body.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        fairy.body.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         WorldSwitchManager.Instance.Bear.GetComponent<SpriteRenderer>().enabled = false;
         WorldSwitchManager.Instance.Fairy.GetComponent<SpriteRenderer>().enabled = false;
         StartCoroutine(Animation());
@@ -48,9 +48,7 @@ public class Level3End : MonoBehaviour {
                 yield return null;
             }
         }
-        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
-        bear.body.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        fairy.body.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        print(GameStateManager.Instance.CurrentGamePlayState);
         LevelNavigator.Instance.CompleteCurrentLevel();
     }
 
@@ -87,5 +85,11 @@ public class Level3End : MonoBehaviour {
         }
         body.transform.position += Movement;
         return (target.position - body.position).magnitude < eps;
+    }
+    void EndAnimation() {
+
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
+        bear.body.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        fairy.body.gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 }

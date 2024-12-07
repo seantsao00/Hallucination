@@ -42,7 +42,6 @@ public class CharacterHorizontalMove : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (rb.bodyType == RigidbodyType2D.Static) return;
         if (
             !InputManager.Control.Character.HorizontalMove.enabled ||
             characterStateController.HasState(CharacterState.HorizontalSpringFlying)

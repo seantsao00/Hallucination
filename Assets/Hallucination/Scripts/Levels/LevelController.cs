@@ -32,8 +32,6 @@ public class LevelController : MonoBehaviour {
         WorldToSwitch = CharacterTypeEnum.Bear,
     };
     [SerializeField] CheckpointData[] checkpointDataList;
-    public GameObject fairyWorldMainCamera {get; private set;}
-    public GameObject bearWorldMainCamera {get; private set;}
 
     int numberOfFulfilledCheckpoints;
 
@@ -41,8 +39,6 @@ public class LevelController : MonoBehaviour {
         if (restartData.WorldToSwitch == CharacterTypeEnum.None) {
             Debug.LogError("You must specify a world to restart.");
         }
-        fairyWorldMainCamera = transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject;
-        bearWorldMainCamera = transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject;
     }
 
     void ApplyCharacterSyncMethod(GameObject character, Syncable method) {
@@ -77,17 +73,8 @@ public class LevelController : MonoBehaviour {
     }
 
     void LoadCheckpointData(CheckpointData checkpointData) {
-        if (checkpointData.WorldToSwitch != CharacterTypeEnum.None) {
+        if (checkpointData.WorldToSwitch != CharacterTypeEnum.None)
             WorldSwitchManager.Instance.SwitchToWorld(force: true, targetWorld: checkpointData.WorldToSwitch);
-        } else {
-            if (WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Bear) {
-                bearWorldMainCamera.SetActive(true);
-                fairyWorldMainCamera.SetActive(false);
-            } else {
-                bearWorldMainCamera.SetActive(false);
-                fairyWorldMainCamera.SetActive(true);
-            }
-        }
         if (checkpointData.LockWorldSwitch) WorldSwitchManager.Instance.LockWorldSwitch();
         if (checkpointData.UnlockWorldSwitch) WorldSwitchManager.Instance.UnlockWorldSwitch();
         if (checkpointData.FairySpawnPoint != null) {
@@ -167,12 +154,17 @@ public class LevelController : MonoBehaviour {
 
         if (fadeIn) StartCoroutine(Util.FadeOutCanvasGroup(1f, WorldSwitchManager.Instance.FadingMask));
 
+        transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
+        transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
         ApplyCharacterSyncMethods();
         RegisterHandler();
     }
 
     public void CompleteLevel() {
         Assert.IsTrue(this == LevelNavigator.Instance.CurrentLevel);
+
+        transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(false);
+        transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(false);
 
         StartCoroutine(PerformDeactivateAfterComplete());
     }

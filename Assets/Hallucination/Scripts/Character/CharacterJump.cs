@@ -42,7 +42,6 @@ public class CharacterJump : MonoBehaviour {
     }
 
     void Jump(InputAction.CallbackContext context) {
-        if (rb.bodyType == RigidbodyType2D.Static) return;
         if (context.performed) {
             jumpBufferCounter = jumpBufferTime;
         }
@@ -54,7 +53,6 @@ public class CharacterJump : MonoBehaviour {
     }
 
     void Update() {
-        if (rb.bodyType == RigidbodyType2D.Static) return;
         if (characterStateController.HasState(CharacterState.StandingOnGround)) {
             coyoteTimeCounter = coyoteTime;
         } else {

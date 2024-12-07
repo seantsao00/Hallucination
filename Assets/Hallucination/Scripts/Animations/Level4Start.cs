@@ -9,7 +9,6 @@ public class Level4Start : MonoBehaviour {
         public Transform[] points;
     }
     [SerializeField] string dialogueName = "Level 4 Start";
-    [SerializeField] Transform bearWorldFairy;
     [SerializeField] AnimationObjects train;
     [SerializeField] float trainSpeed = 8f;
     [SerializeField] AnimationObjects bear, fairy;
@@ -31,7 +30,6 @@ public class Level4Start : MonoBehaviour {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
         bear.body.gameObject.SetActive(false);
         WorldSwitchManager.Instance.Bear.transform.position = bear.points[bear.points.Length - 1].position;
-        bearWorldFairy.position = fairy.points[fairy.points.Length - 1].position;
         WorldSwitchManager.Instance.Bear.GetComponent<SpriteRenderer>().enabled = true;
         DialogueManager.Instance.StartDialogueWithCallback(dialogueName, () => {
             LevelNavigator.Instance.CompleteCurrentLevel();

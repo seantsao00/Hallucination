@@ -6,7 +6,7 @@ public class FairyObjectProjectionManager : MonoBehaviour {
     [SerializeField] LayerMask excludeLayerMask;
 
     public static FairyObjectProjectionManager Instance { get; private set; }
-    public HashSet<GameObject> Projections= new HashSet<GameObject>();
+    public HashSet<GameObject> Projections = new HashSet<GameObject>();
 
     void Awake() {
         if (Instance != null && Instance != this) {
@@ -21,15 +21,15 @@ public class FairyObjectProjectionManager : MonoBehaviour {
                 tilemap.CompressBounds();
             }
             foreach (var collider in projection.GetComponentsInChildren<Collider2D>()) {
-                // Debug.Log("Normal Collider");
-                SetColliderExcludeLayers(collider);
+                collider.excludeLayers = excludeLayerMask;
                 Projections.Add(collider.gameObject);
             }
-        }
-    }
-    void SetColliderExcludeLayers(Collider2D collider) {
-        if (collider != null) {
-            collider.excludeLayers = excludeLayerMask;
+            foreach (var effector in projection.GetComponentsInChildren<Effector2D>()) {
+                effector.enabled = false;
+                foreach (var collider in effector.GetComponents<Collider2D>()) {
+                    collider.usedByEffector = false;
+                }
+            }
         }
     }
 }

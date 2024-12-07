@@ -94,14 +94,13 @@ public class Flower : MonoBehaviour {
     }
 
     void RecoverCollisionLayer(GameObject obj) {
-        Collider2D[] colliders = obj.GetComponents<Collider2D>();
         if (obj.layer == LayerMask.NameToLayer("ProjectionGround")) {
             obj.layer = LayerMask.NameToLayer("Ground");
         } else if (obj.layer == LayerMask.NameToLayer("FairyProjection")) {
             obj.layer = LayerMask.NameToLayer("Default");
         }
         Vector2 fairyPosition = WorldSwitchManager.Instance.Fairy.transform.position;
-        foreach (var collider in colliders) {
+        foreach (var collider in obj.GetComponents<Collider2D>()) {
             collider.excludeLayers = 0;
             // if (obj.layer == LayerMask.NameToLayer("Ground")) {
             //     if (collider.OverlapPoint(fairyPosition)) {
@@ -112,6 +111,12 @@ public class Flower : MonoBehaviour {
             //         // WorldSwitchManager.Instance.Fairy.GetComponent<CharacterDeath>().TakeDamage();
             //     }
             // }
+        }
+        foreach (var effector in obj.GetComponents<Effector2D>()) {
+            effector.enabled = true;
+            foreach (var collider in effector.GetComponents<Collider2D>()) {
+                collider.usedByEffector = true;
+            }
         }
     }
     void DestroyProjectionObjects() {

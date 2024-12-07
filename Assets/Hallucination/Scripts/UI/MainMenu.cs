@@ -4,8 +4,12 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
+    public LoadingScreen loadingScreen;
     void Start() {
-        StartCoroutine(Util.InitializeLocalizationAsync());
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        loadingScreen.ShowLoadingScreen();
+        StartCoroutine(Util.InitializeLocalizationAsync(loadingScreen));
     }
     
 

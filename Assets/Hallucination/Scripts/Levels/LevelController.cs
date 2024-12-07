@@ -152,7 +152,7 @@ public class LevelController : MonoBehaviour {
         }
         LoadCheckpointData(levelData);
 
-        if (fadeIn) StartCoroutine(Util.FadeIn(1f, WorldSwitchManager.Instance.FadingMask));
+        if (fadeIn) StartCoroutine(Util.FadeOutCanvasGroup(1f, WorldSwitchManager.Instance.FadingMask));
 
         transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
         transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);

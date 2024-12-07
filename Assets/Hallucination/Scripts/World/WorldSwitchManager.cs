@@ -126,7 +126,7 @@ public class WorldSwitchManager : MonoBehaviour {
 
     IEnumerator PerformSwitchToWorldWithFade(CharacterTypeEnum world) {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.SwitchingWorld;
-        yield return StartCoroutine(Util.FadeOut(0.4f, FadingMask));
+        yield return StartCoroutine(Util.FadeInCanvasGroup(0.4f, FadingMask));
 
         if (world == CharacterTypeEnum.Bear) {
             SetWorldBear();
@@ -135,7 +135,7 @@ public class WorldSwitchManager : MonoBehaviour {
         } else {
             Debug.LogError($"Unexpected {nameof(world)} value: {world}");
         }
-        yield return StartCoroutine(Util.FadeIn(0.4f, FadingMask));
+        yield return StartCoroutine(Util.FadeOutCanvasGroup(0.4f, FadingMask));
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
     }
 

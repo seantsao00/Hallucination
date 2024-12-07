@@ -938,10 +938,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1376896356}
   - component: {fileID: 1376896358}
+  - component: {fileID: 1376896360}
   - component: {fileID: 1376896357}
   - component: {fileID: 1376896359}
   - component: {fileID: 1376896361}
-  - component: {fileID: 1376896360}
   m_Layer: 5
   m_Name: Comic
   m_TagString: Untagged

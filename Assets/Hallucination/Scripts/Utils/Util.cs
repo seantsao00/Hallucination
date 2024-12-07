@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 
 public class Util {
-    static public IEnumerator FadeIn(float fadeDuration, CanvasGroup FadeMask) {
+    static public IEnumerator FadeOutCanvasGroup(float fadeDuration, CanvasGroup FadeMask) {
         float fadeSpeed = 1f / fadeDuration;
 
         for (float t = 1; t > 0; t -= Time.deltaTime * fadeSpeed) {
@@ -12,7 +12,7 @@ public class Util {
         }
     }
 
-    static public IEnumerator FadeOut(float fadeDuration, CanvasGroup FadeMask) {
+    static public IEnumerator FadeInCanvasGroup(float fadeDuration, CanvasGroup FadeMask) {
         float fadeSpeed = 1f / fadeDuration;
 
         for (float t = 0; t < 1; t += Time.deltaTime * fadeSpeed) {

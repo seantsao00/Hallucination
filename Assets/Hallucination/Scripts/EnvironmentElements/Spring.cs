@@ -19,9 +19,15 @@ public class Spring : MonoBehaviour {
 
             springCoroutine = StartCoroutine(LaunchSpring());
             horizontalMove.CurrentSpring = this;
+            GetComponent<Animator>().SetBool("Trigger", true);
         }
     }
 
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Player")) {
+            GetComponent<Animator>().SetBool("Trigger", false);
+        }
+    }
     IEnumerator LaunchSpring() {
         characterStateController.RemoveState(CharacterState.PreReleaseJumping);
         characterStateController.AddState(CharacterState.SpringFlying);

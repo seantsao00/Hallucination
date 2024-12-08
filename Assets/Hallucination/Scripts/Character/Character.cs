@@ -43,7 +43,7 @@ public class Character : MonoBehaviour {
 
     Coroutine springCoroutine;
 
-    private void SetFacingDirection(Vector2 direction) {
+    void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;
         if (direction.x < 0) transform.rotation = Quaternion.Euler(angle.x, 180, angle.z);
         if (direction.x > 0) transform.rotation = Quaternion.Euler(angle.x, 0, angle.z);

@@ -58,6 +58,18 @@ MonoBehaviour:
     m_Localized: Main Menu
     m_Metadata:
       m_Items: []
+  - m_Id: 3171071097245696
+    m_Localized: Game Design
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3171075098611712
+    m_Localized: Game Develop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3171076340125696
+    m_Localized: Art
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

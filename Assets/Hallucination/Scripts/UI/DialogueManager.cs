@@ -40,13 +40,10 @@ public class DialogueManager : MonoBehaviour {
         isTyping = false;
         Instance = this;
         dialogueLines = new Queue<DialogueLine>();
+        LoadDialoguesFromFile();  // Load all dialogues from the JSON file
         normalDialogueBox.dialogueBox.SetActive(false);
         inGameDialogueBox.dialogueBox.SetActive(false);
         gameObject.SetActive(false);
-    }
-
-    void Start() {
-        LoadDialoguesFromFile();
     }
 
     void OnEnable() {

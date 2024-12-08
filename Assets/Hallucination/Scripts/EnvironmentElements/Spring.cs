@@ -1,71 +1,25 @@
-using System.Collections;
 using UnityEngine;
 
-public class Spring : MonoBehaviour {
-    [SerializeField] float verticalSpeed;
-    [SerializeField] float horizontalSpeed;
-    [SerializeField] float springDuration = 0.5f;
-    Rigidbody2D characterRb;
-    CharacterStateController characterStateController;
-    Coroutine springCoroutine;
-    CharacterHorizontalMove horizontalMove;
-    public bool IsSpringing => springCoroutine != null;
+public class Spring: MonoBehaviour {
+    protected Rigidbody2D characterRb;
+    protected Character character;
+    protected CharacterStateController characterStateController;
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    protected virtual void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
+            character = other.GetComponent<Character>();
             characterRb = other.GetComponent<Rigidbody2D>();
-            horizontalMove = other.GetComponent<CharacterHorizontalMove>();
-            characterStateController = other.GetComponent<CharacterStateController>();
             other.GetComponent<CharacterDash>()?.ResetDash();
+            characterStateController = other.GetComponent<CharacterStateController>();
+            characterStateController.RemoveState(CharacterState.PreReleaseJumping);
 
-            springCoroutine = StartCoroutine(LaunchSpring());
-            horizontalMove.CurrentSpring = this;
             GetComponent<Animator>().SetBool("Trigger", true);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    protected virtual void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             GetComponent<Animator>().SetBool("Trigger", false);
         }
-    }
-
-    IEnumerator LaunchSpring() {
-        characterStateController.RemoveState(CharacterState.PreReleaseJumping);
-        characterStateController.AddState(CharacterState.SpringFlying);
-        if (horizontalSpeed != 0) {
-            characterStateController.AddState(CharacterState.HorizontalSpringFlying);
-            if (Mathf.Sign(horizontalMove.WindBonusSpeed) == Mathf.Sign(horizontalSpeed)) {
-                characterRb.velocity = new Vector2(horizontalMove.WindBonusSpeed + horizontalSpeed, verticalSpeed);
-            } else {
-                characterRb.velocity = new Vector2(horizontalSpeed, verticalSpeed);
-            }
-        } else {
-            characterRb.velocity = new Vector2(characterRb.velocity.x, verticalSpeed);
-        }
-        yield return new WaitForSeconds(springDuration);
-        springCoroutine = null;
-        characterStateController.RemoveState(CharacterState.SpringFlying);
-        characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
-        horizontalMove.CurrentSpring = null;
-    }
-
-    public void StopSpringHorizontalSpeed() {
-        if (springCoroutine != null) {
-            StopCoroutine(springCoroutine);
-            springCoroutine = null;
-            characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
-            horizontalMove.CurrentSpring = null;
-        }
-    }
-
-    /// <summary>
-    /// For flower projection objects to destroy themselves after deactivated
-    /// </summary>
-    public void DestroySelfAfterDeactivated() => StartCoroutine(DestroyCoroutine());
-    IEnumerator DestroyCoroutine() {
-        gameObject.SetActive(false);
-        yield return new WaitUntil(() => !IsSpringing);
-        Destroy(gameObject);
     }
 }

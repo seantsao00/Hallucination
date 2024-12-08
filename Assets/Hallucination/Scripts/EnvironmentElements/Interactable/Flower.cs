@@ -123,11 +123,8 @@ public class Flower : MonoBehaviour {
         // print(duplicatedObjects);
         foreach (var duplicatedObject in duplicatedObjects) {
             Flower flower = duplicatedObject.GetComponent<Flower>();
-            Spring spring = duplicatedObject.GetComponent<Spring>();
             if (flower != null) {
                 flower.DestroySelfAfterDeactivated();
-            } else if (spring != null) {
-                spring.DestroySelfAfterDeactivated();
             } else {
                 Destroy(duplicatedObject);
             }

@@ -7,7 +7,6 @@ public enum CharacterState {
     PreReleaseJumping,
     Climbing,
     Dashing,
-    SpringFlying,
     HorizontalSpringFlying,
     Grabbing,
     BeingBlown,
@@ -21,7 +20,6 @@ public class CharacterStateController : MonoBehaviour {
     [Header("Gravity")]
     [SerializeField] float beingBlownGravityMultiplier = 0.4f;
     [SerializeField] float airHangingGravityMultiplier = 0.4f;
-    [SerializeField] float springFlyingGravityMultiplier = 1f;
 
     HashSet<CharacterState> activeStates = new HashSet<CharacterState>();
 
@@ -77,12 +75,7 @@ public class CharacterStateController : MonoBehaviour {
     /// </summary>
     void RemoveMutuallyExclusiveStates(CharacterState state, bool added) {
         if (added) {
-            if (state == CharacterState.SpringFlying) {
-                activeStates.Remove(CharacterState.PreReleaseJumping);
-            }
-            if (state == CharacterState.PreReleaseJumping) {
-                activeStates.Remove(CharacterState.SpringFlying);
-            }
+            // 
         }
     }
 
@@ -95,8 +88,6 @@ public class CharacterStateController : MonoBehaviour {
             rb.gravityScale = NormalGravityScale * beingBlownGravityMultiplier;
         } else if (HasState(CharacterState.AirHanging)) {
             rb.gravityScale = NormalGravityScale * airHangingGravityMultiplier;
-        } else if (HasState(CharacterState.SpringFlying)) {
-            rb.gravityScale = NormalGravityScale * springFlyingGravityMultiplier;
         } else if (HasState(CharacterState.PreReleaseJumping)) {
             rb.gravityScale = NormalGravityScale * GetComponent<CharacterJump>().PreReleaseGravityMultiplier;
         } else {

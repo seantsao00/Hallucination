@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class CharacterHorizontalMove : MonoBehaviour {
@@ -7,9 +6,7 @@ public class CharacterHorizontalMove : MonoBehaviour {
     [SerializeField] float normalSpeed = 5f;
     [SerializeField] float grabSpeed = 3f;
     public float CurrentBasicSpeed { get; private set; }
-    [HideInInspector] public Spring CurrentSpring;
     [HideInInspector] public float WindBonusSpeed;
-    [SerializeField] LayerMask groundLayer;
 
     public void ResetBasicSpeed() => CurrentBasicSpeed = normalSpeed;
 
@@ -18,19 +15,6 @@ public class CharacterHorizontalMove : MonoBehaviour {
         characterStateController = GetComponent<CharacterStateController>();
         CurrentBasicSpeed = normalSpeed;
         characterStateController.OnStateChanged += HandleStateChange;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (((1 << collision.gameObject.layer) & groundLayer.value) != 0) {
-            foreach (ContactPoint2D contact in collision.contacts) {
-                float angle = Vector2.Angle(contact.normal, Vector2.up);
-                if (CurrentSpring != null && Mathf.Approximately(angle, 90)) {
-                    CurrentSpring.StopSpringHorizontalSpeed();
-                    CurrentSpring = null;
-                    break;
-                }
-            }
-        }
     }
 
     void HandleStateChange(CharacterState state, bool added) {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public enum CharacterTypeEnum { None, Fairy, Bear };
@@ -40,6 +41,8 @@ public class Character : MonoBehaviour {
     [HideInInspector] public bool IsBellyInGround;
     [HideInInspector] public bool IsLedgeDetected;
 
+    Coroutine springCoroutine;
+
     private void SetFacingDirection(Vector2 direction) {
         Vector3 angle = transform.rotation.eulerAngles;
         if (direction.x < 0) transform.rotation = Quaternion.Euler(angle.x, 180, angle.z);
@@ -79,9 +82,51 @@ public class Character : MonoBehaviour {
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision) {
+        // If the character's body touches the ground on one of the 2 sides, stop the horizontal speed given by the spring.
+        if (springCoroutine != null) {
+            if (((1 << collision.gameObject.layer) & LayerMask.NameToLayer("Ground")) != 0) {
+                foreach (ContactPoint2D contact in collision.contacts) {
+                    float angle = Vector2.Angle(contact.normal, Vector2.up);
+                    if (Mathf.Approximately(angle, 90)) {
+                        StopSpringHorizontalSpeed();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void GainSpringHorizontalSpeed(Vector2 springStartPosition, Vector2 speed, float duration) =>
+        springCoroutine = StartCoroutine(HandleSpringHorizontalSpeed(springStartPosition, speed, duration));
+
+    IEnumerator HandleSpringHorizontalSpeed(Vector2 springStartPosition, Vector2 speed, float duration) {
+        Debug.Log($"Spring duration ({duration}) started");
+        characterStateController.AddState(CharacterState.HorizontalSpringFlying);
+        // make sure the character is above the spring before starting the timer
+        do {
+            rb.velocity = speed;
+            yield return null;
+        } while (transform.position.y < springStartPosition.y);
+        Debug.Log("Character Above Spring");
+        yield return new WaitForSeconds(duration);
+        Debug.Log("Spring duration ended");
+        springCoroutine = null;
+        characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
+    }
+
+    public void StopSpringHorizontalSpeed() {
+        if (springCoroutine != null) {
+            // Debug.Log("Spring duration stopped");
+            StopCoroutine(springCoroutine);
+            springCoroutine = null;
+            characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
+        }
+    }
+
     public void StopMotion() {
-        if (rb != null)
-            rb.velocity = new Vector2(0, 0);
+        if (rb != null) rb.velocity = new Vector2(0, 0);
         GetComponent<CharacterDash>()?.ResetDash();
+        StopSpringHorizontalSpeed();
     }
 }

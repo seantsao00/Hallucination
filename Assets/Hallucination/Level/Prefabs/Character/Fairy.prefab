@@ -180,11 +180,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxJumpHeight: 3.5
-  slowerFallGravityMultiplier: 0.7
+  <PreReleaseGravityMultiplier>k__BackingField: 0.7
   releaseJumpSpeedMultiplier: 0.5
-  jumpHangTimeGravityMultiplier: 0.4
-  jumpHangTimeThresholdSpeed: 0.5
   coyoteTime: 0.1
+  jumpBufferTime: 0.1
   jumpSound: {fileID: 8300000, guid: cc72fe4bc1c488143b0fc26ab2273401, type: 3}
 --- !u!114 &8602150884692660129
 MonoBehaviour:
@@ -201,7 +200,6 @@ MonoBehaviour:
   dashLength: 4
   dashDuration: 0.2
   dashCooldown: 1
-  dashGravityMultiplier: 0
   dashSound: {fileID: 8300000, guid: 5ea5d7bebfddcf24c87e972a80cb4427, type: 3}
 --- !u!96 &-1860308792635032451
 TrailRenderer:

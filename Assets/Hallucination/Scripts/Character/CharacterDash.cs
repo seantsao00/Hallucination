@@ -48,7 +48,7 @@ public class CharacterDash : MonoBehaviour {
     public void ResetDash() {
         StopAllCoroutines();
         characterStateController?.RemoveState(CharacterState.Dashing);
-        dashTrailRenderer.emitting = false;
+        if (dashTrailRenderer != null) dashTrailRenderer.emitting = false;
         canDash = true;
         isDashCooling = false;
     }

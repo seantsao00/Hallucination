@@ -10,9 +10,9 @@ public class Spring: MonoBehaviour {
             character = other.GetComponent<Character>();
             characterRb = other.GetComponent<Rigidbody2D>();
             other.GetComponent<CharacterDash>()?.ResetDash();
+            character.StopSpringHorizontalSpeed();
             characterStateController = other.GetComponent<CharacterStateController>();
             characterStateController.RemoveState(CharacterState.PreReleaseJumping);
-
             GetComponent<Animator>().SetBool("Trigger", true);
         }
     }

@@ -67,6 +67,7 @@ public class CharacterDash : MonoBehaviour {
         characterStateController.AddState(CharacterState.Dashing);
         rb.velocity = new Vector2(character.FacingDirection.x * dashSpeed, 0);
         dashTrailRenderer.emitting = true;
+        character.StopSpringHorizontalSpeed();
         yield return new WaitForSeconds(dashDuration);
 
         characterStateController.RemoveState(CharacterState.Dashing);

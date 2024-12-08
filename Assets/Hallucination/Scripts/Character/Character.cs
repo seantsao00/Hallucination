@@ -90,6 +90,7 @@ public class Character : MonoBehaviour {
                     float angle = Vector2.Angle(contact.normal, Vector2.up);
                     if (Mathf.Approximately(angle, 90)) {
                         StopSpringHorizontalSpeed();
+                        Debug.Log("Spring duration stopped");
                         break;
                     }
                 }
@@ -101,16 +102,13 @@ public class Character : MonoBehaviour {
         springCoroutine = StartCoroutine(HandleSpringHorizontalSpeed(springStartPosition, speed, duration));
 
     IEnumerator HandleSpringHorizontalSpeed(Vector2 springStartPosition, Vector2 speed, float duration) {
-        Debug.Log($"Spring duration ({duration}) started");
         characterStateController.AddState(CharacterState.HorizontalSpringFlying);
         // make sure the character is above the spring before starting the timer
         do {
             rb.velocity = speed;
             yield return null;
         } while (transform.position.y < springStartPosition.y);
-        Debug.Log("Character Above Spring");
         yield return new WaitForSeconds(duration);
-        Debug.Log("Spring duration ended");
         springCoroutine = null;
         characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
     }

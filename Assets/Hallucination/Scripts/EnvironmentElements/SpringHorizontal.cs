@@ -7,7 +7,6 @@ public class SpringHorizontal : Spring {
     protected override void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             base.OnTriggerEnter2D(other);
-            character.StopSpringHorizontalSpeed();
             characterStateController.AddState(CharacterState.HorizontalSpringFlying);
             float windBonusSpeed = other.GetComponent<CharacterHorizontalMove>().WindBonusSpeed;
             Vector2 targetSpeed;

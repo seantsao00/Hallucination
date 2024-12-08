@@ -36,7 +36,7 @@ public class Flower : MonoBehaviour {
 
     IEnumerator HandleActivation() {
         isActivated = true;
-        capturedSurroundings.Activate();
+        capturedSurroundings.Activate(activateDuration);
         duplicatedObjects = new();
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.0f);
         WorldSwitchManager.Instance.Lock(gameObject);

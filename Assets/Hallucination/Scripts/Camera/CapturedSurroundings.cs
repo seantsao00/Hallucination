@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CapturedSurroundings : MonoBehaviour {
@@ -8,10 +9,22 @@ public class CapturedSurroundings : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void Activate() {
+    public void Activate(float activateDuration) {
         UpdateSprite();
+        StartCoroutine(HandleSpriteFade(activateDuration));
         spriteRenderer.color = new Color(1, 1, 1, 0.2f);
         spriteRenderer.enabled = true;
+    }
+    IEnumerator HandleSpriteFade(float activateDuration) {
+        float passedTime = 0;
+        float startFadeTime = activateDuration - 1;
+        while (passedTime < activateDuration) {
+            passedTime += Time.deltaTime;
+            if (passedTime > startFadeTime) {
+                spriteRenderer.color = new Color(1, 1, 1, 0.2f * (activateDuration -  passedTime));
+            }
+            yield return null;
+        }
     }
 
     public void Deactivate() {

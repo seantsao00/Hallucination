@@ -33,10 +33,12 @@ public class LevelNavigator : MonoBehaviour {
 
     public static void SetStartLevelIndex(int levelIndex) {
         PlayerPrefs.SetInt("StartLevelIndex", levelIndex);
+        PlayerPrefs.Save();
     }
 
     public static void SetFirstPlay(bool isFirstPlay) {
         PlayerPrefs.SetInt("FirstPlay", isFirstPlay ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     void Awake() {
@@ -57,6 +59,7 @@ public class LevelNavigator : MonoBehaviour {
             Debug.LogWarning("currentLevelIndex is out of range. Set to last level.");
             currentLevelIndex = 0;
             PlayerPrefs.SetInt("StartLevelIndex", currentLevelIndex);
+            PlayerPrefs.Save();
         }
 
         CurrentLevel.gameObject.SetActive(true);
@@ -65,6 +68,7 @@ public class LevelNavigator : MonoBehaviour {
         if (firstLoad) {
             firstLoad = false;
             PlayerPrefs.SetInt("FirstPlay", 0);
+            PlayerPrefs.Save();
             if (CurrentLevel.CanBeStartLevel) {
                 CurrentLevel.StartLevel();
             } else {
@@ -95,6 +99,7 @@ public class LevelNavigator : MonoBehaviour {
         CurrentLevel.CompleteLevel();
         currentLevelIndex += 1;
         PlayerPrefs.SetInt("StartLevelIndex", currentLevelIndex);
+        PlayerPrefs.Save();
         if (currentLevelIndex == levels.Length) {
             Debug.LogWarning("The last level completed");
         } else {
@@ -102,5 +107,10 @@ public class LevelNavigator : MonoBehaviour {
             CurrentLevel.gameObject.SetActive(true);
             CurrentLevel.StartLevel();
         }
+    }
+
+    public void EndGame() {
+        GameStateManager.Instance.CurrentGameState = GameState.End;
+        SceneManager.LoadScene("EndGame");
     }
 }

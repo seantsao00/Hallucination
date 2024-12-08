@@ -39,6 +39,7 @@ public class IntroComicController : MonoBehaviour {
     void ComicEndHandler(VideoPlayer vp) {
         InputManager.Control.Animation.Confirm.performed += ConfirmAction;
         PlayerPrefs.SetInt("IntroWatched", 1);
+        PlayerPrefs.Save();
         StartCoroutine(Util.FadeInCanvasGroup(1f, NextTip));
     }
 

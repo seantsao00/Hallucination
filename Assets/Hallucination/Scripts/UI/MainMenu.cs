@@ -14,7 +14,12 @@ public class MainMenu : MonoBehaviour {
     
 
     public void PlayGame() {
-        SceneManager.LoadSceneAsync("Intro");
+        if (PlayerPrefs.GetInt("IntroWatched", 0) == 0) SceneManager.LoadSceneAsync("Intro");
+        else SceneManager.LoadScene("Levels");
+    }
+
+    public void ResetAllData() {
+        PlayerPrefs.DeleteAll();
     }
 
     public void QuitGame() {

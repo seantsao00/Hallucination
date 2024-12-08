@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da83ba7cc5bc3a74caa718d0e8445e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eatenColor: {r: 0, g: 1, b: 0, a: 1}
+  eatenColor: {r: 0.4669811, g: 0.4669811, b: 0.4669811, a: 0.7137255}
 --- !u!58 &7338246494513105705
 CircleCollider2D:
   m_ObjectHideFlags: 0

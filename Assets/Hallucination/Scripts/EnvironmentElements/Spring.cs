@@ -13,12 +13,14 @@ public class Spring: MonoBehaviour {
             character.StopSpringHorizontalSpeed();
             characterStateController = other.GetComponent<CharacterStateController>();
             characterStateController.RemoveState(CharacterState.PreReleaseJumping);
+            characterStateController.AddState(CharacterState.InsideSpring);
             GetComponent<Animator>().SetBool("Trigger", true);
         }
     }
 
     protected virtual void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
+            characterStateController.RemoveState(CharacterState.InsideSpring);
             GetComponent<Animator>().SetBool("Trigger", false);
         }
     }

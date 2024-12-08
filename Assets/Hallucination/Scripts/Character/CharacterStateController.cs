@@ -14,6 +14,7 @@ public enum CharacterState {
     StandingOnGround,
     AirHanging,
     Dead,
+    InsideSpring
 }
 
 public class CharacterStateController : MonoBehaviour {
@@ -130,7 +131,8 @@ public class CharacterStateController : MonoBehaviour {
         activeStates.Contains(CharacterState.Climbing) ||
         activeStates.Contains(CharacterState.BeingBlown) ||
         !activeStates.Contains(CharacterState.StandingOnGround) ||
-        activeStates.Contains(CharacterState.LedgeClimbing)
+        activeStates.Contains(CharacterState.LedgeClimbing) ||
+        activeStates.Contains(CharacterState.InsideSpring)
     ;
 
     public void UpdateInput() {
@@ -166,7 +168,8 @@ public class CharacterStateController : MonoBehaviour {
                 activeStates.Contains(CharacterState.Grabbing) ||
                 activeStates.Contains(CharacterState.Dashing) ||
                 activeStates.Contains(CharacterState.Climbing) ||
-                activeStates.Contains(CharacterState.LedgeClimbing)
+                activeStates.Contains(CharacterState.LedgeClimbing) ||
+                activeStates.Contains(CharacterState.InsideSpring)
             ) {
                 Control.Character.Dash.Disable();
             } else {

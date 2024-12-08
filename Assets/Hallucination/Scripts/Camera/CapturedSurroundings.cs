@@ -10,6 +10,7 @@ public class CapturedSurroundings : MonoBehaviour {
 
     public void Activate() {
         UpdateSprite();
+        spriteRenderer.color = new Color(1, 1, 1, 0.2f);
         spriteRenderer.enabled = true;
     }
 

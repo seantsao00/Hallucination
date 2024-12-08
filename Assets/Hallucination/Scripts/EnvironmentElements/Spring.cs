@@ -9,6 +9,7 @@ public class Spring : MonoBehaviour {
     CharacterStateController characterStateController;
     Coroutine springCoroutine;
     CharacterHorizontalMove horizontalMove;
+    public bool IsSpringing => springCoroutine != null;
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
@@ -28,6 +29,7 @@ public class Spring : MonoBehaviour {
             GetComponent<Animator>().SetBool("Trigger", false);
         }
     }
+
     IEnumerator LaunchSpring() {
         characterStateController.RemoveState(CharacterState.PreReleaseJumping);
         characterStateController.AddState(CharacterState.SpringFlying);
@@ -55,5 +57,15 @@ public class Spring : MonoBehaviour {
             characterStateController.RemoveState(CharacterState.HorizontalSpringFlying);
             horizontalMove.CurrentSpring = null;
         }
+    }
+
+    /// <summary>
+    /// For flower projection objects to destroy themselves after deactivated
+    /// </summary>
+    public void DestroySelfAfterDeactivated() => StartCoroutine(DestroyCoroutine());
+    IEnumerator DestroyCoroutine() {
+        gameObject.SetActive(false);
+        yield return new WaitUntil(() => !IsSpringing);
+        Destroy(gameObject);
     }
 }

@@ -10,7 +10,7 @@ public class Flower : MonoBehaviour {
     public float activateDuration = 3f;
     [SerializeField] CapturedSurroundings capturedSurroundings;
     public bool isActivated { get; private set; } = false;
-    float targetAlpha = 0.8f;
+    float targetAlpha = 1f;
 
     void Awake() {
         detector = WorldSwitchManager.Instance.Bear.GetComponentInChildren<CharacterProjectionDetector>();
@@ -38,7 +38,7 @@ public class Flower : MonoBehaviour {
         isActivated = true;
         capturedSurroundings.Activate();
         duplicatedObjects = new();
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.0f);
         WorldSwitchManager.Instance.Lock(gameObject);
         DuplicateProjectionObjects();
         yield return new WaitForSeconds(activateDuration);
@@ -123,8 +123,11 @@ public class Flower : MonoBehaviour {
         // print(duplicatedObjects);
         foreach (var duplicatedObject in duplicatedObjects) {
             Flower flower = duplicatedObject.GetComponent<Flower>();
+            Spring spring = duplicatedObject.GetComponent<Spring>();
             if (flower != null) {
                 flower.DestroySelfAfterDeactivated();
+            } else if (spring != null) {
+                spring.DestroySelfAfterDeactivated();
             } else {
                 Destroy(duplicatedObject);
             }

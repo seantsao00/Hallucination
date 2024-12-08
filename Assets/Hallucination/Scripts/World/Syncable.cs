@@ -38,6 +38,9 @@ public class Syncable : MonoBehaviour {
         to.syncedObject = from.syncedObject;
         to.currentWorldReference = from.currentWorldReference;
         to.syncedWorldReference = from.syncedWorldReference;
+        if (from is SyncSamePosition && to is SyncSamePosition) {
+            (to as SyncSamePosition).syncedPosition = (from as SyncSamePosition).syncedPosition;
+        };
     }
 
     void OnDrawGizmosSelected() {

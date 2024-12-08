@@ -38,14 +38,11 @@ public class Level4Start : MonoBehaviour {
     }
 
     IEnumerator FairyAnimation() {
-        Animator animator = fairy.body.GetComponent<Animator>();
-        animator.SetBool("Movement", true);
         foreach (var point in fairy.points) {
             while (!Move(fairy.body, point, 3f)) {
                 yield return null;
             }
         }
-        animator.SetBool("Movement", false);
     }
 
     IEnumerator BearAnimation() {

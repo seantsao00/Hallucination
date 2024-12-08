@@ -56,8 +56,14 @@ public class LevelController : MonoBehaviour {
         // StartCoroutine(PerformApplyCharacterSyncMethods(character, method));
         Destroy(character.GetComponent<Syncable>());
         if (method != null) {
-            var syncable = character.AddComponent<Syncable>();
-            Syncable.CopyData(method, syncable);
+            Syncable syncable;
+            if (method is SyncSamePosition) {
+                syncable = character.AddComponent<SyncSamePosition>();
+                Syncable.CopyData(method, syncable);
+            } else {
+                syncable = character.AddComponent<Syncable>();
+                Syncable.CopyData(method, syncable);
+            }
             // Debug.Log($"{syncable.syncedObject}, {syncable.currentWorldReference}, {syncable.syncedWorldReference}");
             syncable.enabled = true;
         }

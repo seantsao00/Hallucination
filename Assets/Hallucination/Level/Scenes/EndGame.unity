@@ -300,7 +300,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 40
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -546,6 +546,7 @@ GameObject:
   - component: {fileID: 1288713493}
   - component: {fileID: 1288713492}
   - component: {fileID: 1288713491}
+  - component: {fileID: 1288713495}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -697,6 +698,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288713489}
   m_CullTransparentMesh: 1
+--- !u!225 &1288713495
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288713489}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1477531031
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,6 +723,7 @@ GameObject:
   - component: {fileID: 1477531035}
   - component: {fileID: 1477531034}
   - component: {fileID: 1477531033}
+  - component: {fileID: 1477531037}
   m_Layer: 5
   m_Name: ThankYou
   m_TagString: Untagged
@@ -861,6 +875,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1477531031}
   m_CullTransparentMesh: 1
+--- !u!225 &1477531037
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477531031}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1755926978
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,8 +1008,8 @@ MonoBehaviour:
   lesson: {fileID: 2108698355}
   lessonText: {fileID: 802445973}
   cover: {fileID: 1107718606}
-  thankYou: {fileID: 0}
-  continueTip: {fileID: 0}
+  thankYou: {fileID: 1477531037}
+  continueTip: {fileID: 1288713495}
 --- !u!1 &2054169154
 GameObject:
   m_ObjectHideFlags: 0

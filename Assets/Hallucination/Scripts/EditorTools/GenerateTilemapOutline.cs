@@ -17,7 +17,7 @@ public class GenerateTilemapOutlineInspector : Editor {
 
 public class GenerateTilemapOutline : MonoBehaviour {
     [SerializeField] Tilemap[] sourceTilemaps;
-    [SerializeField] Tile outlineTile;
+    [SerializeField] TileBase outlineTile;
     [SerializeField] Color outlineColor = Color.black;
     [SerializeField] string outlineName = "Outline";
     [SerializeField] int sortingOrder = -100;

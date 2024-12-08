@@ -144,7 +144,7 @@ MonoBehaviour:
   m_text: Start Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 606f2a06412358349adf50afd4353bfb, type: 2}
-  m_sharedMaterial: {fileID: 8662060251281113088, guid: 606f2a06412358349adf50afd4353bfb, type: 2}
+  m_sharedMaterial: {fileID: -4507737416526999794, guid: 606f2a06412358349adf50afd4353bfb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

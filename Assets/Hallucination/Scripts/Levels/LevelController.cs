@@ -25,6 +25,7 @@ public class LevelController : MonoBehaviour {
     [SerializeField] GameObject fairyWorldFairy, fairyWorldBear, bearWorldFairy, bearWorldBear;
     [SerializeField] CharacterSyncMethod characterSyncMethod;
     [SerializeField] CheckpointData startData;
+    [SerializeField] int musicTrackIndex;
     // For debugging (directly start the game with any level)
     public bool CanBeStartLevel =>
         startData.WorldToSwitch != CharacterTypeEnum.None &&
@@ -160,8 +161,8 @@ public class LevelController : MonoBehaviour {
             return;
         }
         LoadCheckpointData(levelData);
-
         if (fadeIn) StartCoroutine(Util.FadeOutCanvasGroup(1f, WorldSwitchManager.Instance.FadingMask));
+        MusicManager.Instance.PlayMusic(musicTrackIndex);
 
         transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
         transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);

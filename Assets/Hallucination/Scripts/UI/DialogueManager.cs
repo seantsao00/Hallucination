@@ -65,9 +65,7 @@ public class DialogueManager : MonoBehaviour {
                 filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/English/dialogue.json");
                 break;
             case Language.Chinese:
-                // filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/Chinese/dialogue.json");
-                filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/English/dialogue.json");
-                Debug.LogWarning("Chinese dialogue not implemented yet. Using English dialogue instead.");
+                filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/Chinese/dialogue.json");
                 break;
         }
 

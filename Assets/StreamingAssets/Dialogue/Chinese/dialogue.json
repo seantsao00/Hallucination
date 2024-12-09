@@ -2,61 +2,65 @@
     "dialogues": [
         {
             "name": "Bear Touch Boundary",
+            "pauseGame": true,
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "I shall not leave you alone..."
+                    "sentence": "我..無法拋下你..."
                 }
             ]
         },
         {
             "name": "Level 1 Start",
+            "pauseGame": true,
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "Why do you avoid me like this? What happened to you?"
+                    "sentence": "為什麼要這樣躲避我？你怎麼了？"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I don't understand... you were fine yesterday. Why have you changed?"
+                    "sentence": "我不明白...你昨天還好好的，為什麼變這樣子？"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "... I can't find the words. It's like you're a stranger now."
+                    "sentence": "...怎麼說呢？...你看起來像個陌生人？"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "What's happening? What should I do to help? Why are you so different now?"
+                    "sentence": "發生了什麼事？需要幫忙嗎？"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I really want to understand, but it's like there's a wall between us. I can't grasp what you're feeling."
+                    "sentence": "無法理解..."
                 }
             ]
         },
         {
             "name": "Level 1 Pass",
+            "pauseGame": true,
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "Where are you going? It's like you're slipping further away from me..."
+                    "sentence": "你要去哪？目的在何方？為什麼要這樣遠離我？"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "But I can't just leave you like this. Maybe... Maybe if I follow, I can help."
+                    "sentence": "我不會就這樣讓你離開的。你..你會需要我的，我會幫助你。"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "Even if I don't understand, I'll stay by your side, and try."
+                    "sentence": "即使我不懂，我還是會留在你身邊，並嘗試理解"
                 }
             ]
         },
         {
             "name": "Level 2 Start",
+            "pauseGame": true,
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "Where are you going...?"
+                    "sentence": "你打算去哪...？"
                 },
                 {
                     "speaker": "Bear",
@@ -64,107 +68,123 @@
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "It looks like you're trying to leave... but stuck here."
+                    "sentence": "看起來你在離開的路上被困在纜車裡了...？"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "Maybe if I get you out, things will go back to the way they were."
+                    "sentence": "也許我幫你脫困，你會回來的吧？"
                 }
             ]
         },
         {
             "name": "Level 3 Pursue",
+            "pauseGame": false,
             "lines": [
                 {
-                    "speaker": "Bear",
-                    "sentence": "Why do you keep running away?"
+                    "speaker": "Dark Bear",
+                    "sentence": "為什麼你要一直逃避？"
                 },
                 {
-                    "speaker": "Bear",
-                    "sentence": "What is it you're so afraid of?"
+                    "speaker": "Dark Bear",
+                    "sentence": "你到底在害怕什麼？"
                 },
                 {
-                    "speaker": "Bear",
-                    "sentence": "I'm trying to help... trying to fix you."
+                    "speaker": "Dark Bear",
+                    "sentence": "我是在幫你導回正軌！"
                 },
                 {
-                    "speaker": "Bear",
-                    "sentence": "I don't know what you're going through, but I want to understand."
+                    "speaker": "Dark Bear",
+                    "sentence": "我不知道你經歷了什麼，但我願意理解。"
                 },
                 {
-                    "speaker": "Bear",
-                    "sentence": "I’m doing this for you. This is for your own good."
+                    "speaker": "Dark Bear",
+                    "sentence": "這都是為了你好。"
                 },
                 {
-                    "speaker": "Bear",
-                    "sentence": "Please... I can't imagine a world without you..."
+                    "speaker": "Dark Bear",
+                    "sentence": "拜託，我無法想像沒有你的世界..."
                 },
                 {
-                    "speaker": "Bear",
-                    "sentence": "拜託你別演了。"
+                    "speaker": "Dark Bear",
+                    "sentence": "別演了...會來吧..."
                 }
             ]
         },
         {
-            "name": "Level 3 Comprehend",
+            "name": "Level 3 Comprehend_0",
+            "pauseGame": true,
             "lines": [
                 {
-                    "speaker": "Bear",
-                    "sentence": "I think... maybe I need to try harder to understand you. I can't just keep assuming I know what's best."
+                    "speaker": "Dark Bear",
+                    "sentence": "也許...我得更努力去理解你。我不能總認為我是對的。"
+                }
+            ]
+        },
+        {
+            "name": "Level 3 Comprehend_1",
+            "pauseGame": true,
+            "lines": [
+                {
+                    "speaker": "Dark Bear",
+                    "sentence": "我必須接受你已經不一樣了...你變了...或許我必須接受這一點。"
                 },
                 {
-                    "speaker": "Bear",
-                    "sentence": "I need to accept that you're not the same as you were. You've changed... and maybe I have to accept that."
-                },
+                    "speaker": "Dark Bear",
+                    "sentence": "我不應該試圖強迫你回到過去的樣子...或論斷你現在的狀態..."
+                }
+            ]
+        },
+        {
+            "name": "Level 3 Comprehend_2",
+            "pauseGame": true,
+            "lines": [
                 {
-                    "speaker": "Bear",
-                    "sentence": "I shouldn't try to force you to return to what you once were... or judge you for what you've become."
-                },
-                {
-                    "speaker": "Bear",
-                    "sentence": "Instead, I need to understand you. I need to accept you."
+                    "speaker": "Dark Bear",
+                    "sentence": "相對的，我必要誠心理解你、接納你。"
                 }
             ]
         },
         {
             "name": "Level 4 Start",
+            "pauseGame": true,
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "Oh... my... What a world you see... How strange it all is..."
+                    "sentence": "噢，我的天哪！你..你到底看到了什麼？這都是什麼...？"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I can't fully comprehend it yet, but now... I understand more. I see more of what you're going through."
+                    "sentence": "雖然我仍無法完全理解，但現在...我能感受到了、感受到你在經歷的事情。"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I'll stay with you, no matter how strange this place looks. I'm not leaving."
+                    "sentence": "我會陪著你的，不管這多麼奇怪，我不會拋棄你。"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "Let's keep moving forward. Together. I'll help you however I can."
+                    "sentence": "讓我們繼續向前吧！一起走！我會無條件支撐你的。"
                 }
             ]
         },
         {
             "name": "Level 4 Complete",
+            "pauseGame": true,
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "Now I can truly comprehend... I finally understand you."
+                    "sentence": "現在，我終於能真的接納你了..."
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I know I can't truly know what your feeling, but... now, I can embrace it."
+                    "sentence": "雖然明白我無法真正理解你的感受，但...現在，我能夠包容了。"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I won't try to change you. I won't force you to be anything you're not. I'll just be here for you."
+                    "sentence": "我不會再試圖改變你、不會再強迫你成為什麼樣子...我會一直陪著、支持你。"
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I'll walk with you... Together, we'll find our way."
+                    "sentence": "我們..一起...我們會找到新的方式一同前進。"
                 }
             ]
         }

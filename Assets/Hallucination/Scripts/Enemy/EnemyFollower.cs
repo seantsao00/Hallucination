@@ -8,7 +8,7 @@ public class EnemyFollower : MonoBehaviour {
         if (targetPosition == null) {
             return;
         } else {
-            transform.position = targetPosition.Value;
+            transform.position = targetPosition.Value + new Vector3(0, 0.8f, 0);
         }
     }
 }

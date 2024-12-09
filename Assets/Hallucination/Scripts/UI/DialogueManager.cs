@@ -71,7 +71,7 @@ public class DialogueManager : MonoBehaviour {
                 break;
         }
 
-        UnityWebRequest request = UnityWebRequest.Get(filePath);
+        UnityWebRequest request = UnityWebRequest.Get("file://" + filePath);
         UnityWebRequestAsyncOperation operation = request.SendWebRequest();
 
         while (!operation.isDone) {

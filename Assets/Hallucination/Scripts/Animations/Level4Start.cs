@@ -8,11 +8,16 @@ public class Level4Start : MonoBehaviour {
         public Transform body;
         public Transform[] points;
     }
+    [SerializeField] Cinemachine.CinemachineVirtualCamera fixedCamera;
     [SerializeField] string dialogueName = "Level 4 Start";
     [SerializeField] AnimationObjects train;
     [SerializeField] float trainSpeed = 8f;
     [SerializeField] AnimationObjects bear, fairy;
     float eps = 1e-4f;
+
+    void Awake() {
+        fixedCamera.gameObject.SetActive(false);
+    }
 
     public void StartAnimation() {
         WorldSwitchManager.Instance.Bear.GetComponent<SpriteRenderer>().enabled = false;
@@ -34,6 +39,7 @@ public class Level4Start : MonoBehaviour {
         WorldSwitchManager.Instance.Bear.transform.position = bear.points[bear.points.Length - 1].position;
         WorldSwitchManager.Instance.Bear.GetComponent<SpriteRenderer>().enabled = true;
         WorldSwitchManager.Instance.Fairy.GetComponent<SpriteRenderer>().enabled = true;
+        fixedCamera.gameObject.SetActive(true);
         DialogueManager.Instance.StartDialogueWithCallback(dialogueName, () => {
             LevelNavigator.Instance.CompleteCurrentLevel();
         });

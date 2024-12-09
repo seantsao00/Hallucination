@@ -1,16 +1,19 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 using UnityEngine.SceneManagement;
 
 public class GameOverAnimation : MonoBehaviour {
-    public Transform bear;
-    public Transform bearDestination;
-    public Transform fairy;
-    public Transform[] points;
+    [SerializeField] Transform bear;
+    [SerializeField] Transform bearDestination;
+    [SerializeField] Transform fairy;
+    [SerializeField] Transform[] points;
+    // [SerializeField] SpriteRenderer fairyBackground;
     float speed = 5f;
     float eps = 1e-4f;
     string endGameSceneName = "EndGame";
     string dialogueName = "Level 4 Complete";
+    // bool animationFinished = false;
 
     public void StartAnimation() {
         WorldSwitchManager.Instance.Bear.GetComponent<Character>().StopMotion();
@@ -34,8 +37,27 @@ public class GameOverAnimation : MonoBehaviour {
         }
         yield return StartCoroutine(BearMove(bearDestination));
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
-        DialogueManager.Instance.StartDialogueWithCallback(dialogueName, () => SceneManager.LoadScene(endGameSceneName));
+        // Coroutine pollutionAnim = StartCoroutine(PollutionAnimation(2f));
+        DialogueManager.Instance.StartDialogueWithCallback(
+            dialogueName, () => StartCoroutine(LoadSceneAfterAnimation())
+        );
     }
+
+    IEnumerator LoadSceneAfterAnimation() {
+        // yield return new WaitUntil(() => animationFinished);
+        yield return null;
+        // just make the this a couroutine
+        SceneManager.LoadScene(endGameSceneName);
+    }
+
+    // IEnumerator PollutionAnimation(float duration) {
+    //     float fadeSpeed = 1f / duration;
+    //     for (float t = 1; t > 0; t -= Time.deltaTime * fadeSpeed) {
+    //         fairyBackground.color = new Color(1, 1, 1, t);
+    //         yield return null;
+    //     }
+    //     animationFinished = true;
+    // }
 
     IEnumerator BearMove(Transform destination) {
         Animator animator = bear.GetComponent<Animator>();

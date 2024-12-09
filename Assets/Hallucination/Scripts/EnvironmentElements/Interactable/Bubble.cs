@@ -23,9 +23,15 @@ public class Bubble : Syncable {
     override public void SyncState() {
         if (isGlowing) {
             syncedObject.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 1f);
+            foreach (Transform child in syncedObject.transform) {
+                child.gameObject.SetActive(true);
+            }
             syncedObject.GetComponent<Collider2D>().enabled = true;
         } else {
             syncedObject.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.4f);
+            foreach (Transform child in syncedObject.transform) {
+                child.gameObject.SetActive(false);
+            }
             syncedObject.GetComponent<Collider2D>().enabled = false;
         }
     }

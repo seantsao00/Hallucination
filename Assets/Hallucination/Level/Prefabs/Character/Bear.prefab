@@ -80,7 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdf4350e9c407d4abf70d18fba04a80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTag: Stone
 --- !u!1 &6471211740841845485
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,10 +327,17 @@ MonoBehaviour:
   climbableLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   bodyCheck: {fileID: 6141803603691011443}
   bodyCheckSize: 0.2
   bottomCheck: {fileID: 351535063092547149}
   bottomCheckSize: 0.2
+  footCheck: {fileID: 0}
+  footCheckSize: {x: 0, y: 0}
+  bellyCheck: {fileID: 0}
+  bellyCheckSize: {x: 0, y: 0}
 --- !u!1001 &4954331430291672165
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -476,7 +482,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1.01
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

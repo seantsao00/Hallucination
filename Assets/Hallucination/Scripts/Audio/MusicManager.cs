@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MusicManager : MonoBehaviour
-{
+public class MusicManager : MonoBehaviour {
     public static MusicManager Instance;
 
     [Header("Audio Source")]
@@ -10,23 +9,18 @@ public class MusicManager : MonoBehaviour
 
     [Header("Music Tracks")]
     public AudioClip[] musicClips;
-    public float[] musicVolumes = {0.5f, 0.25f};
+    public float[] musicVolumes = { 0.5f, 0.25f };
     [Range(0f, 1f)] public float musicVolume = 0.5f;
 
     int currentTrackIndex = -1;
-    void Awake()
-    {
-        if (Instance == null)
-        {
+    void Awake() {
+        if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
+        } else {
             Destroy(gameObject);
         }
-        if (audioSource == null)
-        {
+        if (audioSource == null) {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
         audioSource.loop = false;
@@ -51,27 +45,24 @@ public class MusicManager : MonoBehaviour
         StartCoroutine(MusicFadeIn());
     }
 
-    public void StopMusic()
-    {
+    public void StopMusic() {
         audioSource.Stop();
         currentTrackIndex = -1;
     }
 
-    public void SetVolume(float volume)
-    {
+    public void SetVolume(float volume) {
         musicVolume = Mathf.Clamp01(volume);
         audioSource.volume = musicVolume;
     }
 
-    public bool IsPlaying()
-    {
+    public bool IsPlaying() {
         return audioSource.isPlaying;
     }
     IEnumerator MusicFadeIn() {
         float fadeTimer = 0;
         while (fadeTimer < 3) {
             fadeTimer += Time.deltaTime;
-            SetVolume(musicVolumes[currentTrackIndex] * (fadeTimer / 2f)); 
+            SetVolume(musicVolumes[currentTrackIndex] * (fadeTimer / 2f));
             yield return null;
         }
     }
@@ -80,7 +71,7 @@ public class MusicManager : MonoBehaviour
         float fadeTimer = 0;
         while (fadeTimer < 3) {
             fadeTimer += Time.deltaTime;
-            SetVolume(musicVolumes[currentTrackIndex] * ((2f - fadeTimer) / 2f)); 
+            SetVolume(musicVolumes[currentTrackIndex] * ((2f - fadeTimer) / 2f));
             yield return null;
         }
     }

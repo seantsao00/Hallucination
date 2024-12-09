@@ -23,7 +23,7 @@ public class SurroundingCapturer : MonoBehaviour {
         capturePath = Application.dataPath + "/Hallucination/Captures";
         System.IO.Directory.CreateDirectory(capturePath);
         captureCamera = GetComponent<Camera>();
-        WorldSwitchManager.Instance.WorldSwitching.AddListener(CaptureWhenSwitched);
+        WorldSwitchManager.Instance.WorldStartSwitching.AddListener(CaptureWhenSwitched);
     }
 
     void Update() {

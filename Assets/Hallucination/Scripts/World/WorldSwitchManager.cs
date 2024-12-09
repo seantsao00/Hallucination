@@ -111,6 +111,7 @@ public class WorldSwitchManager : MonoBehaviour {
         if (withFade) {
             StartCoroutine(PerformSwitchToWorldWithFade(targetWorld));
         } else {
+            WorldSwitched?.Invoke();
             if (targetWorld == CharacterTypeEnum.Bear) {
                 SetWorldBear();
             } else if (targetWorld == CharacterTypeEnum.Fairy) {
@@ -119,7 +120,6 @@ public class WorldSwitchManager : MonoBehaviour {
                 Debug.LogError($"Unexpected {nameof(targetWorld)} value: {targetWorld}");
             }
         }
-        WorldSwitched?.Invoke();
     }
 
     private void SwitchWorldByInput(InputAction.CallbackContext context) {
@@ -129,6 +129,8 @@ public class WorldSwitchManager : MonoBehaviour {
     IEnumerator PerformSwitchToWorldWithFade(CharacterTypeEnum world) {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.SwitchingWorld;
         yield return StartCoroutine(Util.FadeInCanvasGroup(0.4f, FadingMask));
+
+        WorldSwitched?.Invoke();
 
         if (world == CharacterTypeEnum.Bear) {
             SetWorldBear();

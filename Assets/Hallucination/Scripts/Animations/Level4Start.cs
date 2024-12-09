@@ -15,6 +15,8 @@ public class Level4Start : MonoBehaviour {
     float eps = 1e-4f;
 
     public void StartAnimation() {
+        WorldSwitchManager.Instance.Bear.GetComponent<SpriteRenderer>().enabled = false;
+        WorldSwitchManager.Instance.Fairy.GetComponent<SpriteRenderer>().enabled = false;
         StartCoroutine(Animation());
     }
 

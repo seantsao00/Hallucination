@@ -20,6 +20,7 @@ public class MainMenu : MonoBehaviour {
 
     public void ResetAllData() {
         PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
     }
 
     public void QuitGame() {

@@ -58,7 +58,7 @@ public class Character : MonoBehaviour {
     }
 
     void OnDestroy() {
-        Debug.Log("Character Destroyed");
+        // Debug.Log("Character Destroyed");
         WorldSwitchManager.Instance.WorldSwitching.RemoveListener(StopMotion);
         WorldSwitchManager.Instance.WorldSwitched.RemoveListener(StopMotion);
     }

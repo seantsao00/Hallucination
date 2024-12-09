@@ -101,10 +101,10 @@ public class DialogueManager : MonoBehaviour {
 
     public async void StartDialogueWithCallback(string dialogueName, Action callback = null) {
         while (!isLoaded) await Task.Yield();
-
+        StopAllCoroutines();
         gameObject.SetActive(true);
         callbackAfterDialogue = callback;
-
+        // Debug.Log("Start dialogue " + dialogueName);
         if (dialogueData != null) {
             DialogueCollection dialogueCollection = FindDialogueByName(dialogueName);
             if (dialogueCollection != null) {
@@ -232,6 +232,8 @@ public class DialogueManager : MonoBehaviour {
 
     void EndDialogue() {
         // Debug.Log("End of dialogue");
+        StopAllCoroutines();
+        isTyping = false;
         gameObject.SetActive(false);
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
         callbackAfterDialogue?.Invoke();

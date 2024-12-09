@@ -167,7 +167,7 @@ public class LevelController : MonoBehaviour {
         transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
         ApplyCharacterSyncMethods();
         RegisterHandler();
-        print(MusicManager.Instance);
+        // print(MusicManager.Instance);
         MusicManager.Instance.PlayMusic(musicTrackIndex);
     }
 

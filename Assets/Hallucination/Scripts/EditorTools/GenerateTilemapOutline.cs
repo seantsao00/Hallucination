@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 [CustomEditor(typeof(GenerateTilemapOutline))]
@@ -26,8 +27,17 @@ public class GenerateTilemapOutline : MonoBehaviour {
         foreach (var sourceTilemap in sourceTilemaps) {
             Tilemap outlineTilemap;
             sourceTilemap.CompressBounds();
+            
             GameObject outlineTilemapGameObject = new GameObject();
             outlineTilemapGameObject.name = outlineName;
+            List<GameObject> destroyedTilemap = new();
+            foreach (Transform child in sourceTilemap.transform) {
+                if (child.gameObject.name == outlineName) destroyedTilemap.Add(child.gameObject);
+            }
+            GameObject[] destroyedTilemapArray = destroyedTilemap.ToArray();
+            for (int i = 0; i < destroyedTilemapArray.Length; i++) {
+                DestroyImmediate(destroyedTilemapArray[i]);
+            }
             Vector3 outlinePosition = sourceTilemap.transform.position;
             // outlinePosition.z += 1;
             outlineTilemapGameObject.transform.position = outlinePosition;

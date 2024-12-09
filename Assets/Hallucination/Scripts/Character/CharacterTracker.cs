@@ -13,7 +13,6 @@ public class CharacterTracker : MonoBehaviour {
         if (positionHistory.Count < trackingDelay / Time.deltaTime) return null;
 
         while (positionHistory.Count > trackingDelay / Time.deltaTime) {
-            Debug.Log("Dequeueing");
             positionHistory.Dequeue();
         }
 

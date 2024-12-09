@@ -419,6 +419,7 @@ GameObject:
   - component: {fileID: 802445972}
   - component: {fileID: 802445971}
   - component: {fileID: 802445973}
+  - component: {fileID: 802445974}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -465,9 +466,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "We can\u2019t truly know what others are thinking,\nand we might not even
-    be able to understand a little bit how they feel.\n\nBut still, through compassion,
-    patience, and love,\nwe can gradually accept each other and find a way to connect."
+  m_text: 'We can''t truly know what others are feeling,
+
+    and we might not even
+    be able to understand a little bit how they feel.
+
+
+    But still, through compassion,
+    patience, and love,
+
+    we can gradually accept each other and find a way to
+    connect.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 475f8ce54fd0ac3419ed92dcef113da2, type: 2}
   m_sharedMaterial: {fileID: 9009913188860223129, guid: 475f8ce54fd0ac3419ed92dcef113da2, type: 2}
@@ -558,6 +567,79 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineDelay: 0
   fadeDuration: 2.5
+--- !u!114 &802445974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802445969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 2288379673189810194
+  references:
+    version: 2
+    RefIds:
+    - rid: 2288379673189810194
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 802445971}
+        m_TrackedProperties:
+          items:
+          - rid: 2288379673189810195
+          - rid: 2288379673189810196
+          - rid: 2288379673189810199
+        m_UpdateType: 0
+    - rid: 2288379673189810195
+      type: {class: StringTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_text
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: "We can't truly know what others are feeling,\nand we might not
+            even be able to understand a little bit how they feel.\r\n\nBut still,
+            through compassion, patience, and love, \nwe can gradually accept each
+            other and find a way to connect."
+        - localeIdentifier:
+            m_Code: zh-TW
+          value: "\u6211\u5011\u7121\u6CD5\u771F\u6B63\u4E86\u89E3\u4ED6\u4EBA\u7684\u611F\u53D7\uFF0C\r\n\u751A\u81F3\u53EA\u80FD\u89F8\u53CA\u4ED6\u5011\u611F\u53D7\u7684\u4E00\u5C0F\u90E8\u5206\u3002\r\n\r\n\u4F46\u6191\u85C9\u540C\u7406\u5FC3\u3001\u8010\u5FC3\u548C\u611B\uFF0C\r\n\u6211\u5011\u4ECD\u53EF\u4EE5\u9010\u6B65\u63A5\u53D7\u5F7C\u6B64\uFF0C\u4E26\u627E\u5230\u9023\u7D50\u7684\u65B9\u6CD5\u3002"
+    - rid: 2288379673189810196
+      type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          rid: 2288379673189810197
+        m_PropertyPath: m_fontAsset
+    - rid: 2288379673189810197
+      type: {class: LocalizedTmpFont, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:22fc4f680281e994b9e19b0becbf59d4
+        m_TableEntryReference:
+          m_KeyId: 1015366488064
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+    - rid: 2288379673189810199
+      type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          rid: 2288379673189810200
+        m_PropertyPath: m_sharedMaterial
+    - rid: 2288379673189810200
+      type: {class: LocalizedMaterial, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:22fc4f680281e994b9e19b0becbf59d4
+        m_TableEntryReference:
+          m_KeyId: 1015563620352
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
 --- !u!1 &1107718605
 GameObject:
   m_ObjectHideFlags: 0

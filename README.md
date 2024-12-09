@@ -55,7 +55,8 @@ The bear's perspective starts to shift. As they begin to accept the fairy's chan
 Though the bear still doesn't fully understand the hallucinations, they realize that their journey isn't about returning the fairy to what they were before. It's about finding a way to move forward, together, and accepting the fairy as they are now. The bear understands that love and connection aren't about fixing others; it's about being there, offering support, and embracing one another in all their complexities.
 
 By the end of the journey, the bear reaches a place of true acceptance. The bear may never fully understand what the fairy sees, but the bear has learned the most important lesson: 
-> We can’t truly know what others are thinking, and we might not even be able to understand a little bit how they feel.
+> We can't truly know what others are feeling, and we might not even be able to understand a little bit how they feel.
+>
 > But still, through compassion, patience, and love, we can gradually accept each other and find a way to connect.
 
 

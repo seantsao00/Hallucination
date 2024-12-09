@@ -16,7 +16,6 @@ public class ParallaxController : MonoBehaviour {
 
     void Start() {
         cam = Camera.main.transform;
-        // camPrevPos = cam.position;
 
         int backCount = transform.childCount;
         mat = new Material[backCount];
@@ -43,17 +42,19 @@ public class ParallaxController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (camPrevPos != null && camPrevPos != Vector3.zero) {
+        if (camPrevPos != null && !(camPrevPos.x == 0 && camPrevPos.y == 0)) {
             distanceX = cam.position.x - camPrevPos.x;
             distanceY = cam.position.y - camPrevPos.y;
         } else {
             distanceX = 0;
             distanceY = 0;
         }
-        if ((transform.parent.name == "FairyRelated"
-                && WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Fairy)
-            || (transform.parent.name == "BearRelated"
-                && WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Bear)) {
+
+        if (((transform.parent.name == "FairyRelated"
+                    && WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Fairy)
+                || (transform.parent.name == "BearRelated"
+                    && WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Bear))
+            && (cam.position.x != 0 || cam.position.y != 0)) {
             camPrevPos = cam.position;
         }
 

@@ -4,7 +4,7 @@ public class CheckpointBoundary : MonoBehaviour {
     [SerializeField] LevelCheckpoint checkpoint;
     [SerializeField] bool activeIfCheckpointCompleted;
     [SerializeField] string touchBoundaryDialogueName = "Bear Touch Boundary";
-
+    int lockCount = 0;
     void Awake() {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null) {
@@ -19,10 +19,18 @@ public class CheckpointBoundary : MonoBehaviour {
                 checkpoint?.CheckpointCompleted.AddListener(delegate { gameObject.SetActive(false); });
             }
         }
+        WorldSwitchManager.Instance.WorldSwitching.AddListener(SelfLock);
+        WorldSwitchManager.Instance.WorldSwitching.AddListener(SelfUnlock);
     }
-
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (!string.IsNullOrEmpty(touchBoundaryDialogueName) && collision.gameObject.CompareTag("Player")) {
+    void SelfLock() {
+        lockCount++;
+    }
+    void SelfUnlock() {
+        lockCount--;
+    }
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (!string.IsNullOrEmpty(touchBoundaryDialogueName) && collision.gameObject.CompareTag("Player")
+            && lockCount == 0) {
             DialogueManager.Instance.StartDialogue(touchBoundaryDialogueName);
         }
     }

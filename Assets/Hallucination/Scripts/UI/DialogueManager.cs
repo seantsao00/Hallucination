@@ -100,6 +100,7 @@ public class DialogueManager : MonoBehaviour {
     public async void StartDialogueWithCallback(string dialogueName, Action callback = null) {
         while (!isLoaded) await Task.Yield();
         StopAllCoroutines();
+        if (GameStateManager.Instance.CurrentGamePlayState == GamePlayState.SwitchingWorld) return;
         gameObject.SetActive(true);
         callbackAfterDialogue = callback;
         // Debug.Log("Start dialogue " + dialogueName);
@@ -158,7 +159,6 @@ public class DialogueManager : MonoBehaviour {
             EndDialogue();
             return;
         }
-
         // Start typing the next dialogue
         DialogueLine dialogueLine = dialogueLines.Dequeue();
         StopAllCoroutines();

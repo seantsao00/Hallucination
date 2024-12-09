@@ -25,10 +25,6 @@ public class MusicManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    void Start()
-    {
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -46,7 +42,7 @@ public class MusicManager : MonoBehaviour
     }
 
     IEnumerator HandleTrackChange(int trackIndex) {
-        if (trackIndex != -1) yield return StartCoroutine(MusicFadeOut());
+        if (currentTrackIndex != -1) yield return StartCoroutine(MusicFadeOut());
         audioSource.clip = musicClips[trackIndex];
         audioSource.loop = true;
         audioSource.Play();

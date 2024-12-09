@@ -162,12 +162,13 @@ public class LevelController : MonoBehaviour {
         }
         LoadCheckpointData(levelData);
         if (fadeIn) StartCoroutine(Util.FadeOutCanvasGroup(1f, WorldSwitchManager.Instance.FadingMask));
-        MusicManager.Instance.PlayMusic(musicTrackIndex);
 
         transform.Find("FairyWorld").Find("FairyLevelMainCamera").gameObject.SetActive(true);
         transform.Find("BearWorld").Find("BearLevelMainCamera").gameObject.SetActive(true);
         ApplyCharacterSyncMethods();
         RegisterHandler();
+        print(MusicManager.Instance);
+        MusicManager.Instance.PlayMusic(musicTrackIndex);
     }
 
     public void CompleteLevel() {

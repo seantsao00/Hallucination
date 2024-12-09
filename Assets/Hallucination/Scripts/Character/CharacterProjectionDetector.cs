@@ -4,6 +4,10 @@ public class CharacterProjectionDetector : MonoBehaviour {
     public HashSet<GameObject> ProjectionObjects = new();
     public float radius => GetComponent<CircleCollider2D>().radius;
 
+    public void ClearAllProjections() {
+        ProjectionObjects.Clear();
+    }
+
     void OnTriggerEnter2D(Collider2D other) {
         if (!other.gameObject.activeInHierarchy) return;
         if (FairyObjectProjectionManager.Instance.Projections.Contains(other.gameObject)

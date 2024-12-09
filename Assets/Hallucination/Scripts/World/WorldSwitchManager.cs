@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class WorldSwitchManager : MonoBehaviour {
     public static WorldSwitchManager Instance { get; private set; }
@@ -13,7 +14,8 @@ public class WorldSwitchManager : MonoBehaviour {
     public CanvasGroup FadingMask;
     public UnityEvent WorldSwitching;
     public UnityEvent WorldSwitched;
-
+    [SerializeField] Sprite worldSwitchIconInFairyWorld;
+    [SerializeField] Sprite worldSwitchIconInBearWorld;
     public CharacterTypeEnum currentWorld { get; private set; }
 
     /// <summary>
@@ -140,12 +142,14 @@ public class WorldSwitchManager : MonoBehaviour {
     }
 
     private void SetWorldFairy() {
+        WorldSwitchIcon.GetComponent<Image>().sprite = worldSwitchIconInFairyWorld;
         currentWorld = CharacterTypeEnum.Fairy;
         foreach (var environment in fairyWorldEnvironments) { environment.SetActive(true); }
         foreach (var environment in bearWorldEnvironments) { environment.SetActive(false); }
     }
 
     private void SetWorldBear() {
+        WorldSwitchIcon.GetComponent<Image>().sprite = worldSwitchIconInBearWorld;
         currentWorld = CharacterTypeEnum.Bear;
         foreach (var environment in fairyWorldEnvironments) { environment.SetActive(false); }
         foreach (var environment in bearWorldEnvironments) { environment.SetActive(true); }

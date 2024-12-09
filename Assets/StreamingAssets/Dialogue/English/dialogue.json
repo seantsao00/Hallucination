@@ -140,7 +140,7 @@
             "lines": [
                 {
                     "speaker": "Dark Bear",
-                    "sentence": "Instead, I need to understand you. I need to accept you."
+                    "sentence": "Instead, I need to understand you. I need to sincerely accept you."
                 }
             ]
         },
@@ -154,7 +154,7 @@
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "I can't fully comprehend it yet, but now... I understand more. I see more of what you're going through."
+                    "sentence": "I can't fully comprehend it yet, but now... I understand more. I feel more of what you're going through."
                 },
                 {
                     "speaker": "Bear",
@@ -162,7 +162,7 @@
                 },
                 {
                     "speaker": "Bear",
-                    "sentence": "Let's keep moving forward. Together. I'll help you however I can."
+                    "sentence": "Let's keep moving forward. Together. I'll support you however I can."
                 }
             ]
         },
@@ -172,7 +172,7 @@
             "lines": [
                 {
                     "speaker": "Bear",
-                    "sentence": "Now I can truly comprehend... I finally understand you."
+                    "sentence": "Now I can truly comprehend..."
                 },
                 {
                     "speaker": "Bear",

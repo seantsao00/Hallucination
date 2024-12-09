@@ -9,8 +9,6 @@ public class Level3End : MonoBehaviour {
         public Transform body;
         public Transform[] points;
     }
-    [SerializeField] string dialogueName = "Level 4 Start";
-    [SerializeField] float trainSpeed = 8f;
     [SerializeField] AnimationObjects bear, fairy;
     float eps = 1e-4f;
     bool isBearMoveFinished;

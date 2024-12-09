@@ -150,7 +150,7 @@ public class DialogueManager : MonoBehaviour {
             StopAllCoroutines();
             currentDialogueBox.dialogueText.text = currentSentence;
             TMP_TextInfo textInfo = currentDialogueBox.dialogueText.textInfo;
-            SetDialogueAlpha(255, textInfo);
+            ShowFullSentence();
             isTyping = false;
             return;
         }
@@ -180,53 +180,31 @@ public class DialogueManager : MonoBehaviour {
     IEnumerator TypeSentence(DialogueLine dialogueLine, float speed = 1f) {
         var dialogueText = currentDialogueBox.dialogueText;
         isTyping = true;
-        dialogueText.text = dialogueLine.sentence;
-        TMP_TextInfo textInfo = dialogueText.textInfo;
-        // Debug.Log(currentDialogueBox.dialogueText.text);
-        SetDialogueAlpha(0, textInfo);
-        dialogueText.ForceMeshUpdate();
-        // Gradually reveal characters
-        for (int i = 0; i < textInfo.characterCount; i++) {
-            TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
-            if (!charInfo.isVisible) continue;
-
-            int vertexIndex = charInfo.vertexIndex;
-            Color32[] vertexColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
-            float alpha = 0;
-            
-            while (alpha < 1) {
-                
-                alpha += Time.deltaTime * 10f * speed;
-                alpha = Math.Min(alpha, 1);
-                byte newAlpha = (byte)(alpha * 255);
-
-                for (int j = 0; j < 4; j++) {
-                    vertexColors[vertexIndex + j].a = newAlpha;
-                }
-
-                dialogueText.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-                yield return null;
-            }
+        for (int i = 0; i <= dialogueLine.sentence.Length; i++) {
+            dialogueText.text = SentenceBeforeIndex(dialogueLine.sentence, i);
+            yield return new WaitForSeconds(0.03f / speed);
         }
         isTyping = false;
     }
-
-    void SetDialogueAlpha(byte alpha, TMP_TextInfo textInfo) {
+    void ShowFullSentence() {
         var dialogueText = currentDialogueBox.dialogueText;
-        dialogueText.ForceMeshUpdate();
-        for (int i = 0; i < textInfo.characterCount; i++) {
-            TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
-            if (!charInfo.isVisible) continue;
-
-            int vertexIndex = charInfo.vertexIndex;
-            Color32[] vertexColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
-
-            for (int j = 0; j < 4; j++) {
-                vertexColors[vertexIndex + j].a = (byte)alpha;
-            }
-        }
-        dialogueText.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+        dialogueText.text = SentenceBeforeIndex(currentSentence, currentSentence.Length);
     }
+    void ClearSentence() {
+        var dialogueText = currentDialogueBox.dialogueText;
+        dialogueText.text = SentenceBeforeIndex(currentSentence, 0);
+    }
+    string SentenceBeforeIndex(string fullSentence, int index) {
+        string ret = "";
+        for (int i = 0; i < index; i++) {
+            ret += fullSentence[i];
+        }
+        for (int i = index; i < fullSentence.Length; i++) {
+            ret += " ";
+        }
+        return ret;
+    }
+
 
     void EndDialogue() {
         // Debug.Log("End of dialogue");

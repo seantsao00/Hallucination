@@ -20,6 +20,7 @@ public class PauseGameMenu : MonoBehaviour {
 
     public void BackToMainMenu() {
         GameStateManager.Instance.CurrentGameState = GameState.MainMenu;
+        MusicManager.Instance.StopMusic();
         SceneManager.LoadScene("MainMenu");
     }
 

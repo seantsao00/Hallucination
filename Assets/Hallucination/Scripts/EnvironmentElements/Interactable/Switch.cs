@@ -8,6 +8,7 @@ public interface ISwitchControlled {
 
 public class Switch : InteractableObjectBase {
     [SerializeField] GameObject[] controlledObjects;
+    [SerializeField] Sprite[] stateSprites;
     [SerializeField] int numberOfStates = 2;
     [SerializeField] int startStateIndex;
     int currentStateIndex;
@@ -34,6 +35,7 @@ public class Switch : InteractableObjectBase {
         foreach (var controlled in controlledList) {
             controlled.SetState(currentStateIndex);
         }
+        gameObject.GetComponent<SpriteRenderer>().sprite = stateSprites[currentStateIndex];
     }
 
     void OnTriggerEnter2D(Collider2D other) {

@@ -23,6 +23,7 @@ public class Switch : InteractableObjectBase {
             if (controlled != null) {
                 controlledList.Add(controlled);
                 controlled.SetState(currentStateIndex);
+                gameObject.GetComponent<SpriteRenderer>().sprite = stateSprites[currentStateIndex];
             } else {
                 Debug.LogWarning($"Omit object that has not implemented ISwitchControlled: {obj}");
             }
@@ -34,8 +35,8 @@ public class Switch : InteractableObjectBase {
         currentStateIndex = (currentStateIndex + 1) % numberOfStates;
         foreach (var controlled in controlledList) {
             controlled.SetState(currentStateIndex);
+            gameObject.GetComponent<SpriteRenderer>().sprite = stateSprites[currentStateIndex];
         }
-        gameObject.GetComponent<SpriteRenderer>().sprite = stateSprites[currentStateIndex];
     }
 
     void OnTriggerEnter2D(Collider2D other) {

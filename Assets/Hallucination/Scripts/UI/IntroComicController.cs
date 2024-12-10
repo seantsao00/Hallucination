@@ -37,6 +37,7 @@ public class IntroComicController : MonoBehaviour {
     }
 
     void ComicEndHandler(VideoPlayer vp) {
+        // Debug.Log("Enter the handler.");
         InputManager.Control.Animation.Confirm.performed += ConfirmAction;
         PlayerPrefs.SetInt("IntroWatched", 1);
         PlayerPrefs.Save();

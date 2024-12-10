@@ -15,9 +15,11 @@ public class Util {
 
     static public IEnumerator FadeInCanvasGroup(float fadeDuration, CanvasGroup FadeMask) {
         float fadeSpeed = 1f / fadeDuration;
-
-        for (float t = 0; t < 1; t += Time.deltaTime * fadeSpeed) {
+        
+        for (float t = 0; t <= 1; t += Time.deltaTime * fadeSpeed) {
             FadeMask.alpha = t;
+            // Debug.Log(FadeMask.alpha);
+            // Debug.Log("Time.deltatim: " + Time.deltaTime + ", fadeSpeed: " + fadeSpeed);
             yield return null;
         }
     }

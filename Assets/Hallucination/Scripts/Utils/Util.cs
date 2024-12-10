@@ -24,7 +24,6 @@ public class Util {
         }
     }
 
-    static Language cachedLanguage;
     public static bool isInitialized = false;
 
     static public IEnumerator InitializeLocalizationAsync(LoadingScreen loadingScreen) {
@@ -42,11 +41,7 @@ public class Util {
             LocalizationSettings.AvailableLocales.Locales.IndexOf(LocalizationSettings.SelectedLocale)
         );
 
-        cachedLanguage = localeIndex switch {
-            (int)Language.English => Language.English,
-            (int)Language.Chinese => Language.Chinese,
-            _ => Language.English,
-        };
+        
         isInitialized = true;
         loadingScreen.gameObject.SetActive(false);
     }
@@ -57,7 +52,18 @@ public class Util {
             return Language.English;
         }
 
-        return cachedLanguage;
+        int localeIndex = PlayerPrefs.GetInt(
+            "Locale",
+            LocalizationSettings.AvailableLocales.Locales.IndexOf(LocalizationSettings.SelectedLocale)
+        );
+
+        Language ret = localeIndex switch {
+            (int)Language.English => Language.English,
+            (int)Language.Chinese => Language.Chinese,
+            _ => Language.English,
+        };
+
+        return ret;
     }
 
 }

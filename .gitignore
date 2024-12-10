@@ -75,4 +75,6 @@ crashlytics-build.properties
 /[Bb]uild.zip
 /[Bb]uilds.zip
 
+.DS_Store
+
 /Assets/Hallucination/Captures

@@ -21,6 +21,7 @@ public class GameOverAnimation : MonoBehaviour {
         WorldSwitchManager.Instance.Fairy.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         WorldSwitchManager.Instance.Bear.GetComponent<SpriteRenderer>().enabled = false;
         fairy.GetComponent<SpriteRenderer>().enabled = false;
+        fairy.GetComponent<SpriteRenderer>().sortingLayerName = "Character";
         StartCoroutine(Animation());
     }
 

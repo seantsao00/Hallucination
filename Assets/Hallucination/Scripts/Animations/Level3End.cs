@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Drawing;
 using UnityEngine;
 
 public class Level3End : MonoBehaviour {
@@ -28,7 +27,6 @@ public class Level3End : MonoBehaviour {
     IEnumerator Animation() {
         
         Animator fairyAnimator = fairy.body.GetComponent<Animator>();
-        Animator bearAnimator = bear.body.GetComponent<Animator>();
         int currentPointIndex = 0;
         string[] dialogueNames = {"Level 3 Comprehend_0", "Level 3 Comprehend_1", "Level 3 Comprehend_2"};
         while (currentPointIndex < fairy.points.Length) {
@@ -62,13 +60,9 @@ public class Level3End : MonoBehaviour {
     }
 
     IEnumerator BearMove(Transform point) {
-        Animator animator = bear.body.GetComponent<Animator>();
-        animator.SetBool("Movement", true);
-        animator.speed = 0.5f;
         while (!Move(bear.body, point, 4.5f)) {
             yield return null;
         }
-        animator.SetBool("Movement", false);
         isBearMoveFinished = true;
     }
 

@@ -1,5 +1,7 @@
 # Hallucination
 
+The [play link](https://seantsao00.itch.io/hallucination) on itch.io.
+
 > [!NOTE]
 > The characters in the story have no gender, so we use "they" as their pronoun in the story.
 
@@ -7,6 +9,7 @@
 > The bear and the fairy are not lovers.
 
 ## Story
+
 ### Story Overview
 
 In a forest, there are two unlikely companions: a gentle, slow-moving bear and a mystical fairy. They share an unspoken bond, living side by side in harmony. The bear is calm and patient, while the fairy is fast, light, and full of life. But one day, something changes. The fairy begins to see the world differently, as if trapped in a distorted reality, perceiving the bear and everything around them as something dark and threatening.
@@ -26,20 +29,24 @@ The game allows players to switch between the fairy's hallucinated world and the
 Since the fairy is caught in a hallucination, all dialogue is delivered by the bear.
 
 #### Intro
+
 At the start of the story, the bear finds the fairy distant and unreachable. The fairy, lost in hallucination, no longer recognizes the bear. To the bear, they feels as though their once-deep bond has been shattered overnight.
 
 #### Level 1 (The Journey Begins)
+
 The bear is deeply confused, unable to comprehend why the fairy has changed so suddenly, why their once joyous companion now seems to fear them.
 
-The fairy's hallucinations have trapped them in an altered reality, and they struggle to leave. The bear, despite not fully understanding the cause, is determined to help. 
+The fairy's hallucinations have trapped them in an altered reality, and they struggle to leave. The bear, despite not fully understanding the cause, is determined to help.
 The bear try to shield the fairy from dangers in their hallucinatory world.
 
 #### Level 2 (Cable Car)
+
 After leaving where they live, the fairy becomes trapped in a cable car due to its hallucination, trying to leave but unable to escape. The bear, tries to free the fairy from this entrapment. Though the bear doesn't fully understand the fairy's condition, the bear still try to help.
 
 At this point, the bear's desperation grows. They yearn to restore the fairy to what they once were, to make everything as it was before. The bear feels an overwhelming desire to turn fairy back to what they once were.
 
 #### Level 3 (Chase)
+
 In this level, the world-switching feature is locked and the player can only control the fairy.
 The fairy sees the bear as a dark, ominous monster chasing after they. The bear's intentions are misunderstood, and the fairy runs in fear, unaware that the bear is trying to help, not harm. The player should control the fairy to perform a sprint (parkour), dodge obstacles and hazards, and evading the bear's chase, all while hearing the bear's voice calling out, pleading for the fairy to back to what they were.
 
@@ -54,11 +61,10 @@ The bear's perspective starts to shift. As they begin to accept the fairy's chan
 
 Though the bear still doesn't fully understand the hallucinations, they realize that their journey isn't about returning the fairy to what they were before. It's about finding a way to move forward, together, and accepting the fairy as they are now. The bear understands that love and connection aren't about fixing others; it's about being there, offering support, and embracing one another in all their complexities.
 
-By the end of the journey, the bear reaches a place of true acceptance. The bear may never fully understand what the fairy sees, but the bear has learned the most important lesson: 
+By the end of the journey, the bear reaches a place of true acceptance. The bear may never fully understand what the fairy sees, but the bear has learned the most important lesson:
 > We can't truly know what others are feeling, and we might not even be able to understand a little bit how they feel.
 >
 > But still, through compassion, patience, and love, we can gradually accept each other and find a way to connect.
-
 
 The bear and fairy no longer need to be the same as they were before. They no longer need to fix the past. What matters is that they can move forward, together, with patience, compassion, and a willingness to accept each other as they are.
 

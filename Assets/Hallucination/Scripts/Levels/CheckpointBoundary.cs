@@ -19,8 +19,8 @@ public class CheckpointBoundary : MonoBehaviour {
                 checkpoint?.CheckpointCompleted.AddListener(delegate { gameObject.SetActive(false); });
             }
         }
-        WorldSwitchManager.Instance.WorldSwitching.AddListener(SelfLock);
-        WorldSwitchManager.Instance.WorldSwitching.AddListener(SelfUnlock);
+        WorldSwitchManager.Instance.WorldStartSwitching.AddListener(SelfLock);
+        WorldSwitchManager.Instance.WorldStartSwitching.AddListener(SelfUnlock);
     }
     void SelfLock() {
         lockCount++;

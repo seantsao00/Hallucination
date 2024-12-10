@@ -53,14 +53,14 @@ public class Character : MonoBehaviour {
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         characterStateController = GetComponent<CharacterStateController>();
+        WorldSwitchManager.Instance.WorldStartSwitching.AddListener(StopMotion);
         WorldSwitchManager.Instance.WorldSwitching.AddListener(StopMotion);
-        WorldSwitchManager.Instance.WorldSwitched.AddListener(StopMotion);
     }
 
     void OnDestroy() {
         // Debug.Log("Character Destroyed");
+        WorldSwitchManager.Instance.WorldStartSwitching.RemoveListener(StopMotion);
         WorldSwitchManager.Instance.WorldSwitching.RemoveListener(StopMotion);
-        WorldSwitchManager.Instance.WorldSwitched.RemoveListener(StopMotion);
     }
 
     void Update() {

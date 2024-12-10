@@ -7,7 +7,7 @@ public class Syncable : MonoBehaviour {
     // GameObject currentWorld, syncedWorld;
 
     protected void OnEnable() {
-        WorldSwitchManager.Instance.WorldSwitched.AddListener(SyncState);
+        WorldSwitchManager.Instance.WorldSwitching.AddListener(SyncState);
     }
 
     protected void OnDisable() {
@@ -15,7 +15,7 @@ public class Syncable : MonoBehaviour {
         // We do not care about this case
         if (WorldSwitchManager.Instance == null) return;
 
-        WorldSwitchManager.Instance.WorldSwitched.RemoveListener(SyncState);
+        WorldSwitchManager.Instance.WorldSwitching.RemoveListener(SyncState);
     }
 
     // protected Vector3 CurrentWorldLocalPosition() {

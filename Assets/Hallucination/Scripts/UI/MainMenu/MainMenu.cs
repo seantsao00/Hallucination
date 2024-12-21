@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
@@ -11,14 +9,14 @@ public class MainMenu : MonoBehaviour {
         loadingScreen.ShowLoadingScreen();
         StartCoroutine(Util.InitializeLocalizationAsync(loadingScreen));
     }
-    
+
 
     public void PlayGame() {
         if (PlayerPrefs.GetInt("IntroWatched", 0) == 0) SceneManager.LoadSceneAsync("Intro");
         else SceneManager.LoadScene("Levels");
     }
 
-    public void ResetAllData() {
+    public void ClearAllData() {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
     }

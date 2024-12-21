@@ -17,12 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 2f689930abc0113498c2bba7de749555
   m_SerializeEntries:
-  - m_GUID: 4614e2b09051abc478dc7694db84f22d
-    m_Address: NotoSansTC-Regular SDF
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-zh-TW
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 48b02780d99b43c4d8bab481d0128e76
     m_Address: Noto Sans-500
     m_ReadOnly: 1

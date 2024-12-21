@@ -10,7 +10,6 @@ public class MainMenu : MonoBehaviour {
         StartCoroutine(Util.InitializeLocalizationAsync(loadingScreen));
     }
 
-
     public void PlayGame() {
         if (PlayerPrefs.GetInt("IntroWatched", 0) == 0) SceneManager.LoadSceneAsync("Intro");
         else SceneManager.LoadScene("Levels");

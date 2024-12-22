@@ -7,7 +7,9 @@ public class EnemyFollower : MonoBehaviour {
     Queue<Vector3> initialPath = new();
     Vector3 originalFairyPosition;
     Vector3 originalBearPosition;
+    bool isPursuing = false;
     void Start() {
+        isPursuing = true;
         originalFairyPosition = WorldSwitchManager.Instance.Fairy.transform.position;
         originalBearPosition = gameObject.transform.position;
         int maxPathPoint = 90;
@@ -17,6 +19,7 @@ public class EnemyFollower : MonoBehaviour {
         }
     }
     void FixedUpdate() {
+        if (!isPursuing) return;
         Vector3? targetPosition;
         if (initialPath.Count != 0) {
             targetPosition = initialPath.Peek();
@@ -32,9 +35,10 @@ public class EnemyFollower : MonoBehaviour {
         }
     }
 
-    public void EndPersue() {
+    public void EndPursue() {
         gameObject.GetComponent<Collider2D>().enabled = false;
-        StartCoroutine(FadeOut());
+        isPursuing = false;
+        // StartCoroutine(FadeOut());
     }
     IEnumerator FadeOut() {
         while (true) {

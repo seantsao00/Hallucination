@@ -12,7 +12,7 @@ public class CharacterProjectionDetector : MonoBehaviour {
         if (!other.gameObject.activeInHierarchy) return;
         if (FairyObjectProjectionManager.Instance.Projections.Contains(other.gameObject)
             && !ProjectionObjects.Contains(other.gameObject)) {
-            Debug.Log("Projection " + other.gameObject.name + " Entered");
+            // Debug.Log("Projection " + other.gameObject.name + " Entered");
             ProjectionObjects.Add(other.gameObject);
         }
     }

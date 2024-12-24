@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class TipManager : MonoBehaviour {
     [SerializeField] GameObject bottomTip;
     [SerializeField] CanvasGroup switchWorldTip;
+    [SerializeField] CanvasGroup projectionTip;
     [SerializeField] CanvasGroup interactableTip;
     public static TipManager Instance { get; private set; }
 
@@ -32,6 +33,7 @@ public class TipManager : MonoBehaviour {
     void Start() {
         bottomTip.SetActive(false);
         switchWorldTip.gameObject.SetActive(false);
+        projectionTip.gameObject.SetActive(false);
         HandleInteractableTip();
     }
     void Awake() {
@@ -54,6 +56,7 @@ public class TipManager : MonoBehaviour {
 
     void HandleConfirm(InputAction.CallbackContext context) {
         switchWorldTip.gameObject.SetActive(false);
+        projectionTip.gameObject.SetActive(false);
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
     }
 
@@ -61,6 +64,12 @@ public class TipManager : MonoBehaviour {
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.AllInputDisabled;
         switchWorldTip.gameObject.SetActive(true);
         StartCoroutine(FadeInFallScreenTip(switchWorldTip, 1f));
+    }
+
+    public void ShowProjectionTip() {
+        GameStateManager.Instance.CurrentGamePlayState = GamePlayState.AllInputDisabled;
+        projectionTip.gameObject.SetActive(true);
+        StartCoroutine(FadeInFallScreenTip(projectionTip, 1f));
     }
 
     public void ShowTip(bool show, string tipText = "") {

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameOverAnimation : MonoBehaviour {
     [SerializeField] Transform bear;
-    [SerializeField] Transform bearDestination;
+    [SerializeField] Transform bearWalkDestination1, bearClimbDestination, bearWalkDestination2;
     [SerializeField] Transform fairy;
     [SerializeField] Transform[] points;
     // [SerializeField] SpriteRenderer fairyBackground;
@@ -36,7 +36,9 @@ public class GameOverAnimation : MonoBehaviour {
         while (!Move(fairy, points[1], speed, 0f)) {
             yield return null;
         }
-        yield return StartCoroutine(BearMove(bearDestination));
+        yield return StartCoroutine(BearMove(bearWalkDestination1, "Movement"));
+        yield return StartCoroutine(BearMove(bearClimbDestination, "Climb"));
+        yield return StartCoroutine(BearMove(bearWalkDestination2, "Movement"));
         GameStateManager.Instance.CurrentGamePlayState = GamePlayState.Normal;
         // Coroutine pollutionAnim = StartCoroutine(PollutionAnimation(2f));
         DialogueManager.Instance.StartDialogueWithCallback(
@@ -60,14 +62,14 @@ public class GameOverAnimation : MonoBehaviour {
     //     animationFinished = true;
     // }
 
-    IEnumerator BearMove(Transform destination) {
+    IEnumerator BearMove(Transform destination, string animationName) {
         Animator animator = bear.GetComponent<Animator>();
-        animator.SetBool("Movement", true);
+        animator.SetBool(animationName, true);
         animator.speed = 0.5f;
-        while (!Move(bear, destination, 4.5f)) {
+        while (!Move(bear, destination, 4f)) {
             yield return null;
         }
-        animator.SetBool("Movement", false);
+        animator.SetBool(animationName, false);
     }
 
     bool Move(Transform body, Transform target, float speed, float slowDownLength = 0f, float minSpeedRatio = 0.33f) {

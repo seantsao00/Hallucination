@@ -26,23 +26,6 @@ public class SurroundingCapturer : MonoBehaviour {
         WorldSwitchManager.Instance.WorldStartSwitching.AddListener(CaptureWhenSwitched);
     }
 
-    void Update() {
-        if (WorldSwitchManager.Instance != null && WorldSwitchManager.Instance.Bear != null) {
-            Quaternion currentRotation = gameObject.transform.rotation;
-
-            float bearYRotation = WorldSwitchManager.Instance.Bear.transform.eulerAngles.y;
-            
-            /*
-            gameObject.transform.rotation = Quaternion.Euler(
-                currentRotation.eulerAngles.x,
-                bearYRotation,
-                currentRotation.eulerAngles.z
-            );
-            */
-            // print(currentRotation + " " + gameObject.transform.rotation);
-        }
-    }
-
     void CalculateParameter() {
         float pixelsPerUnit = captureWidth / 40f;
         radius = localRadius * pixelsPerUnit;
@@ -54,10 +37,10 @@ public class SurroundingCapturer : MonoBehaviour {
     }
     void Capture() {
         
-        CalculateParameter();
-        gameObject.transform.position = new Vector3(WorldSwitchManager.Instance.Bear.transform.position.x, 
+        transform.position = new Vector3(WorldSwitchManager.Instance.Bear.transform.position.x, 
                                                 WorldSwitchManager.Instance.Bear.transform.position.y,
                                                 -10);
+        CalculateParameter();
         
 
         // Debug.Log("Capture called! Camera position:" + gameObject.transform.position);

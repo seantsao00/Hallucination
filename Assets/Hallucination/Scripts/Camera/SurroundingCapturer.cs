@@ -7,7 +7,7 @@ public class SurroundingCapturer : MonoBehaviour {
     int captureHeight = 1080; // Height of the capture
     Vector2 circleCenter;
     float radius;
-    public Texture2D cachedTexture;
+    [HideInInspector] public Texture2D cachedTexture;
     string capturePath;
 
     float localRadius => WorldSwitchManager.Instance.Bear.GetComponentInChildren<CharacterProjectionDetector>().radius;
@@ -26,39 +26,27 @@ public class SurroundingCapturer : MonoBehaviour {
         WorldSwitchManager.Instance.WorldStartSwitching.AddListener(CaptureWhenSwitched);
     }
 
-    void Update() {
-        if (WorldSwitchManager.Instance != null && WorldSwitchManager.Instance.Bear != null) {
-            Quaternion currentRotation = gameObject.transform.rotation;
-
-            float bearYRotation = WorldSwitchManager.Instance.Bear.transform.eulerAngles.y;
-            
-            /*
-            gameObject.transform.rotation = Quaternion.Euler(
-                currentRotation.eulerAngles.x,
-                bearYRotation,
-                currentRotation.eulerAngles.z
-            );
-            */
-            // print(currentRotation + " " + gameObject.transform.rotation);
-        }
-    }
-
     void CalculateParameter() {
         float pixelsPerUnit = captureWidth / 40f;
         radius = localRadius * pixelsPerUnit;
         circleCenter = captureCamera.WorldToScreenPoint(transform.position);
+        // Debug.Log(circleCenter);
+        // if (Application.platform == RuntimePlatform.WebGLPlayer) {
+        //    circleCenter = new Vector2(1920/2, 1080/2);
+        // }
+        circleCenter = new Vector2(captureWidth / 2, captureHeight / 2);
+        // Debug.Log(circleCenter);
     }
 
     void CaptureWhenSwitched() {
         if (WorldSwitchManager.Instance.currentWorld == CharacterTypeEnum.Bear) Capture();
     }
     void Capture() {
-        
-        CalculateParameter();
-        gameObject.transform.position = new Vector3(WorldSwitchManager.Instance.Bear.transform.position.x, 
+
+        transform.position = new Vector3(WorldSwitchManager.Instance.Bear.transform.position.x,
                                                 WorldSwitchManager.Instance.Bear.transform.position.y,
                                                 -10);
-        
+        CalculateParameter();
 
         // Debug.Log("Capture called! Camera position:" + gameObject.transform.position);
         RenderTexture renderTexture = new RenderTexture(captureWidth, captureHeight, 24);
@@ -81,7 +69,7 @@ public class SurroundingCapturer : MonoBehaviour {
         System.IO.File.WriteAllBytes(capturePath + "/CapturedGameObjectsCircle.png", bytes);
 
         // Debug.Log("Captured circular part saved as CapturedGameObjectsCircle.png");
-        
+
         // Cleanup
         Destroy(renderTexture);
         Destroy(capturedTexture);

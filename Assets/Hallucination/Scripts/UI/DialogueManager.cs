@@ -59,7 +59,7 @@ public class DialogueManager : MonoBehaviour {
 
     // Load the entire JSON file containing multiple dialogues
     async void LoadDialoguesFromFile() {
-        string filePath = Path.Combine(Application.streamingAssetsPath, "dialogue.json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/English/dialogue.json");
         switch (Util.CurrentLanguage()) {
             case Language.English:
                 filePath = Path.Combine(Application.streamingAssetsPath, "Dialogue/English/dialogue.json");
@@ -69,7 +69,11 @@ public class DialogueManager : MonoBehaviour {
                 break;
         }
 
-        UnityWebRequest request = UnityWebRequest.Get("file://" + filePath);
+#if !UNITY_WEBGL
+        filePath = "file://" + filePath;
+#endif
+        // UnityWebRequest request = UnityWebRequest.Get("file://" + filePath);
+        UnityWebRequest request = UnityWebRequest.Get(filePath);
         UnityWebRequestAsyncOperation operation = request.SendWebRequest();
 
         while (!operation.isDone) {
@@ -144,7 +148,7 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void DisplayNextSentence() {
-        
+
         // If dialogue is still typing and the game is paused, show the full sentence immediately
         if (isTyping && GameStateManager.Instance.CurrentGamePlayState == GamePlayState.DialogueActive) {
             StopAllCoroutines();

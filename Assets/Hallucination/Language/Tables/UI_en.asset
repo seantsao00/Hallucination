@@ -35,7 +35,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3146586990252032
-    m_Localized: Reset all data
+    m_Localized: Clear all data
     m_Metadata:
       m_Items: []
   - m_Id: 3146759908823040
@@ -68,6 +68,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3171076340125696
     m_Localized: Art
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7724016824422400
+    m_Localized: Are you sure you want to clear all game data?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7724391421906944
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7724432534474752
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7741696956633088
+    m_Localized: Quit Game
     m_Metadata:
       m_Items: []
   references:

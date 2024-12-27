@@ -2,6 +2,10 @@
 
 The [play link](https://seantsao00.itch.io/hallucination) on itch.io.
 
+Gameplay videos:
+- [Gameplay video 1](https://drive.google.com/file/d/1BruDFL0Fu4y4Y0Y34HwDiAYOGxw_hC00/view?usp=drive_link)
+- [Gameplay video 2](https://drive.google.com/file/d/1Zabgfl3DzLFc9UswcOwkPwsTR3NDmis_/view?usp=drive_link)
+
 > [!NOTE]
 > The characters in the story have no gender, so we use "they" as their pronoun in the story.
 
